@@ -115,11 +115,17 @@ class DokumenPegawaiController extends Controller
      * Menghapus dokumen secara "soft" (mengubah statusnya menjadi Dihapus).
      * File fisik tetap ada di server.
      */
-    public function destroy(DokumenPegawai $dokumen_pegawai)
+    public function destroyPermanent(DokumenPegawai $dokumen_pegawai)
     {
-        $dokumen_pegawai->status_dokumen = 'Dihapus';
-        $dokumen_pegawai->save();
+        // Hapus file fisik dari storage
+        $filePath = str_replace('/storage/', 'public/', $dokumen_pegawai->path_file);
+        if (Storage::exists($filePath)) {
+            Storage::delete($filePath);
+        }
 
-        return redirect()->back()->with('success', 'Dokumen berhasil dinon-aktifkan (soft delete).');
+        // Hapus entri dari database secara fisik
+        $dokumen_pegawai->delete();
+
+        return redirect()->back()->with('success', 'Dokumen berhasil dihapus permanen.');
     }
 }

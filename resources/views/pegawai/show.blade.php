@@ -46,7 +46,7 @@
             <input type="file" name="file_dokumen" id="file_dokumen" required>
         </p>
         <p>
-            <label for="keterangan">Keterangan (Opsional):</label><br>
+            <label for="keterangan">Keterangan (Asli/FotoCopy):</label><br>
             <textarea name="keterangan" id="keterangan">{{ old('keterangan') }}</textarea>
         </p>
         <p>
@@ -65,49 +65,35 @@
                     <th>Nama File Asli</th>
                     <th>Versi</th>
                     <th>Keterangan</th>
-                    <th>Status</th>  
+                    <th>Status</th>
                     <th>Tgl. Unggah</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                {{-- PENTING: Ganti $dokumen_aktif menjadi $all_dokumen --}}
                 @forelse ($all_dokumen as $doc)
-                    <tr style="{{ $doc->status_dokumen == 'Aktif' ? '' : ($doc->status_dokumen == 'Revisi' ? 'background-color: #f0f0f0;' : 'background-color: #ffe0e0; opacity: 0.7;') }}">
+                    <tr style="{{ $doc->status_dokumen == 'Revisi' ? 'background-color: #f0f0f0;' : '' }}">
                         <td>{{ $doc->jenis_dokumen->nama_jenis ?? '-' }}</td>
                         <td>{{ $doc->nama_file_asli }}</td>
                         <td>V{{ $doc->versi_dokumen }}</td>
                         <td>{{ $doc->keterangan ?? '-' }}</td>
                         <td>
-                            {{-- TAMPILKAN STATUS DOKUMEN --}}
                             <strong>{{ $doc->status_dokumen }}</strong>
                         </td>
                         <td>{{ $doc->tanggal_upload->format('d-m-Y H:i') }}</td>
                         <td>
-                            {{-- Link Lihat dan Unduh hanya jika status bukan 'Dihapus' --}}
-                            @if ($doc->status_dokumen != 'Dihapus')
-                                <a href="{{ asset($doc->path_file) }}" target="_blank">Lihat</a> |
-                                <a href="{{ route('dokumen.download', $doc->id) }}" target="_blank">Unduh</a> |
-                            @else
-                                <span style="color: gray;">Tidak Tersedia</span> |
-                            @endif
-
-                            {{-- Form non-aktifkan/hapus. Hanya tampilkan tombol non-aktifkan jika status aktif --}}
-                            @if ($doc->status_dokumen == 'Aktif')
-                                <form action="{{ route('dokumen.destroy', $doc->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Yakin non-aktifkan dokumen ini? File fisik tidak akan dihapus.');">Non-aktifkan</button>
-                                </form>
-                            @else
-                                {{-- Jika dokumen sudah non-aktif/revisi, bisa ditambahkan opsi 'Hapus Permanen' atau 'Aktifkan Kembali' --}}
-                                {{-- <span style="color: gray;">Aksi Lain</span> --}}
-                            @endif
+                            <a href="{{ asset($doc->path_file) }}" target="_blank">Lihat</a> |
+                            <a href="{{ route('dokumen.download', $doc->id) }}" target="_blank">Unduh</a> |
+                            <form action="{{ route('dokumen.delete', $doc->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('PERINGATAN! Anda akan menghapus dokumen ini secara PERMANEN. Lanjutkan?');" style="color: red;">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7">Tidak ada dokumen untuk pegawai ini.</td> {{-- UBAH COLSPAN MENJADI 7 --}}
+                        <td colspan="7">Tidak ada dokumen aktif atau revisi untuk pegawai ini.</td>
                     </tr>
                 @endforelse
             </tbody>

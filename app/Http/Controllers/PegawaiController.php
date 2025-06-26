@@ -181,17 +181,33 @@ class PegawaiController extends Controller
      * Remove the specified resource from storage.
      * Menghapus data pegawai dari database.
      */
-    public function destroy(Pegawai $pegawai)
+     public function destroy(Pegawai $pegawai)
     {
-        // Hapus foto profil jika ada
+        // 1. Hapus foto profil pegawai jika ada
         if ($pegawai->foto_profil_path) {
-            $filePath = str_replace('/storage/', 'public/', $pegawai->foto_profil_path);
-            if (Storage::exists($filePath)) {
-                Storage::delete($filePath);
+            $filePathFoto = str_replace('/storage/', 'public/', $pegawai->foto_profil_path);
+            if (Storage::exists($filePathFoto)) {
+                Storage::delete($filePathFoto);
             }
         }
-        
+ 
+        foreach ($pegawai->dokumen as $dokumen) {
+            $filePathDokumen = str_replace('/storage/', 'public/', $dokumen->path_file);
+            if (Storage::exists($filePathDokumen)) {
+                Storage::delete($filePathDokumen);
+            }
+        }
+        // Opsional: Hapus juga folder NIP pegawai di storage dokumen
+        $folderPath = 'public/dokumen_pegawai/' . $pegawai->nip;
+        if (Storage::exists($folderPath)) {
+            Storage::deleteDirectory($folderPath);
+        }
+
+
+        // 3. Hapus data pegawai dari database
+        //    Ini juga akan menghapus record dokumen_pegawai karena onDelete('cascade')
         $pegawai->delete();
+
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
     }
 }

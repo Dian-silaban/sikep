@@ -18,7 +18,7 @@
     <table border="1" style="width:100%; border-collapse: collapse;">
         <thead>
             <tr>
-                <th>Foto Profil</th> {{-- KOLOM BARU UNTUK FOTO --}}
+                <th>Foto Profil</th>  
                 <th>NIP</th>
                 <th>Nama Lengkap</th>
                 <th>Jabatan</th>
@@ -30,16 +30,15 @@
             @forelse ($pegawai as $p)
                 <tr>
                     <td>
-                        {{-- KODE BARU UNTUK MENAMPILKAN FOTO --}}
+                     
                         @if ($p->foto_profil_path)
                             <img src="{{ asset($p->foto_profil_path) }}" alt="Foto Profil {{ $p->nama_lengkap }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
-                        @else
-                            {{-- Placeholder jika tidak ada foto profil --}}
+                        @else 
                             <img src="{{ asset('images/default_profile.png') }}" alt="Foto Profil Default" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
-                            {{-- Anda perlu membuat folder public/images/ dan menaruh default_profile.png di sana --}}
+                            
                         @endif
                     </td>
-                    {{-- AKHIR KODE BARU --}}
+                   
                     <td>{{ $p->nip }}</td>
                     <td>{{ $p->nama_lengkap }}</td>
                     <td>{{ $p->jabatan ?? '-' }}</td>
@@ -56,7 +55,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6">Tidak ada data pegawai.</td> {{-- Kolom span bertambah jadi 6 --}}
+                    <td colspan="6">Tidak ada data pegawai.</td> 
                 </tr>
             @endforelse
         </tbody>
