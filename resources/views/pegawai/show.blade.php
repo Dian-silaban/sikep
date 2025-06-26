@@ -19,9 +19,7 @@
         <p><strong>Email:</strong> {{ $pegawai->email ?? '-' }}</p>
         <p><strong>Nomor Telepon:</strong> {{ $pegawai->nomor_telepon ?? '-' }}</p>
         <p><strong>Jabatan:</strong> {{ $pegawai->jabatan ?? '-' }}</p>
-        {{-- PERUBAHAN DI SINI --}}
         <p><strong>Unit Kerja:</strong> {{ $pegawai->unit_kerja->nama_unit ?? '-' }}</p>
-        {{-- AKHIR PERUBAHAN --}}
         <p><strong>Status Pegawai:</strong> {{ $pegawai->status_pegawai ?? '-' }}</p>
         <p><strong>Tanggal Bergabung:</strong> {{ $pegawai->tanggal_bergabung ? \Carbon\Carbon::parse($pegawai->tanggal_bergabung)->format('d-m-Y') : '-' }}</p>
 
@@ -56,8 +54,7 @@
         </p>
     </form>
 
-   
-{{-- Daftar Dokumen Aktif --}}
+    
  <div style="border: 1px solid #ccc; padding: 15px; margin-top: 20px;">
         <h3>Daftar Semua Dokumen Pegawai (Termasuk Revisi/Non-Aktif)</h3>
 
@@ -68,7 +65,7 @@
                     <th>Nama File Asli</th>
                     <th>Versi</th>
                     <th>Keterangan</th>
-                    <th>Status</th> {{-- TAMBAH KOLOM INI --}}
+                    <th>Status</th>  
                     <th>Tgl. Unggah</th>
                     <th>Aksi</th>
                 </tr>

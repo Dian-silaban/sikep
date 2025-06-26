@@ -44,7 +44,7 @@
             <label for="jabatan">Jabatan:</label><br>
             <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan', $pegawai->jabatan) }}">
         </p>
-        {{-- PERUBAHAN DI SINI --}}
+       
         <p>
             <label for="unit_kerja_id">Unit Kerja:</label><br>
             <select name="unit_kerja_id" id="unit_kerja_id">
@@ -56,7 +56,7 @@
                 @endforeach
             </select>
         </p>
-        {{-- AKHIR PERUBAHAN --}}
+        
         <p>
             <label for="status_pegawai">Status Pegawai:</label><br>
             <select name="status_pegawai" id="status_pegawai">

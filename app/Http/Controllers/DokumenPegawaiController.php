@@ -47,21 +47,19 @@ class DokumenPegawaiController extends Controller
 
         $jenisDokumen = JenisDokumen::find($request->jenis_dokumen_id);
 
-        // LOGIKA VERSIONING DOKUMEN:
-        // 1. Temukan versi dokumen tertinggi yang pernah ada untuk jenis dokumen ini pada pegawai ini.
+         
         $latestVersionDocForType = DokumenPegawai::where('pegawai_id', $pegawai->id)
                                                 ->where('jenis_dokumen_id', $jenisDokumen->id)
                                                 ->orderBy('versi_dokumen', 'desc') // Urutkan dari versi tertinggi
                                                 ->first(); // Ambil yang paling atas (tertinggi)
 
-        $newVersion = 1; // Default jika belum ada dokumen sama sekali
+        $newVersion = 1;  
         if ($latestVersionDocForType) {
-            // Jika sudah ada dokumen sebelumnya, versi baru adalah versi tertinggi + 1
+            
             $newVersion = $latestVersionDocForType->versi_dokumen + 1;
         }
 
-        // 2. Tandai dokumen yang saat ini AKTIF dengan jenis yang sama menjadi 'Revisi'.
-        // (Ini harus dilakukan SETELAH menemukan newVersion untuk menghindari konflik jika latestVersionDocForType adalah dokumen yang baru saja kita non-aktifkan)
+        
         $currentActiveDoc = DokumenPegawai::where('pegawai_id', $pegawai->id)
                                         ->where('jenis_dokumen_id', $jenisDokumen->id)
                                         ->where('status_dokumen', 'Aktif')

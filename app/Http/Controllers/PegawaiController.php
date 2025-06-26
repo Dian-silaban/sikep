@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
 use App\Models\JenisDokumen;
-use App\Models\UnitKerja; // Penting: Tambahkan ini untuk Opsi A
+use App\Models\UnitKerja;  
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,8 +17,7 @@ class PegawaiController extends Controller
      */
     public function index(Request $request)
     {
-        // Memulai query untuk model Pegawai dengan eager loading relasi unit_kerja
-        // Eager loading (with('unit_kerja')) akan mencegah N+1 query problem
+        
         $query = Pegawai::with('unit_kerja')->orderBy('nama_lengkap');
 
         // Logic Pencarian
@@ -49,7 +48,7 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        // Ambil semua data unit kerja untuk dropdown (Opsi A)
+        
         $unit_kerja = UnitKerja::orderBy('nama_unit')->get();
         return view('pegawai.create', compact('unit_kerja'));
     }
@@ -96,7 +95,7 @@ class PegawaiController extends Controller
      */
     public function show(Pegawai $pegawai)
     {
-        // PENTING: Menambahkan filter whereNotIn untuk status_dokumen = 'Dihapus'
+         
         $all_dokumen = $pegawai->dokumen()
                                ->whereNotIn('status_dokumen', ['Dihapus']) // Hanya tampilkan Aktif dan Revisi
                                ->orderBy('jenis_dokumen_id')
@@ -147,7 +146,7 @@ class PegawaiController extends Controller
         $data['nip'] = strtoupper($data['nip']);
 
         if ($request->hasFile('foto_profil')) {
-            // Hapus foto lama jika ada dan bukan default image
+             
             if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'default_profile.png')) { // Sesuaikan nama default image jika berbeda
                 $oldPath = str_replace('/storage/', 'public/', $pegawai->foto_profil_path);
                 if (Storage::exists($oldPath)) {
@@ -161,8 +160,7 @@ class PegawaiController extends Controller
             $path = $file->storeAs('public/foto_profil', $namaFileTersimpan);
             $data['foto_profil_path'] = Storage::url($path);
         } else {
-            // Jika tidak ada file baru dan ada permintaan untuk menghapus foto lama
-            // (misal, ada checkbox di view untuk menghapus foto)
+             
             if ($request->input('hapus_foto_profil') == '1') {
                  if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'default_profile.png')) {
                     $oldPath = str_replace('/storage/', 'public/', $pegawai->foto_profil_path);
@@ -170,7 +168,7 @@ class PegawaiController extends Controller
                         Storage::delete($oldPath);
                     }
                 }
-                $data['foto_profil_path'] = null; // Set path menjadi null
+                $data['foto_profil_path'] = null;  
             }
         }
 
@@ -192,7 +190,7 @@ class PegawaiController extends Controller
                 Storage::delete($filePath);
             }
         }
-        // Dokumen terkait pegawai akan otomatis terhapus karena onDelete('cascade') di migrasi dokumen_pegawai
+        
         $pegawai->delete();
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
     }
