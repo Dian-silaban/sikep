@@ -8,6 +8,7 @@ use App\Models\UnitKerja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
 
 class PegawaiController extends Controller
 {
@@ -57,18 +58,18 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nip' => 'required|unique:pegawai|string|max:255',
-            'nama_lengkap' => 'required|string|max:255',
-            'tanggal_lahir' => 'nullable|date',
-            'jenis_kelamin' => 'nullable|string|max:50',
-            'alamat' => 'nullable|string',
-            'email' => 'nullable|unique:pegawai|email|max:255',
-            'nomor_telepon' => 'nullable|string|max:50',
-            'jabatan' => 'nullable|string|max:255',
-            'unit_kerja_id' => 'nullable|exists:unit_kerja,id', // Validasi untuk Opsi A
-            'status_pegawai' => 'nullable|string|max:50',
-            'tanggal_bergabung' => 'nullable|date',
-            'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Max 2MB
+            'nip' => 'required|unique:pegawai|string|digits:16', // DITAMBAHKAN: digits:16
+            'nama_lengkap' => 'required|string|max:255', // DIUBAH: dari nullable menjadi required
+            'tanggal_lahir' => 'required|date',           // DIUBAH: dari nullable menjadi required
+            'jenis_kelamin' => 'required|string|max:50',  // DIUBAH: dari nullable menjadi required
+            'alamat' => 'required|string',                // DIUBAH: dari nullable menjadi required
+            'email' => 'required|unique:pegawai|email|max:255', // DIUBAH: dari nullable menjadi required
+            'nomor_telepon' => 'required|string|max:50',   // DIUBAH: dari nullable menjadi required
+            'jabatan' => 'required|string|max:255',        // DIUBAH: dari nullable menjadi required
+            'unit_kerja_id' => 'required|exists:unit_kerja,id', // DIUBAH: dari nullable menjadi required
+            'status_pegawai' => 'required|string|max:50',   // DIUBAH: dari nullable menjadi required
+            'tanggal_bergabung' => 'required|date',        // DIUBAH: dari nullable menjadi required
+            'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->except('foto_profil');
@@ -125,42 +126,43 @@ class PegawaiController extends Controller
      * Memperbarui data pegawai di database.
      * Validasi disesuaikan untuk unit_kerja_id.
      */
-    public function update(Request $request, Pegawai $pegawai)
+     public function update(Request $request, Pegawai $pegawai)
     {
         $request->validate([
-            'nip' => 'required|string|max:255|unique:pegawai,nip,' . $pegawai->id,
+            // NIP: required, digits:16, unique kecuali untuk pegawai ini sendiri
+            'nip' => 'required|string|digits:16|unique:pegawai,nip,' . $pegawai->id,
             'nama_lengkap' => 'required|string|max:255',
-            'tanggal_lahir' => 'nullable|date',
-            'jenis_kelamin' => 'nullable|string|max:50',
-            'alamat' => 'nullable|string',
-            'email' => 'nullable|email|max:255|unique:pegawai,email,' . $pegawai->id,
-            'nomor_telepon' => 'nullable|string|max:50',
-            'jabatan' => 'nullable|string|max:255',
-            'unit_kerja_id' => 'nullable|exists:unit_kerja,id',
-            'status_pegawai' => 'nullable|string|max:50',
-            'tanggal_bergabung' => 'nullable|date',
-            'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|string|max:50',
+            'alamat' => 'required|string',
+            // Email: required, unique kecuali untuk pegawai ini sendiri
+            'email' => 'required|email|max:255|unique:pegawai,email,' . $pegawai->id,
+            'nomor_telepon' => 'required|string|max:50',
+            'jabatan' => 'required|string|max:255',
+            'unit_kerja_id' => 'required|exists:unit_kerja,id',
+            'status_pegawai' => 'required|string|max:50',
+            'tanggal_bergabung' => 'required|date',
+            'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Ini tetap nullable/opsional
+            // 'hapus_foto_profil' tidak perlu divalidasi, hanya checkbox boolean
         ]);
 
-        $data = $request->except('foto_profil');
+      $data = $request->except('foto_profil', '_redirect_to', 'hapus_foto_profil'); // Pastikan 'hapus_foto_profil' juga dikecualikan
         $data['nip'] = strtoupper($data['nip']);
 
         if ($request->hasFile('foto_profil')) {
-             
-            if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'default_profile.png')) { // Sesuaikan nama default image jika berbeda
+            if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'default_profile.png')) {
                 $oldPath = str_replace('/storage/', 'public/', $pegawai->foto_profil_path);
                 if (Storage::exists($oldPath)) {
                     Storage::delete($oldPath);
                 }
             }
-
             $file = $request->file('foto_profil');
             $ekstensi = $file->getClientOriginalExtension();
             $namaFileTersimpan = $data['nip'] . '_foto_profil_' . Str::uuid() . '.' . $ekstensi;
             $path = $file->storeAs('public/foto_profil', $namaFileTersimpan);
             $data['foto_profil_path'] = Storage::url($path);
         } else {
-             
+            // Logika penghapusan foto profil
             if ($request->input('hapus_foto_profil') == '1') {
                  if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'default_profile.png')) {
                     $oldPath = str_replace('/storage/', 'public/', $pegawai->foto_profil_path);
@@ -168,11 +170,20 @@ class PegawaiController extends Controller
                         Storage::delete($oldPath);
                     }
                 }
-                $data['foto_profil_path'] = null;  
+                $data['foto_profil_path'] = null;
+            }
+            // Jika tidak ada foto baru dan tidak diminta hapus, biarkan foto_profil_path tetap seperti sebelumnya
+            // Ini penting jika 'foto_profil_path' tidak masuk ke $data dari $request->except() jika tidak ada file baru
+            else if (!$request->hasFile('foto_profil') && !isset($data['foto_profil_path'])) {
+                $data['foto_profil_path'] = $pegawai->foto_profil_path;
             }
         }
 
         $pegawai->update($data);
+
+        if ($request->has('_redirect_to') && URL::isValidUrl($request->_redirect_to)) {
+            return redirect($request->_redirect_to)->with('success', 'Data pegawai berhasil diperbarui.');
+        }
 
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil diperbarui.');
     }

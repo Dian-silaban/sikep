@@ -8,6 +8,9 @@
     <form method="POST" action="{{ route('pegawai.update', $pegawai->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+
+        <input type="hidden" name="_redirect_to" value="{{ URL::previous() }}">
+
         <p>
             <label for="nip">NIP:</label><br>
             <input type="text" name="nip" id="nip" value="{{ old('nip', $pegawai->nip) }}" required>
@@ -44,7 +47,6 @@
             <label for="jabatan">Jabatan:</label><br>
             <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan', $pegawai->jabatan) }}">
         </p>
-       
         <p>
             <label for="unit_kerja_id">Unit Kerja:</label><br>
             <select name="unit_kerja_id" id="unit_kerja_id">
@@ -56,7 +58,6 @@
                 @endforeach
             </select>
         </p>
-        
         <p>
             <label for="status_pegawai">Status Pegawai:</label><br>
             <select name="status_pegawai" id="status_pegawai">
@@ -82,7 +83,7 @@
         </p>
         <p>
             <button type="submit">Perbarui Pegawai</button>
-            <a href="{{ route('pegawai.show', $pegawai->id) }}">Batal</a>
+            <a href="{{ URL::previous() }}">Batal</a>
         </p>
     </form>
 @endsection
