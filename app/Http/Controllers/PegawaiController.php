@@ -197,15 +197,12 @@ class PegawaiController extends Controller
                 Storage::delete($filePathDokumen);
             }
         }
-        // Opsional: Hapus juga folder NIP pegawai di storage dokumen
+      
         $folderPath = 'public/dokumen_pegawai/' . $pegawai->nip;
         if (Storage::exists($folderPath)) {
             Storage::deleteDirectory($folderPath);
         }
 
-
-        // 3. Hapus data pegawai dari database
-        //    Ini juga akan menghapus record dokumen_pegawai karena onDelete('cascade')
         $pegawai->delete();
 
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
