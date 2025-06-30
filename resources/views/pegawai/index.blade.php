@@ -1,21 +1,217 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('title', 'Daftar Pegawai')
 
+
 @section('content')
-    <h2>Daftar Pegawai</h2>
-    <p><a href="{{ route('pegawai.create') }}">Tambah Pegawai Baru</a></p>
+<!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
+        crossorigin="anonymous">
+    </script>
+<style>
+    .tabel-daftar {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #878b91;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.tabel-daftar thead {
+    background-color: #363d53; /* warna header */
+}
+
+
+.tabel-daftar th,
+.tabel-daftar td {
+    border: 1px solid #e2e8f0;
+    padding: 12px 16px; /* lebih kecil dari sebelumnya */
+    text-align: center; /* isi tabel ke tengah */
+    vertical-align: middle;
+}
+
+.tabel-daftar th {
+    font-weight: bold;
+    color: #fff;
+    
+}
+
+.tabel-daftar tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.tabel-daftar img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.tabel-daftar a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+
+.tabel-daftar button {
+    background: none;
+    border: none;
+    color: #dc2626;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-tambah {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #363d53;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-tambah:hover {
+    background-color: #292e3f;
+}
+
+.form-pencarian {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.form-pencarian input[type="text"] {
+    padding: 6px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    width: 700px;
+    height: 45px;
+    font-size: 16px;
+}
+
+.form-pencarian button {
+    padding: 6px 12px;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    height: 44px;
+    width: 70px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-pencarian button:hover {
+    background-color: #059669;
+}
+
+.form-pencarian a {
+    color: #ef4444;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.form-pencarian a:hover {
+    text-decoration: underline;
+}
+
+.action-buttons {
+
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    align-items: center;
+}
+
+.action-buttons form {
+    display: inline-block;
+    margin: 0;
+}
+
+
+.btn-aksi {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: #fff !important;
+}
+
+.btn-lihat {
+    background-color: #3b82f6; /* biru */
+    color: white;
+}
+
+.btn-lihat:hover {
+    background-color: #2563eb;
+}
+
+.btn-edit {
+    background-color: #10b981; /* kuning */
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0e9266;
+}
+
+.btn-hapus {
+    background-color: #ef4444 !important;/* merah */
+    color: white;
+    
+}
+
+.btn-hapus:hover {
+    background-color: #b41f1f !important;
+}
+
+.header-pegawai {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-pegawai h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+}
+
+
+    </style>
+    <div class="header-pegawai">
+        <h2>Daftar Pegawai</h2>
+        <p><a href="{{ route('pegawai.create') }}" class="btn-tambah"> + Tambah Pegawai Baru</a></p>
+    </div>
 
     {{-- Form Pencarian --}}
-    <form method="GET" action="{{ route('pegawai.index') }}" style="margin-bottom: 20px;">
-        <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..." value="{{ $searchTerm ?? '' }}" style="width: 300px; padding: 5px;">
+    <form class="form-pencarian" method="GET" action="{{ route('pegawai.index') }}" >
+        <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..." value="{{ $searchTerm ?? '' }}" >
         <button type="submit">Cari</button>
         @if ($searchTerm ?? '')
-            <a href="{{ route('pegawai.index') }}" style="margin-left: 10px;">Reset Pencarian</a>
+            <a href="{{ route('pegawai.index') }}" >Reset Pencarian</a>
         @endif
     </form>
 
-    <table border="1" style="width:100%; border-collapse: collapse;">
+    <table class="tabel-daftar" border="1" style="width:100%; border-collapse: collapse;">
         <thead>
             <tr>
                 <th>Foto Profil</th>  
@@ -43,14 +239,18 @@
                     <td>{{ $p->nama_lengkap }}</td>
                     <td>{{ $p->jabatan ?? '-' }}</td>
                     <td>{{ $p->unit_kerja->nama_unit ?? '-' }}</td>
-                    <td>
-                        <a href="{{ route('pegawai.show', $p->id) }}">Lihat</a> |
-                        <a href="{{ route('pegawai.edit', $p->id) }}">Edit</a> |
-                        <form action="{{ route('pegawai.destroy', $p->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Yakin hapus?');">Hapus</button>
-                        </form>
+                    <td class="action-buttons">
+                        <a href="{{ route('pegawai.show', $p->id) }}" class="btn-aksi btn-lihat">Lihat</a>
+                        <a href="{{ route('pegawai.edit', $p->id) }}" class="btn-aksi btn-edit">Edit</a>
+                        <!-- Tombol Hapus pakai modal -->
+    <button type="button"
+        class="btn-aksi btn-hapus"
+        data-bs-toggle="modal"
+        data-bs-target="#confirmDeleteModal"
+        data-nama="{{ $p->nama_lengkap }}"
+        data-action="{{ route('pegawai.destroy', $p->id) }}">
+        Hapus
+    </button>
                     </td>
                 </tr>
             @empty
@@ -64,4 +264,51 @@
     <div>
         {{ $pegawai->links() }}
     </div>
+
+       <!-- Modal Konfirmasi Hapus -->
+<div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="POST" id="formDelete">
+        @csrf
+        @method('DELETE')
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteLabel">Konfirmasi Hapus</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <div class="modal-body">
+          <p>Yakin ingin menghapus <strong id="namaPegawai"></strong>?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-danger">Hapus</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 @endsection
+
+    @section('scripts')
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+    const modalElement = document.getElementById('confirmDeleteModal');
+    const formDelete = document.getElementById('formDelete');
+    const namaPegawaiSpan = document.getElementById('namaPegawai');
+
+    modalElement.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const nama = button.getAttribute('data-nama');
+        const action = button.getAttribute('data-action');
+
+        namaPegawaiSpan.textContent = nama;
+        formDelete.setAttribute('action', action);
+    });
+});
+</script>
+@endsection
+
+
