@@ -411,14 +411,12 @@ button[onclick] {
                         <td class="action-buttons">
                             <a href="{{ asset($doc->path_file) }}" target="_blank" class="btn-aksi btn-lihat">Lihat</a>
                             <a href="{{ route('dokumen.download', $doc->id) }}" target="_blank" class="btn-aksi btn-unduh">Unduh</a>
-                            {{-- <form action="{{ route('dokumen.delete', $doc->id) }}" method="POST" onsubmit="return confirm('PERINGATAN! Anda akan menghapus dokumen ini secara PERMANEN. Lanjutkan?');">
+                            <form action="{{ route('dokumen.delete', $doc->id) }}" method="POST" onsubmit="return confirm('PERINGATAN! Anda akan menghapus dokumen ini secara PERMANEN. Lanjutkan?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn-aksi btn-hapus">Hapus</button>
-                            </form> --}}
-                            <form onsubmit="event.preventDefault(); tampilkanModalHapus('{{ route('dokumen.delete', $doc->id) }}');">
-    <button type="submit" class="btn-aksi btn-hapus">Hapus</button>
-</form>
+                            </form>
+                            
 
                         </td>
                     </tr>
@@ -433,39 +431,7 @@ button[onclick] {
 </div>
 
 
-<!-- Modal Konfirmasi Hapus -->
-<div class="modal fade" id="modalKonfirmasiHapus" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="modalHapusLabel">Konfirmasi Penghapusan</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Tutup"></button>
-      </div>
-      <div class="modal-body">
-        Apakah Anda yakin ingin <strong>menghapus dokumen ini secara permanen</strong>?
-      </div>
-      <div class="modal-footer">
-        <form id="formHapusDokumen" method="POST">
-            @csrf
-            @method('DELETE')
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-            <button type="submit" class="btn btn-danger">Ya, Hapus</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 
-@push('scripts')
-<script>
-    function tampilkanModalHapus(actionUrl) {
-        const form = document.getElementById('formHapusDokumen');
-        form.action = actionUrl;
-        const modal = new bootstrap.Modal(document.getElementById('modalKonfirmasiHapus'));
-        modal.show();
-    }
-</script>
-@endpush
 
 
 @endsection

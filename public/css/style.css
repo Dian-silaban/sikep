@@ -1,0 +1,397 @@
+    
+    * {
+        font-family: 'Poppins';
+    }
+    .navbar-brand{
+        color: #363d53;
+    }
+
+    .navbar{
+        background-color: #fff;
+    }
+    
+    .btn-back {
+    background-color: #363d53 !important;
+    color: #fff !important;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+    padding: 10px;
+}
+
+.btn-back:hover {
+    background-color: #2b2f3d;
+    color: #fff !important;
+}
+
+span{
+    padding: 10px;
+}
+
+    /* Container form */
+.container-detail {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    max-width: 700px;
+    margin: 0 auto 30px;
+}
+
+/* Judul */
+.container-detail h2,
+h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #1f2937;
+    text-align: center;
+}
+
+/* Label dan input */
+form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="date"],
+form select,
+form textarea,
+form input[type="file"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    background-color: #fff;
+}
+
+/* Tombol Submit dan Batal */
+form button[type="submit"],
+form a.btn-custom {
+    padding: 10px 16px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+form a.btn-custom {
+    background-color: #6b7280;
+    margin-left: 10px;
+}
+
+form button[type="submit"]:hover {
+    background-color: #1e40af;
+}
+
+form a.btn-custom:hover {
+    background-color: #4b5563;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .container-detail {
+        padding: 20px;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        font-size: 13px;
+    }
+
+    form button,
+    form a.btn-custom {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+}
+
+.form-container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-container h2 {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    form label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 6px;
+        margin-top: 16px;
+    }
+
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="date"],
+    form select,
+    form textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        box-sizing: border-box;
+    }
+
+    form textarea {
+        resize: vertical;
+    }
+
+    .form-actions {
+        margin-top: 25px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    button[type="submit"] {
+        background-color: #2563eb;
+        color: white;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #1e40af;
+    }
+
+    .btn-batal {
+        background-color: #6b7280;
+        color: white;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .btn-batal:hover {
+        background-color: #4b5563;
+    }
+
+    .foto-preview {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-top: 8px;
+    }
+
+    small {
+        display: block;
+        margin-top: 6px;
+        color: #6b7280;
+        font-size: 13px;
+    }
+
+.tabel-daftar {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #878b91;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.tabel-daftar thead {
+    background-color: #363d53; /* warna header */
+}
+
+
+.tabel-daftar th,
+.tabel-daftar td {
+    border: 1px solid #e2e8f0;
+    padding: 12px 16px; /* lebih kecil dari sebelumnya */
+    text-align: center; /* isi tabel ke tengah */
+    vertical-align: middle;
+}
+
+.tabel-daftar th {
+    font-weight: bold;
+    color: #fff;
+    
+}
+
+.tabel-daftar tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.tabel-daftar img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.tabel-daftar a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+
+.tabel-daftar button {
+    background: none;
+    border: none;
+    color: #dc2626;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-tambah {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #363d53;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-tambah:hover {
+    background-color: #292e3f;
+}
+
+.form-pencarian {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.form-pencarian input[type="text"] {
+    padding: 6px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    width: 700px;
+    height: 45px;
+    font-size: 16px;
+}
+
+.form-pencarian button {
+    padding: 6px 12px;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    height: 44px;
+    width: 70px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-pencarian button:hover {
+    background-color: #059669;
+}
+
+.form-pencarian a {
+    color: #ef4444;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.form-pencarian a:hover {
+    text-decoration: underline;
+}
+
+.action-buttons {
+
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    align-items: center;
+}
+
+.action-buttons form {
+    display: inline-block;
+    margin: 0;
+}
+
+
+.btn-aksi {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: #fff !important;
+}
+
+.btn-lihat {
+    background-color: #3b82f6; /* biru */
+    color: white;
+}
+
+.btn-lihat:hover {
+    background-color: #2563eb;
+}
+
+.btn-edit {
+    background-color: #10b981; /* kuning */
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0e9266;
+}
+
+.btn-hapus {
+    background-color: #ef4444 !important;/* merah */
+    color: white;
+    
+}
+
+.btn-hapus:hover {
+    background-color: #b41f1f !important;
+}
+
+.header-pegawai {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-pegawai h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+}
+

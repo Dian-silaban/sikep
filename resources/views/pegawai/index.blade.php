@@ -4,11 +4,7 @@
 
 
 @section('content')
-<!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
-        crossorigin="anonymous">
-    </script>
+
 <style>
     .tabel-daftar {
     width: 100%;
@@ -196,7 +192,7 @@
 }
 
 
-    </style>
+</style>
     <div class="header-pegawai">
         <h2>Daftar Pegawai</h2>
         <p><a href="{{ route('pegawai.create') }}" class="btn-tambah"> + Tambah Pegawai Baru</a></p>
@@ -242,15 +238,14 @@
                     <td class="action-buttons">
                         <a href="{{ route('pegawai.show', $p->id) }}" class="btn-aksi btn-lihat">Lihat</a>
                         <a href="{{ route('pegawai.edit', $p->id) }}" class="btn-aksi btn-edit">Edit</a>
-                        <!-- Tombol Hapus pakai modal -->
-    <button type="button"
-        class="btn-aksi btn-hapus"
-        data-bs-toggle="modal"
-        data-bs-target="#confirmDeleteModal"
-        data-nama="{{ $p->nama_lengkap }}"
-        data-action="{{ route('pegawai.destroy', $p->id) }}">
-        Hapus
-    </button>
+                        <form action="{{ route('pegawai.destroy', $p->id) }}" method="POST" style="display:inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-aksi btn-hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus pegawai {{ $p->nama_lengkap }}?');">
+                            Hapus
+                        </button>
+                    </form>
+
                     </td>
                 </tr>
             @empty
@@ -265,50 +260,8 @@
         {{ $pegawai->links() }}
     </div>
 
-       <!-- Modal Konfirmasi Hapus -->
-<div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form method="POST" id="formDelete">
-        @csrf
-        @method('DELETE')
-        <div class="modal-header">
-          <h5 class="modal-title" id="confirmDeleteLabel">Konfirmasi Hapus</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-        </div>
-        <div class="modal-body">
-          <p>Yakin ingin menghapus <strong id="namaPegawai"></strong>?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-danger">Hapus</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 
 
-@endsection
-
-    @section('scripts')
-<script>
-
-document.addEventListener('DOMContentLoaded', function () {
-    const modalElement = document.getElementById('confirmDeleteModal');
-    const formDelete = document.getElementById('formDelete');
-    const namaPegawaiSpan = document.getElementById('namaPegawai');
-
-    modalElement.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const nama = button.getAttribute('data-nama');
-        const action = button.getAttribute('data-action');
-
-        namaPegawaiSpan.textContent = nama;
-        formDelete.setAttribute('action', action);
-    });
-});
-</script>
 @endsection
 
 
