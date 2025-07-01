@@ -8,40 +8,10 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 </head>
-<style>
-    
-    * {
-        font-family: 'Poppins';
-    }
-    .navbar-brand{
-        color: #363d53;
-    }
 
-    .navbar{
-        background-color: #fff;
-    }
-    
-    .btn-back {
-    background-color: #363d53 !important;
-    color: #fff !important;
-    border-radius: 10px;
-    transition: background-color 0.3s;
-    padding: 10px;
-}
-
-.btn-back:hover {
-    background-color: #2b2f3d;
-    color: #fff !important;
-}
-
-span{
-    padding: 10px;
-}
-
-</style>
 <body class="bg-light">
 
     <!-- Navbar -->

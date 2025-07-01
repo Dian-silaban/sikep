@@ -1,5 +1,6 @@
-    
-    * {
+ 
+/* app.blade.php */
+  * {
         font-family: 'Poppins';
     }
     .navbar-brand{
@@ -27,7 +28,9 @@ span{
     padding: 10px;
 }
 
-    /* Container form */
+
+/* create.blade.php */
+     /* Container form */
 .container-detail {
     background-color: #fff;
     padding: 30px;
@@ -117,7 +120,10 @@ form a.btn-custom:hover {
     }
 }
 
-.form-container {
+
+
+/* edit.blade.php */
+ .form-container {
         background-color: #fff;
         padding: 30px;
         border-radius: 10px;
@@ -174,6 +180,7 @@ form a.btn-custom:hover {
         font-weight: 500;
         cursor: pointer;
         transition: background-color 0.2s ease-in-out;
+        margin-top: 0;
     }
 
     button[type="submit"]:hover {
@@ -189,6 +196,7 @@ form a.btn-custom:hover {
         text-decoration: none;
         display: inline-block;
         transition: background-color 0.2s ease-in-out;
+        
     }
 
     .btn-batal:hover {
@@ -210,7 +218,8 @@ form a.btn-custom:hover {
         font-size: 13px;
     }
 
-.tabel-daftar {
+/* index.blade.php */
+ .tabel-daftar {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
@@ -289,6 +298,7 @@ form a.btn-custom:hover {
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
+    margin-top: 0;
 }
 
 .form-pencarian input[type="text"] {
@@ -298,6 +308,7 @@ form a.btn-custom:hover {
     width: 700px;
     height: 45px;
     font-size: 16px;
+    margin-bottom: 0;
 }
 
 .form-pencarian button {
@@ -342,17 +353,7 @@ form a.btn-custom:hover {
 }
 
 
-.btn-aksi {
-    padding: 8px 12px;
-    font-size: 14px;
-    border-radius: 6px;
-    font-weight: 500;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-    color: #fff !important;
-}
+
 
 .btn-lihat {
     background-color: #3b82f6; /* biru */
@@ -395,3 +396,265 @@ form a.btn-custom:hover {
     margin: 0;
 }
 
+/* show.blade.php */
+.container-detail-show {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+.container-detail-show h2, h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Info Pegawai */
+.detail-info p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+.detail-info strong {
+    color: #374151;
+}
+
+/* Form */
+form label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+form select,
+form input[type="file"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 10px 18px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+form button:hover {
+    background-color: #1e40af;
+}
+
+/* Tabel Dokumen */
+.table-dokumen {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.table-dokumen th,
+.table-dokumen td {
+    border: 1px solid #e5e7eb;
+    padding: 10px 14px;
+    text-align: center;
+}
+
+.table-dokumen thead {
+    background-color: #363d53;
+    color: white;
+}
+
+.table-dokumen tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Aksi Link */
+.table-dokumen a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 5px;
+}
+
+.table-dokumen a:hover {
+    text-decoration: underline;
+}
+
+button[onclick] {
+    background-color: transparent;
+    color: red;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Foto */
+.foto-profil {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table-dokumen th, .table-dokumen td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .container-detail-show {
+        padding: 20px;
+    }
+}
+
+.detail-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 30px;
+    width: 100%;
+}
+
+.detail-column {
+    flex: 1;
+    min-width: 250px;
+}
+
+.detail-info p {
+    margin: 8px 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.detail-grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.detail-card {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.detail-card p {
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+.detail-card strong {
+    color: #111827;
+}
+
+.foto-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.grid-kotak {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.item-kotak {
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.item-kotak strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #374151;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .grid-kotak {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-custom-edit {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 10px 5px 0 0;
+    background-color: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-custom:hover {
+    background-color: #1e40af;
+}
+
+
+.action-buttons {
+
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    align-items: center;
+}
+
+.action-buttons form {
+    display: inline-block;
+    margin: 0;
+}
+
+
+.btn-aksi {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none !important;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: #fff !important;
+}
+
+.btn-unduh {
+    background-color: #10b981; /* kuning */
+    color: white;
+}
+
+.btn-unduh:hover {
+    background-color: #0e9266;
+}
