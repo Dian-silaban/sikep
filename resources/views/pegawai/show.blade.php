@@ -1,34 +1,76 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('title', 'Detail Pegawai')
 
 @section('content')
-    <h2>Detail Pegawai: {{ $pegawai->nama_lengkap }}</h2>
 
-    <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
+    <h2 style="text-align: center; font-size: 28px; font-weight: 700; margin-bottom: 25px; border-bottom: 2px solid #363d53; padding-bottom: 10px;">
+        Detail Pegawai: {{ $pegawai->nama_lengkap }}</h2>
+
+    <div class="container-detail-show">
+    <div class="foto-wrapper">
         @if ($pegawai->foto_profil_path)
-            <p><img src="{{ asset($pegawai->foto_profil_path) }}" alt="Foto Profil" style="width: 100px; height: 100px; object-fit: cover;"></p>
+            <img src="{{ asset($pegawai->foto_profil_path) }}" alt="Foto Profil" class="foto-profil">
         @else
             <p>Tidak ada foto profil.</p>
         @endif
-        <p><strong>NIP:</strong> {{ $pegawai->nip }}</p>
-        <p><strong>Nama Lengkap:</strong> {{ $pegawai->nama_lengkap }}</p>
-        <p><strong>Tanggal Lahir:</strong> {{ $pegawai->tanggal_lahir ? \Carbon\Carbon::parse($pegawai->tanggal_lahir)->format('d-m-Y') : '-' }}</p>
-        <p><strong>Jenis Kelamin:</strong> {{ $pegawai->jenis_kelamin ?? '-' }}</p>
-        <p><strong>Alamat:</strong> {{ $pegawai->alamat ?? '-' }}</p>
-        <p><strong>Email:</strong> {{ $pegawai->email ?? '-' }}</p>
-        <p><strong>Nomor Telepon:</strong> {{ $pegawai->nomor_telepon ?? '-' }}</p>
-        <p><strong>Jabatan:</strong> {{ $pegawai->jabatan ?? '-' }}</p>
-        <p><strong>Unit Kerja:</strong> {{ $pegawai->unit_kerja->nama_unit ?? '-' }}</p>
-        <p><strong>Status Pegawai:</strong> {{ $pegawai->status_pegawai ?? '-' }}</p>
-        <p><strong>Tanggal Bergabung:</strong> {{ $pegawai->tanggal_bergabung ? \Carbon\Carbon::parse($pegawai->tanggal_bergabung)->format('d-m-Y') : '-' }}</p>
-
-        <p>
-            <a href="{{ route('pegawai.edit', $pegawai->id) }}">Edit Data Pegawai</a> |
-            <a href="{{ route('pegawai.index') }}">Kembali ke Daftar Pegawai</a>
-        </p>
     </div>
 
+    <div class="grid-kotak">
+        <div class="item-kotak">
+            <strong>NIP</strong>
+            {{ $pegawai->nip }}
+        </div>
+        <div class="item-kotak">
+            <strong>Nama Lengkap</strong>
+            {{ $pegawai->nama_lengkap }}
+        </div>
+        <div class="item-kotak">
+            <strong>Tanggal Lahir</strong>
+            {{ $pegawai->tanggal_lahir ? \Carbon\Carbon::parse($pegawai->tanggal_lahir)->format('d-m-Y') : '-' }}
+        </div>
+        <div class="item-kotak">
+            <strong>Jenis Kelamin</strong>
+            {{ $pegawai->jenis_kelamin ?? '-' }}
+        </div>
+        <div class="item-kotak">
+            <strong>Alamat</strong>
+            {{ $pegawai->alamat ?? '-' }}
+        </div>
+        <div class="item-kotak">
+            <strong>Email</strong>
+            {{ $pegawai->email ?? '-' }}
+        </div>
+        <div class="item-kotak">
+            <strong>Nomor Telepon</strong>
+            {{ $pegawai->nomor_telepon ?? '-' }}
+        </div>
+        <div class="item-kotak">
+            <strong>Jabatan</strong>
+            {{ $pegawai->jabatan ?? '-' }}
+        </div>
+        <div class="item-kotak">
+            <strong>Unit Kerja</strong>
+            {{ $pegawai->unit_kerja->nama_unit ?? '-' }}
+        </div>
+        <div class="item-kotak">
+            <strong>Status Pegawai</strong>
+            {{ $pegawai->status_pegawai ?? '-' }}
+        </div>
+        <div class="item-kotak">
+            <strong>Tanggal Bergabung</strong>
+            {{ $pegawai->tanggal_bergabung ? \Carbon\Carbon::parse($pegawai->tanggal_bergabung)->format('d-m-Y') : '-' }}
+        </div>
+    </div>
+
+    <div style="margin-top: 25px;">
+        {{-- PERUBAHAN DI SINI: Menambahkan parameter _redirect_to --}}
+        <a href="{{ route('pegawai.edit', ['pegawai' => $pegawai->id, '_redirect_to' => request()->fullUrl()]) }}" class="btn-custom-edit">Edit Data Pegawai</a>
+        <a href="{{ route('pegawai.index') }}" class="btn-custom-edit">Kembali ke Daftar Pegawai</a>
+    </div>
+</div>
+
+<div class="container-detail-show" >
     <h3>Unggah Dokumen Baru</h3>
     <form method="POST" action="{{ route('pegawai.dokumen.store', $pegawai->id) }}" enctype="multipart/form-data">
         @csrf
@@ -53,12 +95,13 @@
             <button type="submit">Unggah Dokumen</button>
         </p>
     </form>
+</div>
 
-    
- <div style="border: 1px solid #ccc; padding: 15px; margin-top: 20px;">
+
+<div class="container-detail-show" >
         <h3>Daftar Semua Dokumen Pegawai (Termasuk Revisi/Non-Aktif)</h3>
 
-        <table border="1" style="width:100%; border-collapse: collapse; margin-top: 10px;">
+        <table class="table-dokumen">
             <thead>
                 <tr>
                     <th>Jenis Dokumen</th>
@@ -81,14 +124,15 @@
                             <strong>{{ $doc->status_dokumen }}</strong>
                         </td>
                         <td>{{ $doc->tanggal_upload->format('d-m-Y H:i') }}</td>
-                        <td>
-                            <a href="{{ asset($doc->path_file) }}" target="_blank">Lihat</a> |
-                            <a href="{{ route('dokumen.download', $doc->id) }}" target="_blank">Unduh</a> |
-                            <form action="{{ route('dokumen.delete', $doc->id) }}" method="POST" style="display:inline-block;">
+                        <td class="action-buttons">
+                            <a href="{{ asset($doc->path_file) }}" target="_blank" class="btn-aksi btn-lihat">Lihat</a>
+                            <a href="{{ route('dokumen.download', $doc->id) }}" target="_blank" class="btn-aksi btn-unduh">Unduh</a>
+                            <form action="{{ route('dokumen.delete', $doc->id) }}" method="POST" onsubmit="return confirm('PERINGATAN! Anda akan menghapus dokumen ini secara PERMANEN. Lanjutkan?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" onclick="return confirm('PERINGATAN! Anda akan menghapus dokumen ini secara PERMANEN. Lanjutkan?');" style="color: red;">Delete</button>
+                                <button type="submit" class="btn-aksi btn-hapus">Hapus</button>
                             </form>
+                            
                         </td>
                     </tr>
                 @empty
@@ -100,4 +144,5 @@
         </table>
     </div>
 </div>
+
 @endsection

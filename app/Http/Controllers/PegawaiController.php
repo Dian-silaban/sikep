@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
 use App\Models\JenisDokumen;
-use App\Models\UnitKerja;  
+use App\Models\UnitKerja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -18,7 +18,6 @@ class PegawaiController extends Controller
      */
     public function index(Request $request)
     {
-        
         $query = Pegawai::with('unit_kerja')->orderBy('nama_lengkap');
 
         // Logic Pencarian
@@ -29,7 +28,6 @@ class PegawaiController extends Controller
                   ->orWhere('nip', 'like', '%' . $searchTerm . '%')
                   ->orWhere('jabatan', 'like', '%' . $searchTerm . '%');
 
-                
                 $q->orWhereHas('unit_kerja', function($q_unit) use ($searchTerm) {
                     $q_unit->where('nama_unit', 'like', '%' . $searchTerm . '%');
                 });
@@ -49,32 +47,33 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        
         $unit_kerja = UnitKerja::orderBy('nama_unit')->get();
         return view('pegawai.create', compact('unit_kerja'));
     }
 
-    
+    /**
+     * Store a newly created resource in storage.
+     * Menyimpan data pegawai baru ke database.
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'nip' => 'required|unique:pegawai|string|digits:16', // DITAMBAHKAN: digits:16
-            'nama_lengkap' => 'required|string|max:255', // DIUBAH: dari nullable menjadi required
-            'tanggal_lahir' => 'required|date',           // DIUBAH: dari nullable menjadi required
-            'jenis_kelamin' => 'required|string|max:50',  // DIUBAH: dari nullable menjadi required
-            'alamat' => 'required|string',                // DIUBAH: dari nullable menjadi required
-            'email' => 'required|unique:pegawai|email|max:255', // DIUBAH: dari nullable menjadi required
-            'nomor_telepon' => 'required|string|max:50',   // DIUBAH: dari nullable menjadi required
-            'jabatan' => 'required|string|max:255',        // DIUBAH: dari nullable menjadi required
-            'unit_kerja_id' => 'required|exists:unit_kerja,id', // DIUBAH: dari nullable menjadi required
-            'status_pegawai' => 'required|string|max:50',   // DIUBAH: dari nullable menjadi required
-            'tanggal_bergabung' => 'required|date',        // DIUBAH: dari nullable menjadi required
+            'nip' => 'required|unique:pegawai|string|digits:16',
+            'nama_lengkap' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|string|max:50',
+            'alamat' => 'required|string',
+            'email' => 'required|unique:pegawai|email|max:255',
+            'nomor_telepon' => 'required|regex:/^\d{12}$/', // Tepat 12 digit
+            'jabatan' => 'required|string|max:255',
+            'unit_kerja_id' => 'required|exists:unit_kerja,id',
+            'status_pegawai' => 'required|string|max:50',
+            'tanggal_bergabung' => 'required|date',
             'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->except('foto_profil');
-        $data['nip'] = strtoupper($data['nip']); // Pastikan NIP uppercase
-
+        $data['nip'] = strtoupper($data['nip']);  
         if ($request->hasFile('foto_profil')) {
             $file = $request->file('foto_profil');
             $ekstensi = $file->getClientOriginalExtension();
@@ -82,6 +81,13 @@ class PegawaiController extends Controller
 
             $path = $file->storeAs('public/foto_profil', $namaFileTersimpan);
             $data['foto_profil_path'] = Storage::url($path);
+        } else {
+            // Logika untuk foto profil default berdasarkan jenis kelamin
+            if ($request->input('jenis_kelamin') == 'Perempuan') {
+                $data['foto_profil_path'] = asset('img/wanita.jpg');
+            } else {
+                $data['foto_profil_path'] = asset('img/pria.jpg');
+            }
         }
 
         Pegawai::create($data);
@@ -96,7 +102,6 @@ class PegawaiController extends Controller
      */
     public function show(Pegawai $pegawai)
     {
-         
         $all_dokumen = $pegawai->dokumen()
                                ->whereNotIn('status_dokumen', ['Dihapus']) // Hanya tampilkan Aktif dan Revisi
                                ->orderBy('jenis_dokumen_id')
@@ -116,7 +121,6 @@ class PegawaiController extends Controller
      */
     public function edit(Pegawai $pegawai)
     {
-        // Ambil semua data unit kerja untuk dropdown (Opsi A)
         $unit_kerja = UnitKerja::orderBy('nama_unit')->get();
         return view('pegawai.edit', compact('pegawai', 'unit_kerja'));
     }
@@ -126,31 +130,29 @@ class PegawaiController extends Controller
      * Memperbarui data pegawai di database.
      * Validasi disesuaikan untuk unit_kerja_id.
      */
-     public function update(Request $request, Pegawai $pegawai)
+    public function update(Request $request, Pegawai $pegawai)
     {
         $request->validate([
-            // NIP: required, digits:16, unique kecuali untuk pegawai ini sendiri
             'nip' => 'required|string|digits:16|unique:pegawai,nip,' . $pegawai->id,
             'nama_lengkap' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|string|max:50',
             'alamat' => 'required|string',
-            // Email: required, unique kecuali untuk pegawai ini sendiri
             'email' => 'required|email|max:255|unique:pegawai,email,' . $pegawai->id,
-            'nomor_telepon' => 'required|string|max:50',
+            'nomor_telepon' => 'required|regex:/^\d{12}$/', // Tepat 12 digit
             'jabatan' => 'required|string|max:255',
             'unit_kerja_id' => 'required|exists:unit_kerja,id',
             'status_pegawai' => 'required|string|max:50',
             'tanggal_bergabung' => 'required|date',
-            'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Ini tetap nullable/opsional
-            // 'hapus_foto_profil' tidak perlu divalidasi, hanya checkbox boolean
+            'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-      $data = $request->except('foto_profil', '_redirect_to', 'hapus_foto_profil'); // Pastikan 'hapus_foto_profil' juga dikecualikan
+        $data = $request->except('foto_profil', '_redirect_to', 'hapus_foto_profil');
         $data['nip'] = strtoupper($data['nip']);
 
         if ($request->hasFile('foto_profil')) {
-            if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'default_profile.png')) {
+            // Hapus foto profil lama jika ada dan bukan foto default
+            if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'pria.jpg') && !Str::contains($pegawai->foto_profil_path, 'wanita.jpg')) {
                 $oldPath = str_replace('/storage/', 'public/', $pegawai->foto_profil_path);
                 if (Storage::exists($oldPath)) {
                     Storage::delete($oldPath);
@@ -162,18 +164,23 @@ class PegawaiController extends Controller
             $path = $file->storeAs('public/foto_profil', $namaFileTersimpan);
             $data['foto_profil_path'] = Storage::url($path);
         } else {
-            // Logika penghapusan foto profil
+            // Logika penghapusan foto profil atau kembali ke default
             if ($request->input('hapus_foto_profil') == '1') {
-                 if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'default_profile.png')) {
+                // Hapus foto lama jika ada dan bukan foto default
+                if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'pria.jpg') && !Str::contains($pegawai->foto_profil_path, 'wanita.jpg')) {
                     $oldPath = str_replace('/storage/', 'public/', $pegawai->foto_profil_path);
                     if (Storage::exists($oldPath)) {
                         Storage::delete($oldPath);
                     }
                 }
-                $data['foto_profil_path'] = null;
+                
+                if ($pegawai->jenis_kelamin == 'Perempuan') {  
+                    $data['foto_profil_path'] = asset('img/wanita.jpg');
+                } else {
+                    $data['foto_profil_path'] = asset('img/pria.jpg');
+                }
             }
-            // Jika tidak ada foto baru dan tidak diminta hapus, biarkan foto_profil_path tetap seperti sebelumnya
-            // Ini penting jika 'foto_profil_path' tidak masuk ke $data dari $request->except() jika tidak ada file baru
+            
             else if (!$request->hasFile('foto_profil') && !isset($data['foto_profil_path'])) {
                 $data['foto_profil_path'] = $pegawai->foto_profil_path;
             }
@@ -192,28 +199,31 @@ class PegawaiController extends Controller
      * Remove the specified resource from storage.
      * Menghapus data pegawai dari database.
      */
-     public function destroy(Pegawai $pegawai)
+    public function destroy(Pegawai $pegawai)
     {
-        // 1. Hapus foto profil pegawai jika ada
-        if ($pegawai->foto_profil_path) {
+        // 1. Hapus foto profil pegawai jika ada dan BUKAN foto default
+        if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'pria.jpg') && !Str::contains($pegawai->foto_profil_path, 'wanita.jpg')) {
             $filePathFoto = str_replace('/storage/', 'public/', $pegawai->foto_profil_path);
             if (Storage::exists($filePathFoto)) {
                 Storage::delete($filePathFoto);
             }
         }
- 
+
+        // 2. Hapus semua file dokumen terkait pegawai
         foreach ($pegawai->dokumen as $dokumen) {
             $filePathDokumen = str_replace('/storage/', 'public/', $dokumen->path_file);
             if (Storage::exists($filePathDokumen)) {
                 Storage::delete($filePathDokumen);
             }
         }
-      
+
+        // 3. Hapus folder dokumen pegawai jika ada
         $folderPath = 'public/dokumen_pegawai/' . $pegawai->nip;
         if (Storage::exists($folderPath)) {
             Storage::deleteDirectory($folderPath);
         }
 
+        // 4. Hapus data pegawai dari database
         $pegawai->delete();
 
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');

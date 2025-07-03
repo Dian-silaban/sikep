@@ -1,21 +1,26 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('title', 'Daftar Pegawai')
 
+
 @section('content')
-    <h2>Daftar Pegawai</h2>
-    <p><a href="{{ route('pegawai.create') }}">Tambah Pegawai Baru</a></p>
+
+
+    <div class="header-pegawai">
+        <h2>Daftar Pegawai</h2>
+        <p><a href="{{ route('pegawai.create') }}" class="btn-tambah"> + Tambah Pegawai Baru</a></p>
+    </div>
 
     {{-- Form Pencarian --}}
-    <form method="GET" action="{{ route('pegawai.index') }}" style="margin-bottom: 20px;">
-        <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..." value="{{ $searchTerm ?? '' }}" style="width: 300px; padding: 5px;">
+    <form class="form-pencarian" method="GET" action="{{ route('pegawai.index') }}" >
+        <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..." value="{{ $searchTerm ?? '' }}" >
         <button type="submit">Cari</button>
         @if ($searchTerm ?? '')
-            <a href="{{ route('pegawai.index') }}" style="margin-left: 10px;">Reset Pencarian</a>
+            <a href="{{ route('pegawai.index') }}" >Reset Pencarian</a>
         @endif
     </form>
 
-    <table border="1" style="width:100%; border-collapse: collapse;">
+    <table class="tabel-daftar" border="1" style="width:100%; border-collapse: collapse;">
         <thead>
             <tr>
                 <th>Foto Profil</th>  
@@ -43,14 +48,17 @@
                     <td>{{ $p->nama_lengkap }}</td>
                     <td>{{ $p->jabatan ?? '-' }}</td>
                     <td>{{ $p->unit_kerja->nama_unit ?? '-' }}</td>
-                    <td>
-                        <a href="{{ route('pegawai.show', $p->id) }}">Lihat</a> |
-                        <a href="{{ route('pegawai.edit', $p->id) }}">Edit</a> |
+                    <td class="action-buttons">
+                        <a href="{{ route('pegawai.show', $p->id) }}" class="btn-aksi btn-lihat">Lihat</a>
+                        <a href="{{ route('pegawai.edit', $p->id) }}" class="btn-aksi btn-edit">Edit</a>
                         <form action="{{ route('pegawai.destroy', $p->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Yakin hapus?');">Hapus</button>
-                        </form>
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-aksi btn-hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus pegawai {{ $p->nama_lengkap }}?');">
+                            Hapus
+                        </button>
+                    </form>
+
                     </td>
                 </tr>
             @empty
@@ -65,3 +73,5 @@
         {{ $pegawai->links() }}
     </div>
 @endsection
+
+
