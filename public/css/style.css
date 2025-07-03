@@ -1,17 +1,16 @@
- 
 /* app.blade.php */
-  * {
-        font-family: 'Poppins';
-    }
-    .navbar-brand{
-        color: #363d53;
-    }
+* {
+    font-family: 'Poppins';
+}
+.navbar-brand{
+    color: #363d53;
+}
 
-    .navbar{
-        background-color: #fff;
-    }
-    
-    .btn-back {
+.navbar{
+    background-color: #fff;
+}
+
+.btn-back {
     background-color: #363d53 !important;
     color: #fff !important;
     border-radius: 10px;
@@ -30,7 +29,7 @@ span{
 
 
 /* create.blade.php */
-     /* Container form */
+/* Container form */
 .container-detail {
     background-color: #fff;
     padding: 30px;
@@ -123,142 +122,155 @@ form a.btn-custom:hover {
 
 
 /* edit.blade.php */
- .form-container {
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        max-width: 800px;
-        margin: 0 auto;
-    }
+.form-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    max-width: 800px;
+    margin: 0 auto;
+}
 
-    .form-container h2 {
-        font-size: 26px;
-        font-weight: 700;
-        margin-bottom: 25px;
-        text-align: center;
-    }
+.form-container h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: center;
+}
 
-    form label {
-        font-weight: 600;
-        display: block;
-        margin-bottom: 6px;
-        margin-top: 16px;
-    }
+form label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+    margin-top: 16px;
+}
 
-    form input[type="text"],
-    form input[type="email"],
-    form input[type="date"],
-    form select,
-    form textarea {
-        width: 100%;
-        padding: 10px;
-        font-size: 14px;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        box-sizing: border-box;
-    }
+form input[type="text"],
+form input[type="email"],
+form input[type="date"],
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
 
-    form textarea {
-        resize: vertical;
-    }
+form textarea {
+    resize: vertical;
+}
 
-    .form-actions {
-        margin-top: 25px;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
+.form-actions {
+    margin-top: 25px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
 
-    button[type="submit"] {
-        background-color: #2563eb;
-        color: white;
-        padding: 10px 18px;
-        border: none;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background-color 0.2s ease-in-out;
-        margin-top: 0;
-    }
+button[type="submit"] {
+    background-color: #2563eb;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    margin-top: 0;
+}
 
-    button[type="submit"]:hover {
-        background-color: #1e40af;
-    }
+button[type="submit"]:hover {
+    background-color: #1e40af;
+}
 
-    .btn-batal {
-        background-color: #6b7280;
-        color: white;
-        padding: 10px 16px;
-        border-radius: 6px;
-        font-size: 14px;
-        text-decoration: none;
-        display: inline-block;
-        transition: background-color 0.2s ease-in-out;
-        
-    }
+.btn-batal {
+    background-color: #6b7280;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.2s ease-in-out;
+    
+}
 
-    .btn-batal:hover {
-        background-color: #4b5563;
-    }
+.btn-batal:hover {
+    background-color: #4b5563;
+}
 
-    .foto-preview {
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-        border-radius: 4px;
-        margin-top: 8px;
-    }
+.foto-preview {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-top: 8px;
+}
 
-    small {
-        display: block;
-        margin-top: 6px;
-        color: #6b7280;
-        font-size: 13px;
-    }
+small {
+    display: block;
+    margin-top: 6px;
+    color: #6b7280;
+    font-size: 13px;
+}
 
 /* index.blade.php */
- .tabel-daftar {
+/* Hapus styling tabel tradisional */
+.tabel-daftar {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate; /* Penting untuk margin antar baris */
+    border-spacing: 0 15px; /* Jarak antar baris */
     font-size: 14px;
-    background-color: #fff;
-    border: 1px solid #878b91;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    background-color: transparent; /* Latar belakang transparan */
+    border: none; /* Hapus border tabel utama */
+    box-shadow: none; /* Hapus shadow tabel utama */
 }
 
 .tabel-daftar thead {
-    background-color: #363d53; /* warna header */
+    background-color: transparent; /* Hapus latar belakang header */
 }
-
 
 .tabel-daftar th,
 .tabel-daftar td {
-    border: 1px solid #e2e8f0;
-    padding: 12px 16px; /* lebih kecil dari sebelumnya */
-    text-align: center; /* isi tabel ke tengah */
+    border: none; /* Hapus border sel */
+    padding: 12px 16px;
+    text-align: left; /* Sesuaikan alignment teks */
     vertical-align: middle;
 }
 
 .tabel-daftar th {
     font-weight: bold;
-    color: #fff;
-    
+    color: #6b7280; /* Warna teks header lebih soft */
+    padding-bottom: 5px; /* Jarak antar header dan baris pertama */
+    padding-top: 0; /* Hapus padding atas */
+    text-transform: uppercase; /* Huruf kapital untuk header */
+    font-size: 12px;
+}
+
+/* Styling untuk setiap baris (kartu) */
+.tabel-daftar tbody tr {
+    background-color: #fff;
+    border-radius: 10px; /* Sudut membulat */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Bayangan lembut */
+    transition: all 0.2s ease-in-out;
+    display: table-row; /* Pastikan tetap sebagai baris tabel */
 }
 
 .tabel-daftar tbody tr:hover {
-    background-color: #f9fafb;
+    transform: translateY(-2px); /* Efek sedikit naik saat hover */
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12); /* Bayangan lebih kuat saat hover */
 }
 
+/* Styling untuk gambar profil di tabel */
 .tabel-daftar img {
     width: 50px;
     height: 50px;
     object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #ddd;
+    border-radius: 50%; /* Membuat gambar bulat */
+    border: 2px solid #e2e8f0; /* Border tipis di sekitar gambar */
 }
 
 .tabel-daftar a {
@@ -266,7 +278,6 @@ form a.btn-custom:hover {
     text-decoration: none;
     font-weight: 500;
 }
-
 
 .tabel-daftar button {
     background: none;
@@ -340,9 +351,9 @@ form a.btn-custom:hover {
 }
 
 .action-buttons {
-
+    display: flex;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     white-space: nowrap;
     align-items: center;
 }
@@ -352,8 +363,43 @@ form a.btn-custom:hover {
     margin: 0;
 }
 
+/* Styling untuk badge status (misal: Aktif, Non-aktif) */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 9999px; /* Sangat bulat */
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.aktif {
+    background-color: #d1fae5; /* green-100 */
+    color: #065f46; /* green-800 */
+}
+
+.status-badge.non-aktif {
+    background-color: #fee2e2; /* red-100 */
+    color: #991b1b; /* red-800 */
+}
+
+.status-badge.pensiun {
+    background-color: #e0e7ff; /* indigo-100 */
+    color: #3730a3; /* indigo-800 */
+}
 
 
+.btn-aksi {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none !important;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: #fff !important;
+}
 
 .btn-lihat {
     background-color: #3b82f6; /* biru */
@@ -609,7 +655,7 @@ button[onclick] {
 .btn-custom-edit {
     display: inline-block;
     padding: 8px 16px;
-    margin: 10px 5px 0 0;
+    margin: 10px 5px;
     background-color: #2563eb;
     color: white;
     text-decoration: none;
@@ -619,13 +665,13 @@ button[onclick] {
     transition: background-color 0.2s ease-in-out;
 }
 
-.btn-custom:hover {
+.btn-custom-edit:hover {
     background-color: #1e40af;
 }
 
 
 .action-buttons {
-
+    display: flex;
     justify-content: center;
     gap: 6px;
     white-space: nowrap;
@@ -650,11 +696,1602 @@ button[onclick] {
     color: #fff !important;
 }
 
-.btn-unduh {
+.btn-lihat {
+    background-color: #3b82f6; /* biru */
+    color: white;
+}
+
+.btn-lihat:hover {
+    background-color: #2563eb;
+}
+
+.btn-edit {
     background-color: #10b981; /* kuning */
     color: white;
 }
 
-.btn-unduh:hover {
+.btn-edit:hover {
     background-color: #0e9266;
+}
+
+.btn-hapus {
+    background-color: #ef4444 !important;/* merah */
+    color: white;
+    
+}
+
+.btn-hapus:hover {
+    background-color: #b41f1f !important;
+}
+
+.header-pegawai {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-pegawai h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* show.blade.php */
+.container-detail-show {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+.container-detail-show h2, h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Info Pegawai */
+.detail-info p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+.detail-info strong {
+    color: #374151;
+}
+
+/* Form */
+form label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+form select,
+form input[type="file"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 10px 18px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+form button:hover {
+    background-color: #1e40af;
+}
+
+/* Tabel Dokumen */
+.table-dokumen {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.table-dokumen th,
+.table-dokumen td {
+    border: 1px solid #e5e7eb;
+    padding: 10px 14px;
+    text-align: center;
+}
+
+.table-dokumen thead {
+    background-color: #363d53;
+    color: white;
+}
+
+.table-dokumen tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Aksi Link */
+.table-dokumen a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 5px;
+}
+
+.table-dokumen a:hover {
+    text-decoration: underline;
+}
+
+button[onclick] {
+    background-color: transparent;
+    color: red;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Foto */
+.foto-profil {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table-dokumen th, .table-dokumen td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .container-detail-show {
+        padding: 20px;
+    }
+}
+
+.detail-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 30px;
+    width: 100%;
+}
+
+.detail-column {
+    flex: 1;
+    min-width: 250px;
+}
+
+.detail-info p {
+    margin: 8px 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.detail-grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.detail-card {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.detail-card p {
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+.detail-card strong {
+    color: #111827;
+}
+
+.foto-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.grid-kotak {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.item-kotak {
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.item-kotak strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #374151;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .grid-kotak {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-custom-edit {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 10px 5px;
+    background-color: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-custom-edit:hover {
+    background-color: #1e40af;
+}
+
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    align-items: center;
+}
+
+.action-buttons form {
+    display: inline-block;
+    margin: 0;
+}
+
+
+.btn-aksi {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none !important;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: #fff !important;
+}
+
+.btn-lihat {
+    background-color: #3b82f6; /* biru */
+    color: white;
+}
+
+.btn-lihat:hover {
+    background-color: #2563eb;
+}
+
+.btn-edit {
+    background-color: #10b981; /* kuning */
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0e9266;
+}
+
+.btn-hapus {
+    background-color: #ef4444 !important;/* merah */
+    color: white;
+    
+}
+
+.btn-hapus:hover {
+    background-color: #b41f1f !important;
+}
+
+.header-pegawai {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-pegawai h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* show.blade.php */
+.container-detail-show {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+.container-detail-show h2, h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Info Pegawai */
+.detail-info p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+.detail-info strong {
+    color: #374151;
+}
+
+/* Form */
+form label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+form select,
+form input[type="file"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 10px 18px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+form button:hover {
+    background-color: #1e40af;
+}
+
+/* Tabel Dokumen */
+.table-dokumen {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.table-dokumen th,
+.table-dokumen td {
+    border: 1px solid #e5e7eb;
+    padding: 10px 14px;
+    text-align: center;
+}
+
+.table-dokumen thead {
+    background-color: #363d53;
+    color: white;
+}
+
+.table-dokumen tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Aksi Link */
+.table-dokumen a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 5px;
+}
+
+.table-dokumen a:hover {
+    text-decoration: underline;
+}
+
+button[onclick] {
+    background-color: transparent;
+    color: red;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Foto */
+.foto-profil {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table-dokumen th, .table-dokumen td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .container-detail-show {
+        padding: 20px;
+    }
+}
+
+.detail-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 30px;
+    width: 100%;
+}
+
+.detail-column {
+    flex: 1;
+    min-width: 250px;
+}
+
+.detail-info p {
+    margin: 8px 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.detail-grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.detail-card {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.detail-card p {
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+.detail-card strong {
+    color: #111827;
+}
+
+.foto-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.grid-kotak {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.item-kotak {
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.item-kotak strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #374151;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .grid-kotak {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-custom-edit {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 10px 5px;
+    background-color: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-custom-edit:hover {
+    background-color: #1e40af;
+}
+
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    align-items: center;
+}
+
+.action-buttons form {
+    display: inline-block;
+    margin: 0;
+}
+
+
+.btn-aksi {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none !important;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: #fff !important;
+}
+
+.btn-lihat {
+    background-color: #3b82f6; /* biru */
+    color: white;
+}
+
+.btn-lihat:hover {
+    background-color: #2563eb;
+}
+
+.btn-edit {
+    background-color: #10b981; /* kuning */
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0e9266;
+}
+
+.btn-hapus {
+    background-color: #ef4444 !important;/* merah */
+    color: white;
+    
+}
+
+.btn-hapus:hover {
+    background-color: #b41f1f !important;
+}
+
+.header-pegawai {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-pegawai h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* show.blade.php */
+.container-detail-show {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+.container-detail-show h2, h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Info Pegawai */
+.detail-info p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+.detail-info strong {
+    color: #374151;
+}
+
+/* Form */
+form label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+form select,
+form input[type="file"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 10px 18px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+form button:hover {
+    background-color: #1e40af;
+}
+
+/* Tabel Dokumen */
+.table-dokumen {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.table-dokumen th,
+.table-dokumen td {
+    border: 1px solid #e5e7eb;
+    padding: 10px 14px;
+    text-align: center;
+}
+
+.table-dokumen thead {
+    background-color: #363d53;
+    color: white;
+}
+
+.table-dokumen tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Aksi Link */
+.table-dokumen a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 5px;
+}
+
+.table-dokumen a:hover {
+    text-decoration: underline;
+}
+
+button[onclick] {
+    background-color: transparent;
+    color: red;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Foto */
+.foto-profil {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table-dokumen th, .table-dokumen td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .container-detail-show {
+        padding: 20px;
+    }
+}
+
+.detail-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 30px;
+    width: 100%;
+}
+
+.detail-column {
+    flex: 1;
+    min-width: 250px;
+}
+
+.detail-info p {
+    margin: 8px 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.detail-grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.detail-card {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.detail-card p {
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+.detail-card strong {
+    color: #111827;
+}
+
+.foto-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.grid-kotak {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.item-kotak {
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.item-kotak strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #374151;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .grid-kotak {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-custom-edit {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 10px 5px;
+    background-color: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-custom-edit:hover {
+    background-color: #1e40af;
+}
+
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    align-items: center;
+}
+
+.action-buttons form {
+    display: inline-block;
+    margin: 0;
+}
+
+
+.btn-aksi {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none !important;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: #fff !important;
+}
+
+.btn-lihat {
+    background-color: #3b82f6; /* biru */
+    color: white;
+}
+
+.btn-lihat:hover {
+    background-color: #2563eb;
+}
+
+.btn-edit {
+    background-color: #10b981; /* kuning */
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0e9266;
+}
+
+.btn-hapus {
+    background-color: #ef4444 !important;/* merah */
+    color: white;
+    
+}
+
+.btn-hapus:hover {
+    background-color: #b41f1f !important;
+}
+
+.header-pegawai {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-pegawai h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* show.blade.php */
+.container-detail-show {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+.container-detail-show h2, h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Info Pegawai */
+.detail-info p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+.detail-info strong {
+    color: #374151;
+}
+
+/* Form */
+form label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+form select,
+form input[type="file"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 10px 18px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+form button:hover {
+    background-color: #1e40af;
+}
+
+/* Tabel Dokumen */
+.table-dokumen {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.table-dokumen th,
+.table-dokumen td {
+    border: 1px solid #e5e7eb;
+    padding: 10px 14px;
+    text-align: center;
+}
+
+.table-dokumen thead {
+    background-color: #363d53;
+    color: white;
+}
+
+.table-dokumen tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Aksi Link */
+.table-dokumen a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 5px;
+}
+
+.table-dokumen a:hover {
+    text-decoration: underline;
+}
+
+button[onclick] {
+    background-color: transparent;
+    color: red;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Foto */
+.foto-profil {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table-dokumen th, .table-dokumen td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .container-detail-show {
+        padding: 20px;
+    }
+}
+
+.detail-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 30px;
+    width: 100%;
+}
+
+.detail-column {
+    flex: 1;
+    min-width: 250px;
+}
+
+.detail-info p {
+    margin: 8px 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.detail-grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.detail-card {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.detail-card p {
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+.detail-card strong {
+    color: #111827;
+}
+
+.foto-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.grid-kotak {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.item-kotak {
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.item-kotak strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #374151;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .grid-kotak {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-custom-edit {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 10px 5px;
+    background-color: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-custom-edit:hover {
+    background-color: #1e40af;
+}
+
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    align-items: center;
+}
+
+.action-buttons form {
+    display: inline-block;
+    margin: 0;
+}
+
+
+.btn-aksi {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none !important;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: #fff !important;
+}
+
+.btn-lihat {
+    background-color: #3b82f6; /* biru */
+    color: white;
+}
+
+.btn-lihat:hover {
+    background-color: #2563eb;
+}
+
+.btn-edit {
+    background-color: #10b981; /* kuning */
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0e9266;
+}
+
+.btn-hapus {
+    background-color: #ef4444 !important;/* merah */
+    color: white;
+    
+}
+
+.btn-hapus:hover {
+    background-color: #b41f1f !important;
+}
+
+.header-pegawai {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-pegawai h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* show.blade.php */
+.container-detail-show {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+.container-detail-show h2, h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Info Pegawai */
+.detail-info p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+.detail-info strong {
+    color: #374151;
+}
+
+/* Form */
+form label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+form select,
+form input[type="file"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 10px 18px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+form button:hover {
+    background-color: #1e40af;
+}
+
+/* Tabel Dokumen */
+.table-dokumen {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.table-dokumen th,
+.table-dokumen td {
+    border: 1px solid #e5e7eb;
+    padding: 10px 14px;
+    text-align: center;
+}
+
+.table-dokumen thead {
+    background-color: #363d53;
+    color: white;
+}
+
+.table-dokumen tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Aksi Link */
+.table-dokumen a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 5px;
+}
+
+.table-dokumen a:hover {
+    text-decoration: underline;
+}
+
+button[onclick] {
+    background-color: transparent;
+    color: red;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Foto */
+.foto-profil {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table-dokumen th, .table-dokumen td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .container-detail-show {
+        padding: 20px;
+    }
+}
+
+.detail-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 30px;
+    width: 100%;
+}
+
+.detail-column {
+    flex: 1;
+    min-width: 250px;
+}
+
+.detail-info p {
+    margin: 8px 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.detail-grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.detail-card {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.detail-card p {
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+.detail-card strong {
+    color: #111827;
+}
+
+.foto-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.grid-kotak {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.item-kotak {
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.item-kotak strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #374151;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .grid-kotak {
+        grid-template-columns: 1fr;
+    }
+}
+
+.btn-custom-edit {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 10px 5px;
+    background-color: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-custom-edit:hover {
+    background-color: #1e40af;
+}
+
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    align-items: center;
+}
+
+.action-buttons form {
+    display: inline-block;
+    margin: 0;
+}
+
+
+.btn-aksi {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none !important;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: #fff !important;
+}
+
+.btn-lihat {
+    background-color: #3b82f6; /* biru */
+    color: white;
+}
+
+.btn-lihat:hover {
+    background-color: #2563eb;
+}
+
+.btn-edit {
+    background-color: #10b981; /* kuning */
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0e9266;
+}
+
+.btn-hapus {
+    background-color: #ef4444 !important;/* merah */
+    color: white;
+    
+}
+
+.btn-hapus:hover {
+    background-color: #b41f1f !important;
+}
+
+.header-pegawai {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-pegawai h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Styling untuk Paginasi */
+.pagination-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    list-style: none; /* Hapus bullet point */
+    padding: 0;
+}
+
+.pagination-links nav {
+    display: flex;
+    align-items: center;
+}
+
+.pagination-links .relative.inline-flex.items-center { /* Untuk tombol prev/next */
+    padding: 8px 12px;
+    margin: 0 4px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    color: #4b5563;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.pagination-links .relative.inline-flex.items-center:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.pagination-links .relative.inline-flex.items-center.bg-white { /* Untuk tombol aktif */
+    background-color: #2563eb; /* Warna primer */
+    border-color: #2563eb;
+    color: white;
+    font-weight: 600;
+}
+
+.pagination-links .relative.inline-flex.items-center.bg-white:hover {
+    background-color: #1e40af;
+    border-color: #1e40af;
+}
+
+.pagination-links .relative.inline-flex.items-center.pointer-events-none { /* Untuk tombol disabled */
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Styling untuk angka halaman */
+.pagination-links span.relative.inline-flex.items-center {
+    padding: 8px 12px;
+    margin: 0 4px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    color: #4b5563;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.pagination-links span.relative.inline-flex.items-center:hover:not(.bg-white) {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.pagination-links span.relative.inline-flex.items-center.bg-indigo-600 { /* Angka halaman aktif */
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: white;
+    font-weight: 600;
+}
+
+.pagination-links span.relative.inline-flex.items-center.bg-indigo-600:hover {
+    background-color: #1e40af;
+    border-color: #1e40af;
+}
+
+/* Styling untuk ikon SVG di paginasi */
+.pagination-links svg {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
 }
