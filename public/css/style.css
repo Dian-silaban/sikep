@@ -658,3 +658,93 @@ button[onclick] {
 .btn-unduh:hover {
     background-color: #0e9266;
 }
+
+/* Add this to your style.css */
+.btn-reset-pencarian {
+    padding: 6px 12px;
+    background-color: #f87171; /* A shade of red for reset */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    height: 44px;
+    width: auto; /* Allow width to adjust to text */
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-flex; /* To align icon and text if you add one later */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    text-decoration: none; /* Remove underline from link */
+}
+
+.btn-reset-pencarian:hover {
+    background-color: #ef4444; /* Darker red on hover */
+}
+
+/* Styling untuk container statistik */
+    .stats-container {
+        display: flex;
+        justify-content: space-around;
+        gap: 20px;
+        margin-bottom: 30px;
+        flex-wrap: wrap; /* Agar responsif pada layar kecil */
+    }
+
+    /* Styling untuk setiap kartu statistik */
+    .stat-card {
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        padding: 25px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-basis: calc(25% - 15px); /* Untuk 4 kolom, kurangi gap */
+        min-width: 200px; /* Minimal lebar kartu */
+        max-width: 280px; /* Maksimal lebar kartu */
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Styling untuk ikon di dalam kartu statistik */
+    .icon-wrapper {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+    }
+
+    .icon-wrapper.total {
+        background-color: #ffe0e0; /* Background merah muda */
+    }
+
+    .icon-wrapper.active {
+        background-color: #e0ffe0; /* Background hijau muda */
+    }
+
+    .icon-wrapper.non-active {
+        background-color: #fffbe0; /* Background kuning muda */
+    }
+
+    .icon-wrapper.retired {
+        background-color: #e0f8ff; /* Background biru muda */
+    }
+
+    .stat-info .stat-label {
+        font-size: 1rem;
+        color: #6c757d;
+        margin-bottom: 5px;
+    }
+
+    .stat-info .stat-value {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #343a40;
+    }

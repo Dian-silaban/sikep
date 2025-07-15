@@ -18,6 +18,7 @@ class PegawaiController extends Controller
      */
     public function index(Request $request)
     {
+        $searchTerm = null;
         $query = Pegawai::with('unit_kerja')->orderBy('nama_lengkap');
 
         // Logic Pencarian
@@ -35,9 +36,41 @@ class PegawaiController extends Controller
         }
 
         $pegawai = $query->paginate(10); // Paginasi tetap diterapkan
+// --- START: Tambahkan perhitungan statistik pegawai di sini ---
 
-        // Kirim searchTerm kembali ke view agar input pencarian tidak kosong
-        return view('pegawai.index', compact('pegawai'))->with('searchTerm', $request->search);
+ $totalPegawai = Pegawai::count();
+
+ $pegawaiAktif = Pegawai::where('status_pegawai', 'Aktif')->count();
+
+ $pegawaiNonAktif = Pegawai::where('status_pegawai', 'Non-aktif')->count();
+
+ $pegawaiPensiun = Pegawai::where('status_pegawai', 'Pensiun')->count();
+
+// --- END: Tambahkan perhitungan statistik pegawai di sini ---
+
+
+
+// Kirim searchTerm dan variabel statistik kembali ke view
+
+return view('pegawai.index', compact(
+
+ 'pegawai',
+
+ 'searchTerm', // Pastikan ini dikirim juga
+
+ 'totalPegawai',
+
+ 'pegawaiAktif',
+
+ 'pegawaiNonAktif',
+
+ 'pegawaiPensiun'
+
+));
+
+
+
+
     }
 
     /**
