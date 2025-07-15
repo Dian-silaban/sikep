@@ -3,7 +3,6 @@
 @section('title', 'Daftar Pegawai')
 
 @section('content')
-
     <div class="stats-container">
         <div class="stat-card">
             <div class="icon-wrapper total">
@@ -158,6 +157,4 @@
 </div>
 
 @endsection
-
-
 
