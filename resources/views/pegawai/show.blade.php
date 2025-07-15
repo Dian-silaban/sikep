@@ -125,15 +125,34 @@
                         </td>
                         <td>{{ $doc->tanggal_upload->format('d-m-Y H:i') }}</td>
                         <td class="action-buttons">
-                            <a href="{{ asset($doc->path_file) }}" target="_blank" class="btn-aksi btn-lihat">Lihat</a>
-                            <a href="{{ route('dokumen.download', $doc->id) }}" target="_blank" class="btn-aksi btn-unduh">Unduh</a>
-                            <form action="{{ route('dokumen.delete', $doc->id) }}" method="POST" onsubmit="return confirm('PERINGATAN! Anda akan menghapus dokumen ini secara PERMANEN. Lanjutkan?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-aksi btn-hapus">Hapus</button>
-                            </form>
-                            
-                        </td>
+  {{-- Tombol Lihat --}}
+  <a href="{{ asset($doc->path_file) }}" target="_blank" class="btn-aksi btn-lihat" title="Lihat Dokumen">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+      <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+      <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+    </svg>
+  </a>
+
+  {{-- Tombol Unduh --}}
+  <a href="{{ route('dokumen.download', $doc->id) }}" target="_blank" class="btn-aksi btn-unduh" title="Unduh Dokumen">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.6a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5V10.4a.5.5 0 0 1 1 0v2.6a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13V10.4a.5.5 0 0 1 .5-.5z"/>
+      <path d="M7.646 10.854a.5.5 0 0 0 .708 0L11 8.207V1.5a.5.5 0 0 0-1 0v6.793L8.354 5.146a.5.5 0 1 0-.708.708L10.293 9H6.707l2.647-2.646a.5.5 0 0 0-.708-.708L5 9.793 7.646 10.854z"/>
+    </svg>
+  </a>
+
+  {{-- Tombol Hapus --}}
+  <form action="{{ route('dokumen.delete', $doc->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('PERINGATAN! Anda akan menghapus dokumen ini secara PERMANEN. Lanjutkan?');">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn-aksi btn-hapus" title="Hapus Dokumen">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+      </svg>
+    </button>
+  </form>
+</td>
+
                     </tr>
                 @empty
                     <tr>

@@ -1,4 +1,3 @@
-[media pointer="file-service://file-3nhNGt4UAZvEei7E4gr17J"]
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -30,8 +29,9 @@
         body {
             font-family: 'Inter', sans-serif;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column; /* Mengatur item dalam kolom */
+            justify-content: center; /* Pusatkan secara vertikal */
+            align-items: center; /* Pusatkan secara horizontal */
             min-height: 100vh;
             background-color: #f0f2f5; /* Warna latar belakang fallback */
             overflow: hidden; /* Penting untuk animasi latar belakang */
@@ -77,9 +77,11 @@
 
         /* Styling untuk logo di dalam login card */
         .login-logo-container {
-            margin-bottom: 25px;
+            margin-bottom: 25px; /* Jarak antara logo dan form */
             display: flex;
             justify-content: center;
+            z-index: 1; /* Pastikan logo di atas background */
+            position: relative; /* Untuk z-index bekerja */
         }
 
         .login-logo-container img {
@@ -150,21 +152,21 @@
         }
 
         .forgot-password-link { /* Menggunakan nama kelas yang konsisten */
-            color: #374151;
+            color: #363d53;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s ease;
         }
 
         .forgot-password-link:hover {
-            color: #49566a; /* Warna hover lebih terang */
+            color: #66b3ff; /* Warna hover lebih terang */
             text-decoration: underline;
         }
 
         .login-button {
             width: 100%;
             padding: 15px;
-            background-color: #374151;
+            background-color: #363d53;
             color: white;
             border: none;
             border-radius: 10px;
@@ -176,7 +178,7 @@
         }
 
         .login-button:hover {
-            background-color: #374151;
+            background-color: #292e3f;
             transform: translateY(-2px);
         }
 
@@ -238,7 +240,7 @@
         }
 
         .signup-link a {
-            color: #374151;
+            color: #007bff;
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s ease;
@@ -261,24 +263,29 @@
     <!-- Latar Belakang Gradien Bergerak -->
     <div class="animated-background"></div>
 
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-        
+    {{-- Konten utama yang akan dipusatkan --}}
+    <div class="content-wrapper">
 
         <!-- Login Card Container -->
-        <div class="w-full sm:max-w-md px-6 py-4 login-container">
+        <div class="login-container">
+
             <div class="login-logo-container">
             <a href="/">
+                <!-- Pastikan path logo Anda benar -->
+                <!-- Asumsi logo ada di public/img/LOGO_KOTA_METRO.png -->
                 <img src="{{ asset('img/LOGO_KOTA_METRO.png') }}" alt="Logo SIKAP">
             </a>
-        </div>
+            </div>
+
             <h2>Selamat Datang Kembali!</h2>
+            <p>Silakan masukkan detail akun Anda untuk masuk.</p>
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
                 <div class="input-group">
-                    <label for="email">Username</label>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Masukkan Username Anda" required autofocus autocomplete="username">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Masukkan Email Anda" required autofocus autocomplete="username">
                     @error('email')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
@@ -307,7 +314,7 @@
                 <button type="submit" class="login-button">Masuk</button>
             </form>
 
-        
+    
         </div>
     </div>
 </body>

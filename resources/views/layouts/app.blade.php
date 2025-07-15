@@ -17,7 +17,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg shadow-sm mb-5" style="display: flex">
         <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ url('/') }}"> <img src="{{ asset('img/logo.png') }}" alt="Logo" width="60" height="60" class="d-inline-block align-text-top">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ url('/') }}"> <img src="{{ asset('img/LOGO_KOTA_METRO.png') }}" alt="Logo" width="60" height="60" class="d-inline-block align-text-top">
                 <span>SIKEP BPKAD Kota Metro</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
