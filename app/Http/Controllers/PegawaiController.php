@@ -42,7 +42,7 @@ class PegawaiController extends Controller
 
  $pegawaiAktif = Pegawai::where('status_pegawai', 'Aktif')->count();
 
- $pegawaiNonAktif = Pegawai::where('status_pegawai', 'Non-aktif')->count();
+ $pegawaiNonAktif = Pegawai::where('status_pegawai', 'Non-Aktif')->count();
 
  $pegawaiPensiun = Pegawai::where('status_pegawai', 'Pensiun')->count();
 
@@ -91,7 +91,7 @@ return view('pegawai.index', compact(
     public function store(Request $request)
     {
         $request->validate([
-            'nip' => 'required|unique:pegawai|string|digits:16',
+            'nip' => 'required|unique:pegawai|string|digits:18',
             'nama_lengkap' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|string|max:50',
@@ -166,7 +166,7 @@ return view('pegawai.index', compact(
     public function update(Request $request, Pegawai $pegawai)
     {
         $request->validate([
-            'nip' => 'required|string|digits:16|unique:pegawai,nip,' . $pegawai->id,
+            'nip' => 'required|string|digits:18|unique:pegawai,nip,' . $pegawai->id,
             'nama_lengkap' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|string|max:50',

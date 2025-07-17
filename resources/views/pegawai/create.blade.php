@@ -76,11 +76,7 @@
                     <option value="Pensiun" {{ old('status_pegawai') == 'Pensiun' ? 'selected' : '' }}>Pensiun</option>
                 </select>
             </p>
-
-            <p>
-                <label for="tanggal_bergabung">Tanggal Bergabung:</label>
-                <input type="date" name="tanggal_bergabung" id="tanggal_bergabung" value="{{ old('tanggal_bergabung') }}">
-            </p>
+            
 
             <p>
                 <label for="foto_profil">Foto Profil:</label>

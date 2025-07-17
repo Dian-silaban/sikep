@@ -40,7 +40,7 @@
                 </svg>
             </div>
             <div class="stat-info">
-                <p class="stat-label">Non-aktif</p>
+                <p class="stat-label">Pindah</p>
                 <p class="stat-value">{{ $pegawaiNonAktif ?? 0 }}</p>
             </div>
         </div>
@@ -115,7 +115,7 @@
                             }
                         @endphp
                         <span class="status-badge {{ $statusClass }}">
-                            {{ $p->status_pegawai }}
+                            {{ $p->status_pegawai == 'Non-aktif' ? 'Pindah' : $p->status_pegawai }}
                         </span>
                     </td>
                     <td class="action-buttons">
