@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use App\Exports\PegawaiExport;  
+use Maatwebsite\Excel\Facades\Excel;
 
 class PegawaiController extends Controller
 {
@@ -18,58 +20,54 @@ class PegawaiController extends Controller
      */
     public function index(Request $request)
     {
-        $searchTerm = null;
-        $query = Pegawai::with('unit_kerja')->orderBy('nama_lengkap');
+    $searchTerm = $request->search;
+    $unitKerjaFilter = $request->unit_kerja;
+    $statusFilter = $request->status_pegawai;
 
-        // Logic Pencarian
-        if ($request->has('search') && $request->search != '') {
-            $searchTerm = $request->search;
-            $query->where(function($q) use ($searchTerm) {
-                $q->where('nama_lengkap', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('nip', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('jabatan', 'like', '%' . $searchTerm . '%');
+    $query = Pegawai::with('unit_kerja')->orderBy('nama_lengkap');
 
-                $q->orWhereHas('unit_kerja', function($q_unit) use ($searchTerm) {
-                    $q_unit->where('nama_unit', 'like', '%' . $searchTerm . '%');
-                });
-            });
-        }
+    // Filter pencarian
+    if ($searchTerm) {
+        $query->where(function ($q) use ($searchTerm) {
+            $q->where('nama_lengkap', 'like', '%' . $searchTerm . '%')
+              ->orWhere('nip', 'like', '%' . $searchTerm . '%')
+              ->orWhere('jabatan', 'like', '%' . $searchTerm . '%')
+              ->orWhereHas('unit_kerja', function ($q_unit) use ($searchTerm) {
+                  $q_unit->where('nama_unit', 'like', '%' . $searchTerm . '%');
+              });
+        });
+    }
 
-        $pegawai = $query->paginate(10); // Paginasi tetap diterapkan
-// --- START: Tambahkan perhitungan statistik pegawai di sini ---
+    // Filter unit kerja
+    if ($unitKerjaFilter) {
+        $query->where('unit_kerja_id', $unitKerjaFilter);
+    }
 
- $totalPegawai = Pegawai::count();
+    // Filter status pegawai
+    if ($statusFilter) {
+        $query->where('status_pegawai', $statusFilter);
+    }
 
- $pegawaiAktif = Pegawai::where('status_pegawai', 'Aktif')->count();
+    $pegawai = $query->paginate(10);
 
- $pegawaiNonAktif = Pegawai::where('status_pegawai', 'Non-aktif')->count();
+    $totalPegawai = Pegawai::count();
+    $pegawaiAktif = Pegawai::where('status_pegawai', 'Aktif')->count();
+    $pegawaiNonAktif = Pegawai::where('status_pegawai', 'Non-aktif')->count();
+    $pegawaiPensiun = Pegawai::where('status_pegawai', 'Pensiun')->count();
 
- $pegawaiPensiun = Pegawai::where('status_pegawai', 'Pensiun')->count();
+    $unitKerjaList = UnitKerja::orderBy('nama_unit')->get();
 
-// --- END: Tambahkan perhitungan statistik pegawai di sini ---
-
-
-
-// Kirim searchTerm dan variabel statistik kembali ke view
-
-return view('pegawai.index', compact(
-
- 'pegawai',
-
- 'searchTerm', // Pastikan ini dikirim juga
-
- 'totalPegawai',
-
- 'pegawaiAktif',
-
- 'pegawaiNonAktif',
-
- 'pegawaiPensiun'
-
-));
-
-
-
+    return view('pegawai.index', compact(
+        'pegawai',
+        'searchTerm',
+        'unitKerjaFilter',
+        'statusFilter',
+        'unitKerjaList',
+        'totalPegawai',
+        'pegawaiAktif',
+        'pegawaiNonAktif',
+        'pegawaiPensiun'
+    ));
 
     }
 
@@ -146,7 +144,10 @@ return view('pegawai.index', compact(
 
         return view('pegawai.show', compact('pegawai', 'all_dokumen', 'jenis_dokumen', 'unit_kerja'));
     }
-
+     public function exportExcel()
+    {
+        return Excel::download(new PegawaiExport, 'pegawai_'.date('Ymd_His').'.xlsx');
+    }
     /**
      * Show the form for editing the specified resource.
      * Menampilkan formulir untuk mengedit data pegawai.

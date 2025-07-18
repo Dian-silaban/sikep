@@ -61,7 +61,10 @@
 
     <div class="header-pegawai">
         <h2>Daftar Pegawai</h2>
-        <p><a href="{{ route('pegawai.create') }}" class="btn-tambah"> + Tambah Pegawai Baru</a></p>
+        <p>
+            <a href="{{ route('pegawai.create') }}" class="btn-tambah"> + Tambah Pegawai Baru</a>
+            <a href="{{ route(name: 'pegawai.export.excel') }}" class="btn-tambah" style="background-color: #28a745;">Export Excel</a> {{-- Tombol Ekspor --}}
+        </p>
     </div>
 
     {{-- Form Pencarian --}}
@@ -71,6 +74,33 @@
         @if ($searchTerm ?? '')
             <a href="{{ route('pegawai.index') }}" class="btn-reset-pencarian">Reset Pencarian</a>
         @endif
+    </form>
+    <form class="form-pencarian" method="GET" action="{{ route('pegawai.index') }}">
+    <!-- <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..." value="{{ $searchTerm ?? '' }}"> -->
+
+    {{-- Filter Unit Kerja --}}
+    <select name="unit_kerja">
+        <option value="">-- Semua Unit Kerja --</option>
+        @foreach($unitKerjaList as $unit)
+            <option value="{{ $unit->id }}" {{ (isset($unitKerjaFilter) && $unitKerjaFilter == $unit->id) ? 'selected' : '' }}>
+                {{ $unit->nama_unit }}
+            </option>
+        @endforeach
+    </select>
+
+    {{-- Filter Status Pegawai --}}
+    <select name="status_pegawai">
+        <option value="">-- Semua Status --</option>
+        <option value="Aktif" {{ (isset($statusFilter) && $statusFilter == 'Aktif') ? 'selected' : '' }}>Aktif</option>
+        <option value="Non-aktif" {{ (isset($statusFilter) && $statusFilter == 'Non-aktif') ? 'selected' : '' }}>Non-aktif</option>
+        <option value="Pensiun" {{ (isset($statusFilter) && $statusFilter == 'Pensiun') ? 'selected' : '' }}>Pensiun</option>
+    </select>
+
+    <button type="submit">Filter</button>
+
+    @if ($searchTerm || $unitKerjaFilter || $statusFilter)
+        <a href="{{ route('pegawai.index') }}" class="btn-reset-pencarian">Reset</a>
+    @endif
     </form>
 
     <table class="tabel-daftar">
