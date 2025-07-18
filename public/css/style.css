@@ -431,6 +431,15 @@ small {
     background-color: #b41f1f !important;
 }
 
+.btn-rename {
+    background-color: #e0a800; /* kuning */
+    color: white;
+}
+
+.btn-rename:hover {
+    background-color: #d39e00;
+}
+
 
 
 /* show.blade.php */
@@ -863,3 +872,38 @@ button[onclick] {
         font-weight: bold;
         color: #343a40;
     }
+
+/* edit-dokumen */
+.form-group {
+  margin-bottom: 1.25rem; /* jarak seragam antar elemen */
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-input-text,
+.form-select,
+.form-textarea,
+.form-input-file {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.form-textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+small.form-hint {
+  display: block;
+  margin-top: 0.25rem;
+  color: #6c757d;
+  font-size: 0.875rem;
+}

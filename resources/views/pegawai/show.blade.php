@@ -140,8 +140,18 @@
       <path d="M7.646 10.854a.5.5 0 0 0 .708 0L11 8.207V1.5a.5.5 0 0 0-1 0v6.793L8.354 5.146a.5.5 0 1 0-.708.708L10.293 9H6.707l2.647-2.646a.5.5 0 0 0-.708-.708L5 9.793 7.646 10.854z"/>
     </svg>
   </a>
-    {{-- Tombol Edit Dokumen --}}
-    <a href="{{ route('dokumen.edit', $doc->id) }}" class="btn-aksi btn-edit" title="Edit Dokumen"> </a>
+    
+  {{-- Tombol Rename --}}
+<a href="{{ route('dokumen.edit', $doc->id) }}" class="btn-aksi btn-rename" title="Rename Dokumen">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+       class="bi bi-pencil-fill" viewBox="0 0 16 16">
+    <path d="M12.854.146a.5.5 0 0 1 .707 0l2.293 2.293a.5.5 0 0 1 0 .707l-9.5 9.5a.5.5 0 0 1-.168.11l-5 
+             2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5zM11.207 2.5 13.5 4.793 
+             12.5 5.793 10.207 3.5 11.207 2.5zm1.586 3L10.5 3.207l-8.646 8.647-.854 
+             2.146 2.146-.854L12.793 5.5z"/>
+  </svg>
+</a>
+
     
   {{-- Tombol Hapus --}}
   <form action="{{ route('dokumen.delete', $doc->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('PERINGATAN! Anda akan menghapus dokumen ini secara PERMANEN. Lanjutkan?');">
