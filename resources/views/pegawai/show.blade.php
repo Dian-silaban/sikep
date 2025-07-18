@@ -140,7 +140,9 @@
       <path d="M7.646 10.854a.5.5 0 0 0 .708 0L11 8.207V1.5a.5.5 0 0 0-1 0v6.793L8.354 5.146a.5.5 0 1 0-.708.708L10.293 9H6.707l2.647-2.646a.5.5 0 0 0-.708-.708L5 9.793 7.646 10.854z"/>
     </svg>
   </a>
-
+    {{-- Tombol Edit Dokumen --}}
+    <a href="{{ route('dokumen.edit', $doc->id) }}" class="btn-aksi btn-edit" title="Edit Dokumen"> </a>
+    
   {{-- Tombol Hapus --}}
   <form action="{{ route('dokumen.delete', $doc->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('PERINGATAN! Anda akan menghapus dokumen ini secara PERMANEN. Lanjutkan?');">
     @csrf
