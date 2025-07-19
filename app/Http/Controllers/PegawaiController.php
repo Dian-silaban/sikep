@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\URL;
 use App\Exports\PegawaiExport;  
 use Maatwebsite\Excel\Facades\Excel;
 
+
+
 class PegawaiController extends Controller
 {
     /**
@@ -144,10 +146,7 @@ class PegawaiController extends Controller
 
         return view('pegawai.show', compact('pegawai', 'all_dokumen', 'jenis_dokumen', 'unit_kerja'));
     }
-     public function exportExcel()
-    {
-        return Excel::download(new PegawaiExport, 'pegawai_'.date('Ymd_His').'.xlsx');
-    }
+     
     /**
      * Show the form for editing the specified resource.
      * Menampilkan formulir untuk mengedit data pegawai.
@@ -261,5 +260,47 @@ class PegawaiController extends Controller
         $pegawai->delete();
 
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
+    }
+
+
+    public function exportExcel(Request $request)
+    {
+        // Mendefinisikan semua kolom yang mungkin bisa diekspor beserta nama tampilannya.
+        // Kunci adalah nama kolom database/relasi, nilai adalah nama tampilan di Excel.
+        $allExportColumns = [
+            'id' => 'ID Pegawai',
+            'nip' => 'NIP',
+            'nama_lengkap' => 'Nama Lengkap',
+            'nomor_telepon' => 'No. Telepon',
+            // 'nik' => 'NIK', // Aktifkan jika kolom NIK ada di DB Anda
+            'unit_kerja.nama_unit' => 'Unit Kerja', // Mengakses relasi
+            'jabatan' => 'Jabatan',
+            'status_pegawai' => 'Status Pegawai',
+            'alamat' => 'Alamat',
+            'tanggal_lahir' => 'Tanggal Lahir',
+            'jenis_kelamin' => 'Jenis Kelamin',
+            'email' => 'Email',
+            'tanggal_bergabung' => 'Tanggal Bergabung',
+            // 'foto_profil_path' => 'Path Foto Profil',
+            'created_at' => 'Tanggal Dibuat',
+            'updated_at' => 'Tanggal Diperbarui',
+        ];
+
+        // Dapatkan kolom yang dipilih dari request. Jika tidak ada, ekspor semua.
+        $selectedColumnsRaw = $request->input('columns', array_keys($allExportColumns));
+        
+        // Filter kolom yang dipilih untuk memastikan hanya kolom yang valid yang masuk
+        $selectedColumns = array_filter($selectedColumnsRaw, function($col) use ($allExportColumns) {
+            return array_key_exists($col, $allExportColumns);
+        });
+
+        // Dapatkan filter dari request (dari modal)
+        $filters = [
+            'status' => $request->input('status_filter'),
+            'unit_kerja_id' => $request->input('unit_kerja_filter'),
+        ];
+
+        // Buat instance PegawaiExport dengan kolom dan filter yang dipilih
+        return Excel::download(new PegawaiExport($selectedColumns, $filters, $allExportColumns), 'pegawai_data_'.date('Ymd_His').'.xlsx');
     }
 }
