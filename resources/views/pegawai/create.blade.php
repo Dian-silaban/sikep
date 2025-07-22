@@ -78,10 +78,13 @@
             </p>
 
             <p>
-                <label for="tanggal_bergabung">Tanggal Bergabung:</label>
-                <input type="date" name="tanggal_bergabung" id="tanggal_bergabung" value="{{ old('tanggal_bergabung') }}">
+                <label for="nik">NIK:</label>
+                <input type="text" name="nik" id="nik" value="{{ old('nik') }}">
             </p>
 
+            <p>
+                <label for="foto_profil">Pangkat dan Golongan:</label>
+                <input type="text" name="pangkat_golongan" id="pangkat_golongan" value="{{ old('pangkat_golongan') }}">
             <p>
                 <label for="foto_profil">Foto Profil:</label>
                 <input type="file" name="foto_profil" id="foto_profil">

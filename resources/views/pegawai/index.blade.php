@@ -213,9 +213,8 @@
                                     'tanggal_lahir' => 'Tanggal Lahir',
                                     'jenis_kelamin' => 'Jenis Kelamin',
                                     'email' => 'Email',
-                                    'tanggal_bergabung' => 'Tanggal Bergabung',
-                                    // 'nik' => 'NIK', // Aktifkan jika kolom NIK ada di DB
-                                    // 'pangkat' => 'Pangkat', // Aktifkan jika kolom Pangkat ada di DB
+                                    'nik' => 'NIK', // Aktifkan jika kolom NIK ada di DB
+                                    'golongan_pangkat' => 'Pangkat', // Aktifkan jika kolom Pangkat ada di DB
                                 ];
                             @endphp
                             @foreach ($exportColumns as $key => $label)

@@ -14,13 +14,12 @@ class Pegawai extends Model
     protected $fillable = [
         'nip', 'nama_lengkap', 'tanggal_lahir', 'jenis_kelamin', 'alamat',
         'email', 'nomor_telepon', 'jabatan', 'unit_kerja_id', 'status_pegawai',
-        'tanggal_bergabung', 'foto_profil_path'
+        'foto_profil_path', 'nik', 'golongan_pangkat',
     ];
 
     // Supaya kolom tanggal otomatis jadi Carbon (DateTime)
     protected $casts = [
         'tanggal_lahir' => 'date',
-        'tanggal_bergabung' => 'date',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

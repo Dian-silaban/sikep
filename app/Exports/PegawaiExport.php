@@ -79,14 +79,14 @@ class PegawaiExport implements
         }
 
         // Format tanggal agar aman
-        if (in_array($column, ['tanggal_lahir', 'tanggal_bergabung']) && $value) {
+        if (in_array($column, ['tanggal_lahir']) && $value) {
             $value = \Carbon\Carbon::parse($value)->format('d-m-Y');
         } elseif (in_array($column, ['created_at', 'updated_at']) && $value) {
             $value = \Carbon\Carbon::parse($value)->format('d-m-Y H:i:s');
         }
 
         // Tambahkan ' ' untuk NIP dan Nomor Telepon agar dipaksa sebagai teks di Excel
-        if (in_array($column, ['nip', 'nomor_telepon']) && !empty($value)) {
+        if (in_array($column, ['nip', 'nomor_telepon', 'nik']) && !empty($value)) {
             $value = ' ' . $value;
         }
 

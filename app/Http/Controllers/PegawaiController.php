@@ -69,6 +69,7 @@ class PegawaiController extends Controller
         'pegawaiAktif',
         'pegawaiNonAktif',
         'pegawaiPensiun'
+
     ));
 
     }
@@ -101,8 +102,9 @@ class PegawaiController extends Controller
             'jabatan' => 'required|string|max:255',
             'unit_kerja_id' => 'required|exists:unit_kerja,id',
             'status_pegawai' => 'required|string|max:50',
-            'tanggal_bergabung' => 'required|date',
             'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nik' => 'nullable|string|size:16|unique:pegawai,nik', // Validasi NIK
+            'golongan_pangkat' => 'nullable|string|max:50', // Validasi Gol
         ]);
 
         $data = $request->except('foto_profil');
@@ -176,8 +178,9 @@ class PegawaiController extends Controller
             'jabatan' => 'required|string|max:255',
             'unit_kerja_id' => 'required|exists:unit_kerja,id',
             'status_pegawai' => 'required|string|max:50',
-            'tanggal_bergabung' => 'required|date',
             'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nik' => 'nullable|string|size:16|unique:pegawai,nik,' . $pegawai->id, // Validasi NIK
+            'golongan_pangkat' => 'nullable|string|max:50', // Validasi Gol
         ]);
 
         $data = $request->except('foto_profil', '_redirect_to', 'hapus_foto_profil');
@@ -272,7 +275,8 @@ class PegawaiController extends Controller
             'nip' => 'NIP',
             'nama_lengkap' => 'Nama Lengkap',
             'nomor_telepon' => 'No. Telepon',
-            // 'nik' => 'NIK', // Aktifkan jika kolom NIK ada di DB Anda
+            'nik' => 'NIK', // Aktifkan jika kolom NIK ada di DB Anda
+            'golongan_pangkat' => 'Pangkat',
             'unit_kerja.nama_unit' => 'Unit Kerja', // Mengakses relasi
             'jabatan' => 'Jabatan',
             'status_pegawai' => 'Status Pegawai',
@@ -280,7 +284,6 @@ class PegawaiController extends Controller
             'tanggal_lahir' => 'Tanggal Lahir',
             'jenis_kelamin' => 'Jenis Kelamin',
             'email' => 'Email',
-            'tanggal_bergabung' => 'Tanggal Bergabung',
             // 'foto_profil_path' => 'Path Foto Profil',
             'created_at' => 'Tanggal Dibuat',
             'updated_at' => 'Tanggal Diperbarui',

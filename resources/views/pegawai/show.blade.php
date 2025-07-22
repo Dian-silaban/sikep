@@ -58,13 +58,18 @@
             {{ $pegawai->status_pegawai ?? '-' }}
         </div>
         <div class="item-kotak">
-            <strong>Tanggal Bergabung</strong>
-            {{ $pegawai->tanggal_bergabung ? \Carbon\Carbon::parse($pegawai->tanggal_bergabung)->format('d-m-Y') : '-' }}
+            <strong>NIK</strong>
+            {{ $pegawai->nik ?? '-' }}
         </div>
+        <div class="item-kotak">
+            <strong>Pangkat dan Golongan</strong>
+            {{ $pegawai->golongan_pangkat ?? '-' }}
+        </div>    
+        
     </div>
 
     <div style="margin-top: 25px;">
-        {{-- PERUBAHAN DI SINI: Menambahkan parameter _redirect_to --}}
+         
         <a href="{{ route('pegawai.edit', ['pegawai' => $pegawai->id, '_redirect_to' => request()->fullUrl()]) }}" class="btn-custom-edit">Edit Data Pegawai</a>
         <a href="{{ route('pegawai.index') }}" class="btn-custom-edit">Kembali ke Daftar Pegawai</a>
     </div>
