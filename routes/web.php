@@ -26,18 +26,25 @@ Route::middleware('auth')->group(function () {
     // Rute Manajemen Pegawai
     Route::resource('pegawai', PegawaiController::class);
 
-    // Rute Manajemen Dokumen
-    Route::delete('dokumen/{dokumen_pegawai}', [DokumenPegawaiController::class, 'destroyPermanent'])->name('dokumen.delete');
-    Route::get('pegawai/{pegawai}/dokumen', [DokumenPegawaiController::class, 'index'])->name('pegawai.dokumen.index');
-    Route::post('pegawai/{pegawai}/dokumen', [DokumenPegawaiController::class, 'store'])->name('pegawai.dokumen.store');
-    Route::get('dokumen/{dokumen_pegawai}/download', [DokumenPegawaiController::class, 'download'])->name('dokumen.download');
+    Route::middleware('auth')->group(function () {
+    // ... (rute-rute Pegawai, Dokumen, Users) ...
 
-    // BARU: Rute untuk Edit Dokumen
-    Route::get('dokumen/{dokumen_pegawai}/edit', [DokumenPegawaiController::class, 'edit'])->name('dokumen.edit');
-    Route::put('dokumen/{dokumen_pegawai}', [DokumenPegawaiController::class, 'update'])->name('dokumen.update');
+    // BARU: Rute untuk Ekspor Data Pegawai
+        Route::get('pegawai/export/excel', [PegawaiController::class, 'exportExcel'])->name('pegawai.export.excel');
+
+        // Rute Manajemen Dokumen
+        Route::delete('dokumen/{dokumen_pegawai}', [DokumenPegawaiController::class, 'destroyPermanent'])->name('dokumen.delete');
+        Route::get('pegawai/{pegawai}/dokumen', [DokumenPegawaiController::class, 'index'])->name('pegawai.dokumen.index');
+        Route::post('pegawai/{pegawai}/dokumen', [DokumenPegawaiController::class, 'store'])->name('pegawai.dokumen.store');
+        Route::get('dokumen/{dokumen_pegawai}/download', [DokumenPegawaiController::class, 'download'])->name('dokumen.download');
+    
+        // BARU: Rute untuk Edit Dokumen
+        Route::get('dokumen/{dokumen_pegawai}/edit', [DokumenPegawaiController::class, 'edit'])->name('dokumen.edit');
+        Route::put('dokumen/{dokumen_pegawai}', [DokumenPegawaiController::class, 'update'])->name('dokumen.update');
+    });
 
     // Rute Manajemen Pengguna (jika Anda mengimplementasikannya)
-    Route::resource('users', UserController::class); // Contoh: jika Anda menggunakan UserController
+    // Route::resource('users', UserController::class); // Contoh: jika Anda menggunakan UserController
 
 });
 

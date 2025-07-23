@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('title', 'Daftar Pegawai')
 
 @section('content')
@@ -61,7 +62,12 @@
 
     <div class="header-pegawai">
         <h2>Daftar Pegawai</h2>
-        <p><a href="{{ route('pegawai.create') }}" class="btn-tambah"> + Tambah Pegawai Baru</a></p>
+        <p>
+            <a href="{{ route('pegawai.create') }}" class="btn-tambah"> + Tambah Pegawai Baru</a>
+            <button type="button" class="btn-tambah" style="border: none; background-color: #28a745;" data-bs-toggle="modal" data-bs-target="#exportOptionsModal">
+    Export Excel
+</button>
+</p>
     </div>
 
     {{-- Form Pencarian --}}
@@ -72,6 +78,46 @@
             <a href="{{ route('pegawai.index') }}" class="btn-reset-pencarian">Reset Pencarian</a>
         @endif
     </form>
+    <form class="form-pencarian" method="GET" action="{{ route('pegawai.index') }}">
+    <!-- <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..." value="{{ $searchTerm ?? '' }}"> -->
+
+    {{-- Filter Unit Kerja --}}
+
+    {{-- Filter Pegawai --}}
+
+    <div class="box" style="display: flex">
+    <div class="unit" style="height: 44px;">
+    <select class="filter" name="unit_kerja">
+        <option value="">Semua Unit Kerja</option>
+        @foreach($unitKerjaList as $unit)
+            <option value="{{ $unit->id }}" {{ (isset($unitKerjaFilter) && $unitKerjaFilter == $unit->id) ? 'selected' : '' }}>
+                {{ $unit->nama_unit }}
+            </option>
+        @endforeach
+    </select>
+    </div>
+
+    {{-- Filter Status Pegawai --}}
+    <div class="status" style="height: 44px; " >
+    <select class="filter" name="status_pegawai">
+        <option value="">Semua Status</option>
+        <option value="Aktif" {{ (isset($statusFilter) && $statusFilter == 'Aktif') ? 'selected' : '' }}>Aktif</option>
+        <option value="Non-aktif" {{ (isset($statusFilter) && $statusFilter == 'Non-aktif') ? 'selected' : '' }}>Non-aktif</option>
+        <option value="Pensiun" {{ (isset($statusFilter) && $statusFilter == 'Pensiun') ? 'selected' : '' }}>Pensiun</option>
+    </select>
+    </div>
+
+    <div class="btn-filter">
+    <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+
+    <div>
+    @if ($searchTerm || $unitKerjaFilter || $statusFilter)
+        <a href="{{ route('pegawai.index') }}" class="btn-reset-pencarian">Reset</a>
+    @endif
+    </form>
+    </div>
+    </div> 
 
     <table class="tabel-daftar">
         <thead>
@@ -151,11 +197,138 @@
             @endforelse
         </tbody>
     </table>
-
+    
     
    <div class="d-flex justify-content-center mt-4">
     {{ $pegawai->links('vendor.pagination.bootstrap-4') }}
 </div>
 
+        {{-- BARU: Modal untuk Export dengan Opsi --}}
+    <div class="modal fade" id="exportOptionsModal" tabindex="-1" aria-labelledby="exportOptionsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exportOptionsLabel">Pilih Data untuk Export</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="exportForm" action="{{ route('pegawai.export.excel') }}" method="GET">
+                        <p class="fw-bold">Pilih Kolom yang Akan Diexport:</p>
+                        <div class="row">
+                            @php
+                                $exportColumns = [
+                                    'nip' => 'NIP',
+                                    'nik' => 'NIK',
+                                    'nama_lengkap' => 'Nama Lengkap',
+                                    'nomor_telepon' => 'No. Telepon',
+                                    'unit_kerja.nama_unit' => 'Unit Kerja',
+                                    'jabatan' => 'Jabatan',
+                                    'golongan_pangkat' => 'Pangkat',
+                                    'status_pegawai' => 'Status',
+                                    'alamat' => 'Alamat',
+                                    'tanggal_lahir' => 'Tanggal Lahir',
+                                    'jenis_kelamin' => 'Jenis Kelamin',
+                                    'email' => 'Email',
+                                
+                                ];
+                            @endphp
+                            @foreach ($exportColumns as $key => $label)
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="columns[]" value="{{ $key }}" id="column_{{ $key }}" checked>
+                                        <label class="form-check-label" for="column_{{ $key }}">
+                                            {{ $label }}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <hr class="my-4">
+
+                        <p class="fw-bold">Filter Data (Opsional):</p>
+                        <div class="mb-3">
+                            <label for="status_filter" class="form-label">Status Pegawai:</label>
+                            <select class="form-select" id="status_filter" name="status_filter">
+                                <option value="all">Semua Status</option>
+                                <option value="Aktif">Aktif</option>
+                                <option value="Non-aktif">Non-aktif</option>
+                                <option value="Pensiun">Pensiun</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="unit_kerja_filter_modal" class="form-label">Unit Kerja:</label>
+                            <select class="form-select" id="unit_kerja_filter_modal" name="unit_kerja_filter">
+                                <option value="">Semua Unit Kerja</option>
+                                @foreach ($unitKerjaList as $unit)
+                                    <option value="{{ $unit->id }}">
+                                        {{ $unit->nama_unit }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary" form="exportForm">Export Excel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+@section('scripts') {{-- Untuk JavaScript yang spesifik ke halaman ini --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Script untuk modal hapus (sudah ada)
+    const confirmDeleteModalElement = document.getElementById('confirmDeleteModal');
+    const formDelete = document.getElementById('formDelete');
+    const namaPegawaiSpan = document.getElementById('namaPegawai');
+
+    confirmDeleteModalElement.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const nama = button.getAttribute('data-nama');
+        const action = button.getAttribute('data-action');
+
+        namaPegawaiSpan.textContent = nama;
+        formDelete.setAttribute('action', action);
+    });
+
+    // BARU: Script untuk modal Export dengan Opsi
+    const exportOptionsModalElement = document.getElementById('exportOptionsModal');
+    exportOptionsModalElement.addEventListener('show.bs.modal', function (event) {
+        // Reset form setiap kali modal dibuka (opsional, agar pilihan default lagi)
+        const exportForm = document.getElementById('exportForm');
+        exportForm.reset(); 
+        // Anda juga bisa mengatur nilai default berdasarkan filter yang sedang aktif di tabel utama
+        // Misal, jika ada search/filter di URL, set checkbox/select modal sesuai itu
+        const currentSearchTerm = new URLSearchParams(window.location.search).get('search');
+        const currentUnitFilter = new URLSearchParams(window.location.search).get('unit_kerja_filter');
+        const currentStatusFilter = new URLSearchParams(window.location.search).get('status_filter'); // Jika Anda punya filter status di tabel utama juga
+
+        // Contoh set filter unit kerja di modal jika sudah ada filter di tabel utama
+        if (currentUnitFilter) {
+            document.getElementById('unit_kerja_filter_modal').value = currentUnitFilter;
+        }
+        // Contoh set filter status di modal
+        if (currentStatusFilter) {
+            document.getElementById('status_filter').value = currentStatusFilter;
+        }
+
+        // Untuk checkbox kolom, Anda bisa membuat array default yang selalu terpilih
+        // Atau ambil dari config jika ingin lebih dinamis
+        const defaultColumns = ['nip', 'nama_lengkap', 'nomor_telepon', 'unit_kerja.nama_unit', 'jabatan', 'status_pegawai', 'alamat'];
+        exportForm.querySelectorAll('input[name="columns[]"]').forEach(checkbox => {
+            if (defaultColumns.includes(checkbox.value)) {
+                checkbox.checked = true;
+            } else {
+                checkbox.checked = false;
+            }
+        });
+    });
+});
+</script>
 @endsection
 

@@ -22,6 +22,10 @@
             {{ $pegawai->nip }}
         </div>
         <div class="item-kotak">
+            <strong>NIK</strong>
+            {{ $pegawai->nik ?? '-' }}
+        </div> 
+        <div class="item-kotak">
             <strong>Nama Lengkap</strong>
             {{ $pegawai->nama_lengkap }}
         </div>
@@ -50,16 +54,16 @@
             {{ $pegawai->jabatan ?? '-' }}
         </div>
         <div class="item-kotak">
+            <strong>Pangkat dan Golongan</strong>
+            {{ $pegawai->golongan_pangkat ?? '-' }}
+        </div>   
+        <div class="item-kotak">
             <strong>Unit Kerja</strong>
             {{ $pegawai->unit_kerja->nama_unit ?? '-' }}
         </div>
         <div class="item-kotak">
             <strong>Status Pegawai</strong>
             {{ $pegawai->status_pegawai ?? '-' }}
-        </div>
-        <div class="item-kotak">
-            <strong>Tanggal Bergabung</strong>
-            {{ $pegawai->tanggal_bergabung ? \Carbon\Carbon::parse($pegawai->tanggal_bergabung)->format('d-m-Y') : '-' }}
         </div>
     </div>
 

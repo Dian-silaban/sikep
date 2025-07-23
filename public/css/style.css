@@ -907,3 +907,29 @@ small.form-hint {
   color: #6c757d;
   font-size: 0.875rem;
 }
+
+.box {
+  
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px; /* Tambahkan jarak antar elemen */
+  height: 44px;
+  
+  
+}
+
+.btn-filter{
+    margin-top: 0;
+    gap: 30px;
+    height: 44px;
+}
+
+
+.filter{
+    background-color: #28a745;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+
+}

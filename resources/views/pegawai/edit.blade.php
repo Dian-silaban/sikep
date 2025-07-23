@@ -23,6 +23,12 @@
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
 
+        <label for="nik">NIK:</label>
+        <input type="text" name="nik" id="nik" value="{{ old('nik', $pegawai->nik) }}">
+        @error('nik')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror       
+
         <label for="nama_lengkap">Nama Lengkap:</label>
         <input type="text" name="nama_lengkap" id="nama_lengkap" value="{{ old('nama_lengkap', $pegawai->nama_lengkap) }}" required>
         @error('nama_lengkap')
@@ -66,6 +72,12 @@
         <label for="jabatan">Jabatan:</label>
         <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan', $pegawai->jabatan) }}">
         @error('jabatan')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
+        <label for="golongan_pangkat">Pangkat dan Golongan:</label>
+        <input type="text" name="golongan_pangkat" id="golongan_pangkat" value="{{ old('golongan_pangkat', $pegawai->golongan_pangkat) }}">
+        @error('golongan_pangkat')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
 
