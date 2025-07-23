@@ -38,6 +38,13 @@
                         </a>
 
                     </li>
+
+                    {{-- di dalam <ul> navbar Anda --}}
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('settings.document_migration.index') }}">Pengaturan</a>
+                    </li>
+                @endauth
                 </ul>
             </div>
         </div>

@@ -5,7 +5,7 @@ use App\Http\Controllers\DokumenPegawaiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController; // Pastikan ini juga ada jika menggunakan Manajemen Pengguna
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\DocumentMigrationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,6 +41,10 @@ Route::middleware('auth')->group(function () {
         // BARU: Rute untuk Edit Dokumen
         Route::get('dokumen/{dokumen_pegawai}/edit', [DokumenPegawaiController::class, 'edit'])->name('dokumen.edit');
         Route::put('dokumen/{dokumen_pegawai}', [DokumenPegawaiController::class, 'update'])->name('dokumen.update');
+    
+        Route::get('settings/document-migration', [DocumentMigrationController::class, 'index'])->name('settings.document_migration.index');
+        Route::post('settings/document-migration', [DocumentMigrationController::class, 'startMigration'])->name('settings.document_migration.start');
+
     });
 
     // Rute Manajemen Pengguna (jika Anda mengimplementasikannya)
