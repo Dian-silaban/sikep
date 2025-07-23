@@ -1,11 +1,20 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('title', 'Edit Dokumen')
 
 @section('content')
     <div class="form-container">
         <h2 class="form-header">Edit Dokumen: {{ $dokumen_pegawai->nama_file_asli }}</h2>
-        <small class="form-hint">Untuk Pegawai: {{ $dokumen_pegawai->pegawai->nama_lengkap }} (NIP: {{ $dokumen_pegawai->pegawai->nip }})</small>
+        {{-- <small class="form-hint">Untuk Pegawai: {{ $dokumen_pegawai->pegawai->nama_lengkap }} (NIP: {{ $dokumen_pegawai->pegawai->nip }})</small> --}}
+        <div class="d-flex align-items-center p-3 mb-4 rounded shadow-sm" style="background-color: #f9fafb;">
+  <i class="bi bi-person-badge-fill fs-3 text-primary me-3"></i>
+  <div>
+    <div class="fw-semibold text-dark">Arda Putri</div>
+    <small class="text-muted">NIP: 1234567898765432</small>
+  </div>
+</div>
+
+
 
         <form method="POST" action="{{ route('dokumen.update', $dokumen_pegawai->id) }}" enctype="multipart/form-data">
             @csrf
@@ -44,7 +53,7 @@
 
             <div class="form-actions">
                 <button type="submit" class="btn-primary">Perbarui Dokumen</button>
-                <a href="{{ route('pegawai.show', $dokumen_pegawai->pegawai_id) }}" class="btn-secondary">Batal</a>
+                <a href="{{ route('pegawai.show', $dokumen_pegawai->pegawai_id) }}" class="btn-batal">Batal</a>
             </div>
         </form>
     </div>

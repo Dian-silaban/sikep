@@ -17,6 +17,12 @@
             </p>
 
             <p>
+                <label for="nik">NIK:</label>
+                <input type="text" name="nik" id="nik" value="{{ old('nik') }}">
+            </p>
+
+
+            <p>
                 <label for="nama_lengkap">Nama Lengkap:</label>
                 <input type="text" name="nama_lengkap" id="nama_lengkap" value="{{ old('nama_lengkap') }}" required>
             </p>
@@ -54,6 +60,11 @@
                 <label for="jabatan">Jabatan:</label>
                 <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan') }}">
             </p>
+
+            <p>
+                <label for="foto_profil">Pangkat dan Golongan:</label>
+                <input type="text" name="pangkat_golongan" id="pangkat_golongan" value="{{ old('pangkat_golongan') }}">
+            <p>
 
             <p>
                 <label for="unit_kerja_id">Unit Kerja:</label>

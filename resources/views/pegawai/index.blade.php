@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('title', 'Daftar Pegawai')
 
 @section('content')
@@ -40,7 +41,7 @@
                 </svg>
             </div>
             <div class="stat-info">
-                <p class="stat-label">Non-aktif</p>
+                <p class="stat-label">Pindah</p>
                 <p class="stat-value">{{ $pegawaiNonAktif ?? 0 }}</p>
             </div>
         </div>
@@ -63,7 +64,7 @@
         <h2>Daftar Pegawai</h2>
         <p>
             <a href="{{ route('pegawai.create') }}" class="btn-tambah"> + Tambah Pegawai Baru</a>
-            <button type="button" class="btn-tambah" style="background-color: #28a745;" data-bs-toggle="modal" data-bs-target="#exportOptionsModal">
+            <button type="button" class="btn-tambah" style="border: none; background-color: #28a745;" data-bs-toggle="modal" data-bs-target="#exportOptionsModal">
     Export Excel
 </button>
 </p>
@@ -81,29 +82,42 @@
     <!-- <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..." value="{{ $searchTerm ?? '' }}"> -->
 
     {{-- Filter Unit Kerja --}}
-    <select name="unit_kerja">
-        <option value="">-- Semua Unit Kerja --</option>
+
+    {{-- Filter Pegawai --}}
+
+    <div class="box" style="display: flex">
+    <div class="unit" style="height: 44px;">
+    <select class="filter" name="unit_kerja">
+        <option value="">Semua Unit Kerja</option>
         @foreach($unitKerjaList as $unit)
             <option value="{{ $unit->id }}" {{ (isset($unitKerjaFilter) && $unitKerjaFilter == $unit->id) ? 'selected' : '' }}>
                 {{ $unit->nama_unit }}
             </option>
         @endforeach
     </select>
+    </div>
 
     {{-- Filter Status Pegawai --}}
-    <select name="status_pegawai">
-        <option value="">-- Semua Status --</option>
+    <div class="status" style="height: 44px; " >
+    <select class="filter" name="status_pegawai">
+        <option value="">Semua Status</option>
         <option value="Aktif" {{ (isset($statusFilter) && $statusFilter == 'Aktif') ? 'selected' : '' }}>Aktif</option>
         <option value="Non-aktif" {{ (isset($statusFilter) && $statusFilter == 'Non-aktif') ? 'selected' : '' }}>Non-aktif</option>
         <option value="Pensiun" {{ (isset($statusFilter) && $statusFilter == 'Pensiun') ? 'selected' : '' }}>Pensiun</option>
     </select>
+    </div>
 
-    <button type="submit">Filter</button>
+    <div class="btn-filter">
+    <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
 
+    <div>
     @if ($searchTerm || $unitKerjaFilter || $statusFilter)
         <a href="{{ route('pegawai.index') }}" class="btn-reset-pencarian">Reset</a>
     @endif
     </form>
+    </div>
+    </div> 
 
     <table class="tabel-daftar">
         <thead>
@@ -147,7 +161,7 @@
                             }
                         @endphp
                         <span class="status-badge {{ $statusClass }}">
-                            {{ $p->status_pegawai }}
+                            {{ $p->status_pegawai == 'Non-aktif' ? 'Pindah' : $p->status_pegawai }}
                         </span>
                     </td>
                     <td class="action-buttons">
@@ -204,10 +218,12 @@
                             @php
                                 $exportColumns = [
                                     'nip' => 'NIP',
+                                    'nik' => 'NIK',
                                     'nama_lengkap' => 'Nama Lengkap',
                                     'nomor_telepon' => 'No. Telepon',
                                     'unit_kerja.nama_unit' => 'Unit Kerja',
                                     'jabatan' => 'Jabatan',
+                                    'golongan_pangkat' => 'Pangkat',
                                     'status_pegawai' => 'Status',
                                     'alamat' => 'Alamat',
                                     'tanggal_lahir' => 'Tanggal Lahir',
