@@ -85,7 +85,7 @@ class PegawaiExport implements
 
 
         // Tambahkan ' ' untuk NIP dan Nomor Telepon agar dipaksa sebagai teks di Excel
-        if (in_array($column, ['nip', 'nomor_telepon']) && !empty($value)) {
+        if (in_array($column, ['nip', 'nomor_telepon', 'nik']) && !empty($value)) {
             $value = ' ' . $value;
         }
 

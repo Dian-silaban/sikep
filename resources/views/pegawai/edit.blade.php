@@ -104,12 +104,7 @@
         @error('status_pegawai')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-
-        <label for="tanggal_bergabung">Tanggal Bergabung:</label>
-        <input type="date" name="tanggal_bergabung" id="tanggal_bergabung" value="{{ old('tanggal_bergabung', $pegawai->tanggal_bergabung ? \Carbon\Carbon::parse($pegawai->tanggal_bergabung)->format('Y-m-d') : '') }}">
-        @error('tanggal_bergabung')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
+        
 
         <label for="foto_profil">Foto Profil:</label>
         @if ($pegawai->foto_profil_path)

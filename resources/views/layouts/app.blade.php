@@ -38,6 +38,19 @@
                         </a>
 
                     </li>
+
+                      @auth
+  <li class="nav-item">
+    <a class="nav-link text-primary" href="{{ route('settings.document_migration.index') }}" title="Pengaturan">
+      <i class="bi bi-gear fs-4"></i>
+    </a>
+  </li>
+@endauth
+
+                </ul>
+            </div>
+        </div>
+    </nav>
                 </ul>
             </div>
         </div>

@@ -68,7 +68,7 @@
     </div>
 
     <div style="margin-top: 25px;">
-        {{-- PERUBAHAN DI SINI: Menambahkan parameter _redirect_to --}}
+         
         <a href="{{ route('pegawai.edit', ['pegawai' => $pegawai->id, '_redirect_to' => request()->fullUrl()]) }}" class="btn-custom-edit">Edit Data Pegawai</a>
         <a href="{{ route('pegawai.index') }}" class="btn-custom-edit">Kembali ke Daftar Pegawai</a>
     </div>

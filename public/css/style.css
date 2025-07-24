@@ -933,3 +933,8 @@ small.form-hint {
     font-weight: 500;
 
 }
+
+.btn-fixed {
+  min-width: 250px; /* Atur sesuai kebutuhan */
+  text-align: center;
+}

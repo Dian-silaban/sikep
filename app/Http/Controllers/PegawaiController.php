@@ -96,6 +96,7 @@ return view('pegawai.index', compact(
         'pegawaiAktif',
         'pegawaiNonAktif',
         'pegawaiPensiun'
+
     ));
 
     }
@@ -129,6 +130,8 @@ return view('pegawai.index', compact(
             'unit_kerja_id' => 'required|exists:unit_kerja,id',
             'status_pegawai' => 'required|string|max:50',
             'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nik' => 'nullable|string|size:16|unique:pegawai,nik', // Validasi NIK
+            'golongan_pangkat' => 'nullable|string|max:50', // Validasi Gol
         ]);
 
         $data = $request->except('foto_profil');
@@ -203,6 +206,8 @@ return view('pegawai.index', compact(
             'unit_kerja_id' => 'required|exists:unit_kerja,id',
             'status_pegawai' => 'required|string|max:50',
             'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nik' => 'nullable|string|size:16|unique:pegawai,nik,' . $pegawai->id, // Validasi NIK
+            'golongan_pangkat' => 'nullable|string|max:50', // Validasi Gol
         ]);
 
         $data = $request->except('foto_profil', '_redirect_to', 'hapus_foto_profil');
@@ -297,7 +302,8 @@ return view('pegawai.index', compact(
             'nip' => 'NIP',
             'nama_lengkap' => 'Nama Lengkap',
             'nomor_telepon' => 'No. Telepon',
-            // 'nik' => 'NIK', // Aktifkan jika kolom NIK ada di DB Anda
+            'nik' => 'NIK', // Aktifkan jika kolom NIK ada di DB Anda
+            'golongan_pangkat' => 'Pangkat',
             'unit_kerja.nama_unit' => 'Unit Kerja', // Mengakses relasi
             'jabatan' => 'Jabatan',
             'status_pegawai' => 'Status Pegawai',
@@ -305,7 +311,6 @@ return view('pegawai.index', compact(
             'tanggal_lahir' => 'Tanggal Lahir',
             'jenis_kelamin' => 'Jenis Kelamin',
             'email' => 'Email',
-            
             // 'foto_profil_path' => 'Path Foto Profil',
             'created_at' => 'Tanggal Dibuat',
             'updated_at' => 'Tanggal Diperbarui',

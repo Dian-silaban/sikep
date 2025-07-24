@@ -89,7 +89,6 @@
             </p>
             
 
-            <p>
                 <label for="foto_profil">Foto Profil:</label>
                 <input type="file" name="foto_profil" id="foto_profil">
             </p>
