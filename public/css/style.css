@@ -938,3 +938,55 @@ small.form-hint {
   min-width: 250px; /* Atur sesuai kebutuhan */
   text-align: center;
 }
+
+
+/* Add this to your CSS file */
+
+.header-blue-background {
+    background: linear-gradient(to right, #4a90e2, #6a5acd); /* Gradient blue from the example */
+    padding: 100px 30px; /* Increased vertical padding to make it taller */
+    display: flex;
+    align-items: flex-start; /* Align "Kembali" to the top-left */
+    justify-content: flex-start; /* Align "Kembali" to the left */
+    color: white; /* Text color for elements inside */
+    border-radius: 0; /* Remove rounded top corners if you want it to span edge to edge */
+    margin-bottom: 20px; /* Space below the header */
+}
+
+.btn-kembali {
+    background-color: rgba(255, 255, 255, 0.2); /* Slightly transparent white for the button */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-kembali:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* If you decide to move the title into the blue header, uncomment and style this */
+/*
+.header-title {
+    color: white;
+    margin-left: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+*/
+
+/* Optional: Adjustments for the main content containers to align with the new header width */
+.container-detail-show {
+    /* Ensure these containers are within the same main content width as the new header */
+    max-width: 900px; /* Example max-width, adjust as per your layout */
+    margin: 0 auto 20px auto; /* Center the containers and add bottom margin */
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
