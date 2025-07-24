@@ -105,19 +105,6 @@
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         
-        {{-- PERUBAHAN DI SINI: Tambahkan input untuk NIK dan Golongan/Pangkat --}}
-
-        <label for="nik">NIK:</label>
-        <input type="text" name="nik" id="nik" value="{{ old('nik', $pegawai->nik) }}">
-        @error('nik')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror       
-
-        <label for="golongan_pangkat">Pangkat dan Golongan:</label>
-        <input type="text" name="golongan_pangkat" id="golongan_pangkat" value="{{ old('golongan_pangkat', $pegawai->golongan_pangkat) }}">
-        @error('golongan_pangkat')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
 
         <label for="foto_profil">Foto Profil:</label>
         @if ($pegawai->foto_profil_path)

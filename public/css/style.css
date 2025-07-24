@@ -163,7 +163,7 @@ form textarea {
 }
 
 .form-actions {
-    margin-top: 25px;
+    margin-top: 40px;  
     display: flex;
     gap: 10px;
     align-items: center;
@@ -932,4 +932,9 @@ small.form-hint {
     text-decoration: none;
     font-weight: 500;
 
+}
+
+.btn-fixed {
+  min-width: 250px; /* Atur sesuai kebutuhan */
+  text-align: center;
 }

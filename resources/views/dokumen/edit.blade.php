@@ -5,16 +5,13 @@
 @section('content')
     <div class="form-container">
         <h2 class="form-header">Edit Dokumen: {{ $dokumen_pegawai->nama_file_asli }}</h2>
-        {{-- <small class="form-hint">Untuk Pegawai: {{ $dokumen_pegawai->pegawai->nama_lengkap }} (NIP: {{ $dokumen_pegawai->pegawai->nip }})</small> --}}
         <div class="d-flex align-items-center p-3 mb-4 rounded shadow-sm" style="background-color: #f9fafb;">
-  <i class="bi bi-person-badge-fill fs-3 text-primary me-3"></i>
-  <div>
-    <div class="fw-semibold text-dark">Arda Putri</div>
-    <small class="text-muted">NIP: 1234567898765432</small>
-  </div>
-</div>
-
-
+            <i class="bi bi-person-badge-fill fs-3 text-primary me-3"></i>
+            <div>
+                <div class="fw-semibold text-dark">Arda Putri</div>
+                <small class="text-muted">NIP: 1234567898765432</small>
+            </div>
+        </div>
 
         <form method="POST" action="{{ route('dokumen.update', $dokumen_pegawai->id) }}" enctype="multipart/form-data">
             @csrf
@@ -42,15 +39,26 @@
                 <textarea name="keterangan" id="keterangan" class="form-textarea">{{ old('keterangan', $dokumen_pegawai->keterangan) }}</textarea>
             </div>
 
+            {{-- BLOK INI DIPINDAHKAN KE ATAS --}}
+            
+            {{-- AKHIR BLOK YANG DIPINDAHKAN --}}
+
             <div class="form-group">
                 <label for="file_dokumen">Upload File Baru (untuk membuat versi baru):</label>
                 <input type="file" name="file_dokumen" id="file_dokumen" class="form-input-file">
-                <small class="form-hint">Kosongkan jika hanya ingin mengubah detail dokumen. Jika diisi, akan menjadi V{{ $dokumen_pegawai->versi_dokumen + 1 }} dan menggantikan versi aktif saat ini.</small>
-                @if ($dokumen_pegawai->path_file)
-                    <p class="form-hint">File saat ini: <a href="{{ asset($dokumen_pegawai->path_file) }}" target="_blank" class="btn-aksi btn-info">Lihat File V{{ $dokumen_pegawai->versi_dokumen }}</a></p>
-                @endif
+                <small class="form-hint">
+                    Kosongkan jika hanya ingin mengubah detail dokumen. Jika diisi, akan menjadi V{{ $dokumen_pegawai->versi_dokumen + 1 }} dan menggantikan versi aktif saat ini.
+                </small>
             </div>
-
+            @if ($dokumen_pegawai->path_file)
+                <div class="form-group">
+                    <p class="form-hint mb-2">File saat ini:</p>
+                    <a href="{{ asset($dokumen_pegawai->path_file) }}" target="_blank"
+                    class="btn btn-primary"> <!-- Ganti kelas Tailwind dengan kelas Bootstrap -->
+                    🔍 Lihat File Saat Ini V{{ $dokumen_pegawai->versi_dokumen }}
+                    </a>
+                </div>
+            @endif
             <div class="form-actions">
                 <button type="submit" class="btn-primary">Perbarui Dokumen</button>
                 <a href="{{ route('pegawai.show', $dokumen_pegawai->pegawai_id) }}" class="btn-batal">Batal</a>
