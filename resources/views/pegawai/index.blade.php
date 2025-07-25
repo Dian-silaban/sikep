@@ -88,7 +88,7 @@
     <div class="box" style="display: flex">
     <div class="unit" style="height: 44px;">
     <select class="filter" name="unit_kerja">
-        <option value="">Semua Unit Kerja</option>
+        <option value="">Bidang</option>
         @foreach($unitKerjaList as $unit)
             <option value="{{ $unit->id }}" {{ (isset($unitKerjaFilter) && $unitKerjaFilter == $unit->id) ? 'selected' : '' }}>
                 {{ $unit->nama_unit }}
@@ -127,7 +127,7 @@
                 <th>NIP</th>
                 <th>Nama Lengkap</th>
                 <th>Jabatan</th>
-                <th>Unit Kerja</th>
+                <th>Bidang</th>
                 <th>Status</th>
                 <th>Aksi</th>
             </tr>

@@ -33,18 +33,25 @@
                             @csrf
                         </form>
                         {{-- <a class="nav-link btn-back btn-sm" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a> --}}
-                        <a class="nav-link text-danger" href="#" title="Logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="bi bi-box-arrow-right fs-4"></i>
+                        <a class="nav-link text-danger d-flex align-items-center gap-1" href="#" title="Logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="bi bi-box-arrow-right fs-4"></i><span class="d-none d-lg-inline">Keluar</span>
                         </a>
 
+
                     </li>
 
-                    {{-- di dalam <ul> navbar Anda --}}
-                @auth
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('settings.document_migration.index') }}">Pengaturan</a>
-                    </li>
-                @endauth
+                      @auth
+  <li class="nav-item">
+    <a class="nav-link text-primary" href="{{ route('settings.document_migration.index') }}" title="Pengaturan">
+      <i class="bi bi-gear fs-4"></i>
+    </a>
+  </li>
+@endauth
+
+                </ul>
+            </div>
+        </div>
+    </nav>
                 </ul>
             </div>
         </div>
