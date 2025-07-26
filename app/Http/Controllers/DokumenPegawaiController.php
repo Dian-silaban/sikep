@@ -61,7 +61,6 @@ class DokumenPegawaiController extends Controller
             $currentActiveDoc->status_dokumen = 'Revisi';
             $currentActiveDoc->save();
         }
-
         // Proses upload file
         $file = $request->file('file_dokumen');
         $namaFileAsli = $file->getClientOriginalName();

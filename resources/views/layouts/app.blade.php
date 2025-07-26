@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'SIKEP Instansi') }}</title>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
@@ -16,7 +15,6 @@
 
 <body class="bg-light">
 
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg shadow-sm mb-5" style="display: flex">
         <div class="container">
             <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ url('/') }}"> <img src="{{ asset('img/LOGO_KOTA_METRO.png') }}" alt="Logo" width="60" height="60" class="d-inline-block align-text-top">
@@ -32,32 +30,25 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                        {{-- <a class="nav-link btn-back btn-sm" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a> --}}
                         <a class="nav-link text-danger d-flex align-items-center gap-1" href="#" title="Logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="bi bi-box-arrow-right fs-4"></i><span class="d-none d-lg-inline">Keluar</span>
                         </a>
-
-
                     </li>
 
-                      @auth
-  <li class="nav-item">
-    <a class="nav-link text-primary" href="{{ route('settings.document_migration.index') }}" title="Pengaturan">
-      <i class="bi bi-gear fs-4"></i>
-    </a>
-  </li>
-@endauth
+                    @auth
+                    <li class="nav-item">
+                        {{-- UBAH INI: Arahkan ke route pengaturan utama --}}
+                        <a class="nav-link text-primary" href="{{ route('settings.index') }}" title="Pengaturan">
+                            <i class="bi bi-gear fs-4"></i>
+                        </a>
+                    </li>
+                    @endauth
 
                 </ul>
             </div>
         </div>
     </nav>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
+        
     <main class="container mb-5">
         {{-- Alert success --}}
         @if (session('success'))
@@ -90,7 +81,7 @@
     </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        xintegrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
+        integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
         crossorigin="anonymous">
 </script>
     
