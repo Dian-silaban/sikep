@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
-
 @section('title', 'Daftar Pegawai')
 
 @section('content')
+
+    {{-- The <style> block has been removed from here.
+         Please ensure all CSS rules previously in this block are moved to your
+         main CSS file (e.g., public/css/app.css) and linked in layouts/app.blade.php --}}
 
     <div class="stats-container">
         <div class="stat-card">
@@ -21,7 +24,7 @@
         </div>
         <div class="stat-card">
             <div class="icon-wrapper active">
-                {{-- Icon untuk Aktif (contoh: centang/check) --}}
+                {{-- Icon for Active (e.g., checkmark) --}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#1e7e34" class="bi bi-person-check-fill" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
                     <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -34,7 +37,7 @@
         </div>
         <div class="stat-card">
             <div class="icon-wrapper non-active">
-                {{-- Icon untuk Non-aktif (contoh: silang/cross) --}}
+                {{-- Icon for Inactive (e.g., cross) --}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#d39e00" class="bi bi-person-x-fill" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M11.854 10.146a.5.5 0 0 1 0-.708L13.293 8l-1.439-1.439a.5.5 0 1 1 .708-.708l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0z"/>
                     <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -47,7 +50,7 @@
         </div>
         <div class="stat-card">
             <div class="icon-wrapper retired">
-                {{-- Icon untuk Pensiun (contoh: jam pasir/hourglass) --}}
+                {{-- Icon for Retired (e.g., hourglass) --}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#0f6674" class="bi bi-hourglass-bottom" viewBox="0 0 16 16">
                     <path d="M2 1.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0 13a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11a.5.5 0 0 0-.5.5z"/>
                     <path d="M2.5 2a.5.5 0 0 0-.5.5v10.5c0 .354.148.68.417.913.29.25.66.387 1.103.387h7.8a1.5 1.5 0 0 0 1.103-.387c.269-.233.417-.56.417-.913V2.5a.5.5 0 0 0-.5-.5h-11zm0 1h11v10.5c0 .092-.02.176-.057.25-.037.074-.09.13-.153.18L8 9.586 3.71 13.937c-.063-.05-.116-.106-.153-.18-.037-.074-.057-.158-.057-.25V3z"/>
@@ -63,32 +66,33 @@
     <div class="header-pegawai">
         <h2>Daftar Pegawai</h2>
         <p>
-            <a href="{{ route('pegawai.create') }}" class="btn-tambah"> + Tambah Pegawai Baru</a>
+            {{-- Changed to Bootstrap Modal Trigger --}}
+            <button type="button" class="btn-tambah" style="border: none;" data-bs-toggle="modal" data-bs-target="#tambahPegawaiModal">
+                + Tambah Pegawai Baru
+            </button>
             <button type="button" class="btn-tambah" style="border: none; background-color: #28a745;" data-bs-toggle="modal" data-bs-target="#exportOptionsModal">
-    Export Excel
-</button>
-</p>
+                Export Excel
+            </button>
+        </p>
     </div>
 
-    {{-- Form Pencarian --}}
+    {{-- Search Form --}}
     <form class="form-pencarian" method="GET" action="{{ route('pegawai.index') }}" >
-        <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..." value="{{ $searchTerm ?? '' }}" >
+        <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Bidang..." value="{{ $searchTerm ?? '' }}" >
         <button type="submit">Cari</button>
         @if ($searchTerm ?? '')
             <a href="{{ route('pegawai.index') }}" class="btn-reset-pencarian">Reset Pencarian</a>
         @endif
     </form>
     <form class="form-pencarian" method="GET" action="{{ route('pegawai.index') }}">
-    <!-- <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..." value="{{ $searchTerm ?? '' }}"> -->
+    {{-- Unit Kerja Filter --}}
 
-    {{-- Filter Unit Kerja --}}
-
-    {{-- Filter Pegawai --}}
+    {{-- Employee Filter --}}
 
     <div class="box" style="display: flex">
     <div class="unit" style="height: 44px;">
     <select class="filter" name="unit_kerja">
-        <option value="">Semua Unit Kerja</option>
+        <option value="">Bidang</option>
         @foreach($unitKerjaList as $unit)
             <option value="{{ $unit->id }}" {{ (isset($unitKerjaFilter) && $unitKerjaFilter == $unit->id) ? 'selected' : '' }}>
                 {{ $unit->nama_unit }}
@@ -97,13 +101,13 @@
     </select>
     </div>
 
-    {{-- Filter Status Pegawai --}}
+    {{-- Employee Status Filter --}}
     <div class="status" style="height: 44px; " >
     <select class="filter" name="status_pegawai">
-        <option value="">Semua Status</option>
-        <option value="Aktif" {{ (isset($statusFilter) && $statusFilter == 'Aktif') ? 'selected' : '' }}>Aktif</option>
-        <option value="Non-aktif" {{ (isset($statusFilter) && $statusFilter == 'Non-aktif') ? 'selected' : '' }}>Non-aktif</option>
-        <option value="Pensiun" {{ (isset($statusFilter) && $statusFilter == 'Pensiun') ? 'selected' : '' }}>Pensiun</option>
+        <option value="">Status</option>
+        <option value="Aktif">Aktif</option>
+        <option value="Non-aktif">Non-aktif</option>
+        <option value="Pensiun">Pensiun</option>
     </select>
     </div>
 
@@ -127,7 +131,7 @@
                 <th>NIP</th>
                 <th>Nama Lengkap</th>
                 <th>Jabatan</th>
-                <th>Unit Kerja</th>
+                <th>Bidang</th>
                 <th>Status</th>
                 <th>Aksi</th>
             </tr>
@@ -140,7 +144,7 @@
                         @if ($p->foto_profil_path)
                             <img src="{{ asset($p->foto_profil_path) }}" alt="Foto Profil {{ $p->nama_lengkap }}">
                         @else
-                            {{-- Menggunakan logika default dari controller yang sudah disesuaikan --}}
+                            {{-- Using default logic from adjusted controller --}}
                             <img src="{{ asset('img/' . ($p->jenis_kelamin == 'Perempuan' ? 'wanita.jpg' : 'pria.jpg')) }}" alt="Foto Profil Default">
                         @endif
                     </td>
@@ -149,7 +153,7 @@
                     <td>{{ $p->jabatan ?? '-' }}</td>
                     <td>{{ $p->unit_kerja->nama_unit ?? '-' }}</td>
                     <td>
-                        {{-- Menambahkan badge status --}}
+                        {{-- Add status badge --}}
                         @php
                             $statusClass = '';
                             if ($p->status_pegawai == 'Aktif') {
@@ -165,25 +169,40 @@
                         </span>
                     </td>
                     <td class="action-buttons">
-                        {{-- Tombol Lihat (ikon mata) --}}
+                        {{-- View Button (eye icon) --}}
                         <a href="{{ route('pegawai.show', $p->id) }}" class="btn-aksi btn-lihat" title="Lihat">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
                             </svg>
                         </a>
-                        {{-- Tombol Edit (ikon pensil) --}}
-                        <a href="{{ route('pegawai.edit', ['pegawai' => $p->id, '_redirect_to' => request()->fullUrl()]) }}" class="btn-aksi btn-edit" title="Edit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                        {{-- Edit Button (pencil icon) --}}
+                        <button type="button" class="btn-aksi btn-edit" title="Edit"
+                            data-bs-toggle="modal" data-bs-target="#editPegawaiModal"
+                            data-id="{{ $p->id }}"
+                            data-nip="{{ $p->nip }}"
+                            data-nik="{{ $p->nik ?? '' }}"
+                            data-nama-lengkap="{{ $p->nama_lengkap }}"
+                            data-tanggal-lahir="{{ $p->tanggal_lahir ? \Carbon\Carbon::parse($p->tanggal_lahir)->format('Y-m-d') : '' }}"
+                            data-jenis-kelamin="{{ $p->jenis_kelamin ?? '' }}"
+                            data-alamat="{{ $p->alamat ?? '' }}"
+                            data-email="{{ $p->email ?? '' }}"
+                            data-nomor-telepon="{{ $p->nomor_telepon ?? '' }}"
+                            data-jabatan="{{ $p->jabatan ?? '' }}"
+                            data-golongan-pangkat="{{ $p->golongan_pangkat ?? '' }}"
+                            data-unit-kerja-id="{{ $p->unit_kerja_id ?? '' }}"
+                            data-status-pegawai="{{ $p->status_pegawai ?? '' }}"
+                            data-foto-profil-path="{{ $p->foto_profil_path ? asset($p->foto_profil_path) : '' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                 <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 15.5v.5H.5a.5.5 0 0 1-.5-.5V.5a.5.5 0 0 1 .5-.5H2V2h2V.5a.5.5 0 0 1 .5-.5h.5a.5.5 0 0 1 .5.5v1.5h1.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.207l6.5-6.5z"/>
                             </svg>
-                        </a>
-                        {{-- Tombol Hapus (ikon tempat sampah) --}}
+                        </button>
+                        {{-- Delete Button (trash can icon) --}}
                         <form action="{{ route('pegawai.destroy', $p->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn-aksi btn-hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus pegawai {{ $p->nama_lengkap }}?');" title="Hapus">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-trash-fill" viewBox="0 0 16 16">
                                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
                                 </svg>
                             </button>
@@ -203,7 +222,7 @@
     {{ $pegawai->links('vendor.pagination.bootstrap-4') }}
 </div>
 
-        {{-- BARU: Modal untuk Export dengan Opsi --}}
+    {{-- NEW: Modal for Export with Options (already exists) --}}
     <div class="modal fade" id="exportOptionsModal" tabindex="-1" aria-labelledby="exportOptionsLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -221,7 +240,7 @@
                                     'nik' => 'NIK',
                                     'nama_lengkap' => 'Nama Lengkap',
                                     'nomor_telepon' => 'No. Telepon',
-                                    'unit_kerja.nama_unit' => 'Unit Kerja',
+                                    'unit_kerja.nama_unit' => 'Bidang',
                                     'jabatan' => 'Jabatan',
                                     'golongan_pangkat' => 'Pangkat',
                                     'status_pegawai' => 'Status',
@@ -229,7 +248,6 @@
                                     'tanggal_lahir' => 'Tanggal Lahir',
                                     'jenis_kelamin' => 'Jenis Kelamin',
                                     'email' => 'Email',
-                                
                                 ];
                             @endphp
                             @foreach ($exportColumns as $key => $label)
@@ -257,9 +275,9 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="unit_kerja_filter_modal" class="form-label">Unit Kerja:</label>
+                            <label for="unit_kerja_filter_modal" class="form-label">Bidang:</label>
                             <select class="form-select" id="unit_kerja_filter_modal" name="unit_kerja_filter">
-                                <option value="">Semua Unit Kerja</option>
+                                <option value="">Bidang</option>
                                 @foreach ($unitKerjaList as $unit)
                                     <option value="{{ $unit->id }}">
                                         {{ $unit->nama_unit }}
@@ -277,57 +295,410 @@
         </div>
     </div>
 
+    {{-- NEW: Modal for Add New Employee (already exists) --}}
+    <div class="modal fade" id="tambahPegawaiModal" tabindex="-1" aria-labelledby="tambahPegawaiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered"> {{-- Use modal-lg for wider modal --}}
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #363d53; color: white;">
+                    <h5 class="modal-title" id="tambahPegawaiModalLabel" style="text-align:center;">Tambah Pegawai Baru</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('pegawai.store') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-grid">
+                            <p class="form-group">
+                                <label for="nip">NIP:</label>
+                                <input type="text" name="nip" id="nip" value="{{ old('nip') }}" required>
+                            </p>
+
+                            <p class="form-group">
+                                <label for="nik">NIK:</label>
+                                <input type="text" name="nik" id="nik" value="{{ old('nik') }}">
+                            </p>
+
+                            <p class="form-group">
+                                <label for="nama_lengkap">Nama Lengkap:</label>
+                                <input type="text" name="nama_lengkap" id="nama_lengkap" value="{{ old('nama_lengkap') }}" required>
+                            </p>
+
+                            <p class="form-group">
+                                <label for="tanggal_lahir">Tanggal Lahir:</label>
+                                <input type="date" name="tanggal_lahir" id="tanggal_lahir" value="{{ old('tanggal_lahir') }}">
+                            </p>
+
+                            <p class="form-group">
+                                <label for="jenis_kelamin">Jenis Kelamin:</label>
+                                <select name="jenis_kelamin" id="jenis_kelamin">
+                                    <option value="">Pilih</option>
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                            </p>
+
+                            <p class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" name="email" id="email" value="{{ old('email') }}">
+                            </p>
+
+                            <p class="form-group">
+                                <label for="nomor_telepon">Nomor Telepon:</label>
+                                <input type="text" name="nomor_telepon" id="nomor_telepon" value="{{ old('nomor_telepon') }}">
+                            </p>
+
+                            <p class="form-group">
+                                <label for="jabatan">Jabatan:</label>
+                                <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan') }}">
+                            </p>
+
+                            <p class="form-group">
+                                <label for="pangkat_golongan">Pangkat dan Golongan:</label>
+                                <input type="text" name="pangkat_golongan" id="pangkat_golongan" value="{{ old('pangkat_golongan') }}">
+                            </p>
+
+                            <p class="form-group">
+                                <label for="unit_kerja_id">Bidang:</label>
+                                <select name="unit_kerja_id" id="unit_kerja_id">
+                                    <option value="">Pilih Bidang</option>
+                                    @foreach ($unitKerjaList as $unit)
+                                        <option value="{{ $unit->id }}" {{ old('unit_kerja_id') == $unit->id ? 'selected' : '' }}>
+                                            {{ $unit->nama_unit }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </p>
+
+                            <p class="form-group">
+                                <label for="status_pegawai">Status Pegawai:</label>
+                                <select name="status_pegawai" id="status_pegawai">
+                                    <option value="">Pilih</option>
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Non-aktif">Non-aktif</option>
+                                    <option value="Pensiun">Pensiun</option>
+                                </select>
+                            </p>
+
+                            <p class="form-group">
+                                <label for="foto_profil">Foto Profil:</label>
+                                <input type="file" name="foto_profil" id="foto_profil">
+                            </p>
+                        </div>
+
+                        {{-- Address and buttons remain one column --}}
+                        <p>
+                            <label for="alamat">Alamat:</label>
+                            <textarea name="alamat" id="alamat">{{ old('alamat') }}</textarea>
+                        </p>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Simpan Pegawai</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- NEW: Modal for Edit Employee --}}
+    <div class="modal fade" id="editPegawaiModal" tabindex="-1" aria-labelledby="editPegawaiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPegawaiModalLabel">Edit Data Pegawai</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editPegawaiForm" method="POST" action="" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+
+                        {{-- Hidden input to store redirect URL --}}
+                        <input type="hidden" name="_redirect_to" value="{{ request()->fullUrl() }}">
+
+                        <div class="form-grid">
+                            <p class="form-group">
+                                <label for="modal_edit_nip">NIP:</label>
+                                <input type="text" name="nip" id="modal_edit_nip" required>
+                                @error('nip')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_nik">NIK:</label>
+                                <input type="text" name="nik" id="modal_edit_nik">
+                                @error('nik')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_nama_lengkap">Nama Lengkap:</label>
+                                <input type="text" name="nama_lengkap" id="modal_edit_nama_lengkap" required>
+                                @error('nama_lengkap')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_tanggal_lahir">Tanggal Lahir:</label>
+                                <input type="date" name="tanggal_lahir" id="modal_edit_tanggal_lahir">
+                                @error('tanggal_lahir')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_jenis_kelamin">Jenis Kelamin:</label>
+                                <select name="jenis_kelamin" id="modal_edit_jenis_kelamin">
+                                    <option value="">Pilih</option>
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                                @error('jenis_kelamin')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_email">Email:</label>
+                                <input type="email" name="email" id="modal_edit_email">
+                                @error('email')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_nomor_telepon">Nomor Telepon:</label>
+                                <input type="text" name="nomor_telepon" id="modal_edit_nomor_telepon">
+                                @error('nomor_telepon')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_jabatan">Jabatan:</label>
+                                <input type="text" name="jabatan" id="modal_edit_jabatan">
+                                @error('jabatan')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_golongan_pangkat">Pangkat dan Golongan:</label>
+                                <input type="text" name="golongan_pangkat" id="modal_edit_golongan_pangkat">
+                                @error('golongan_pangkat')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_unit_kerja_id">Bidang:</label>
+                                <select name="unit_kerja_id" id="modal_edit_unit_kerja_id">
+                                    <option value="">Pilih Bidang</option>
+                                    @foreach ($unitKerjaList as $unit)
+                                        <option value="{{ $unit->id }}">{{ $unit->nama_unit }}</option>
+                                    @endforeach
+                                </select>
+                                @error('unit_kerja_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_status_pegawai">Status Pegawai:</label>
+                                <select name="status_pegawai" id="modal_edit_status_pegawai">
+                                    <option value="">Pilih</option>
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Non-aktif">Non-aktif</option>
+                                    <option value="Pensiun">Pensiun</option>
+                                </select>
+                                @error('status_pegawai')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_foto_profil">Foto Profil:</label>
+                                {{-- Restructured photo profile section --}}
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex flex-col"> {{-- Column for image and checkbox --}}
+                                        <div id="modal_current_foto_profil_container" class="flex items-center gap-2 mb-2">
+                                            <img src="" alt="Foto Profil Saat Ini" class="foto-preview w-16 h-16 object-cover rounded-md" id="modal_current_foto_profil">
+                                            <div class="flex items-center">
+                                                <input type="checkbox" name="hapus_foto_profil" value="1" id="modal_edit_hapus_foto_profil" class="mr-1">
+                                                <label for="modal_edit_hapus_foto_profil" class="mb-0">Hapus Foto Profil Saat Ini</label>
+                                            </div>
+                                        </div>
+                                        <small class="block mt-1 text-gray-500 text-sm">Kosongkan jika tidak ingin mengubah.</small>
+                                    </div>
+                                    <div class="flex items-start"> {{-- Column for file input --}}
+                                        <input type="file" name="foto_profil" id="modal_edit_foto_profil">
+                                    </div>
+                                </div>
+                                @error('foto_profil')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </p>
+                        </div>
+
+                        <p>
+                            <label for="modal_edit_alamat">Alamat:</label>
+                            <textarea name="alamat" id="modal_edit_alamat"></textarea>
+                            @error('alamat')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </p>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Perbarui Pegawai</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
-@section('scripts') {{-- Untuk JavaScript yang spesifik ke halaman ini --}}
+@section('scripts') {{-- For page-specific JavaScript --}}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Script untuk modal hapus (sudah ada)
+    // Script for delete modal (already exists)
     const confirmDeleteModalElement = document.getElementById('confirmDeleteModal');
     const formDelete = document.getElementById('formDelete');
     const namaPegawaiSpan = document.getElementById('namaPegawai');
 
-    confirmDeleteModalElement.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const nama = button.getAttribute('data-nama');
-        const action = button.getAttribute('data-action');
+    if (confirmDeleteModalElement) {
+        confirmDeleteModalElement.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const nama = button.getAttribute('data-nama');
+            const action = button.getAttribute('data-action');
 
-        namaPegawaiSpan.textContent = nama;
-        formDelete.setAttribute('action', action);
-    });
+            namaPegawaiSpan.textContent = nama;
+            formDelete.setAttribute('action', action);
+        });
+    }
 
-    // BARU: Script untuk modal Export dengan Opsi
+    // Script for Export Options Modal (already exists)
     const exportOptionsModalElement = document.getElementById('exportOptionsModal');
-    exportOptionsModalElement.addEventListener('show.bs.modal', function (event) {
-        // Reset form setiap kali modal dibuka (opsional, agar pilihan default lagi)
-        const exportForm = document.getElementById('exportForm');
-        exportForm.reset(); 
-        // Anda juga bisa mengatur nilai default berdasarkan filter yang sedang aktif di tabel utama
-        // Misal, jika ada search/filter di URL, set checkbox/select modal sesuai itu
-        const currentSearchTerm = new URLSearchParams(window.location.search).get('search');
-        const currentUnitFilter = new URLSearchParams(window.location.search).get('unit_kerja_filter');
-        const currentStatusFilter = new URLSearchParams(window.location.search).get('status_filter'); // Jika Anda punya filter status di tabel utama juga
+    if (exportOptionsModalElement) {
+        exportOptionsModalElement.addEventListener('show.bs.modal', function (event) {
+            const exportForm = document.getElementById('exportForm');
+            exportForm.reset(); 
+            
+            const currentSearchTerm = new URLSearchParams(window.location.search).get('search');
+            const currentUnitFilter = new URLSearchParams(window.location.search).get('unit_kerja'); // Use 'unit_kerja' as per your form name
+            const currentStatusFilter = new URLSearchParams(window.location.search).get('status_pegawai'); // Use 'status_pegawai' as per your form name
 
-        // Contoh set filter unit kerja di modal jika sudah ada filter di tabel utama
-        if (currentUnitFilter) {
-            document.getElementById('unit_kerja_filter_modal').value = currentUnitFilter;
-        }
-        // Contoh set filter status di modal
-        if (currentStatusFilter) {
-            document.getElementById('status_filter').value = currentStatusFilter;
-        }
+            if (currentUnitFilter) {
+                document.getElementById('unit_kerja_filter_modal').value = currentUnitFilter;
+            }
+            if (currentStatusFilter) {
+                document.getElementById('status_filter').value = currentStatusFilter;
+            }
 
-        // Untuk checkbox kolom, Anda bisa membuat array default yang selalu terpilih
-        // Atau ambil dari config jika ingin lebih dinamis
-        const defaultColumns = ['nip', 'nama_lengkap', 'nomor_telepon', 'unit_kerja.nama_unit', 'jabatan', 'status_pegawai', 'alamat'];
-        exportForm.querySelectorAll('input[name="columns[]"]').forEach(checkbox => {
-            if (defaultColumns.includes(checkbox.value)) {
-                checkbox.checked = true;
-            } else {
-                checkbox.checked = false;
+            const defaultColumns = ['nip', 'nama_lengkap', 'nomor_telepon', 'unit_kerja.nama_unit', 'jabatan', 'status_pegawai', 'alamat'];
+            exportForm.querySelectorAll('input[name="columns[]"]').forEach(checkbox => {
+                if (defaultColumns.includes(checkbox.value)) {
+                    checkbox.checked = true;
+                } else {
+                    checkbox.checked = false;
+                }
+            });
+        });
+    }
+
+    // Script for Add New Employee Modal (already exists)
+    const tambahPegawaiModalElement = document.getElementById('tambahPegawaiModal');
+    if (tambahPegawaiModalElement) {
+        tambahPegawaiModalElement.addEventListener('show.bs.modal', function (event) {
+            // Reset form when modal is shown (optional, to clear previous inputs)
+            const form = tambahPegawaiModalElement.querySelector('form');
+            if (form) {
+                form.reset();
+                // If there were validation errors, old() values would repopulate.
+                // For demonstration, we just reset. In a real app, you might
+                // want to clear error messages too.
             }
         });
-    });
+    }
+
+    // NEW: Script for Edit Employee Modal
+    const editPegawaiModal = document.getElementById('editPegawaiModal');
+    if (editPegawaiModal) {
+        editPegawaiModal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            const button = event.relatedTarget;
+
+            // Extract info from data-* attributes
+            const id = button.getAttribute('data-id');
+            const nip = button.getAttribute('data-nip');
+            const nik = button.getAttribute('data-nik');
+            const namaLengkap = button.getAttribute('data-nama-lengkap');
+            const tanggalLahir = button.getAttribute('data-tanggal-lahir');
+            const jenisKelamin = button.getAttribute('data-jenis-kelamin');
+            const alamat = button.getAttribute('data-alamat');
+            const email = button.getAttribute('data-email');
+            const nomorTelepon = button.getAttribute('data-nomor-telepon');
+            const jabatan = button.getAttribute('data-jabatan');
+            const golonganPangkat = button.getAttribute('data-golongan-pangkat');
+            const unitKerjaId = button.getAttribute('data-unit-kerja-id');
+            const statusPegawai = button.getAttribute('data-status-pegawai');
+            const fotoProfilPath = button.getAttribute('data-foto-profil-path');
+
+            // Update the modal's content.
+            const modalTitle = editPegawaiModal.querySelector('.modal-title');
+            const form = editPegawaiModal.querySelector('#editPegawaiForm');
+
+            // Set modal title
+            modalTitle.textContent = `Edit Data Pegawai: ${namaLengkap}`;
+
+            // Set form action
+            form.action = `/pegawai/${id}`; // Adjust this route as per your Laravel routes
+
+            // Populate form fields
+            editPegawaiModal.querySelector('#modal_edit_nip').value = nip;
+            editPegawaiModal.querySelector('#modal_edit_nik').value = nik;
+            editPegawaiModal.querySelector('#modal_edit_nama_lengkap').value = namaLengkap;
+            editPegawaiModal.querySelector('#modal_edit_tanggal_lahir').value = tanggalLahir;
+            editPegawaiModal.querySelector('#modal_edit_jenis_kelamin').value = jenisKelamin;
+            editPegawaiModal.querySelector('#modal_edit_alamat').value = alamat;
+            editPegawaiModal.querySelector('#modal_edit_email').value = email;
+            editPegawaiModal.querySelector('#modal_edit_nomor_telepon').value = nomorTelepon;
+            editPegawaiModal.querySelector('#modal_edit_jabatan').value = jabatan;
+            editPegawaiModal.querySelector('#modal_edit_golongan_pangkat').value = golonganPangkat;
+            editPegawaiModal.querySelector('#modal_edit_unit_kerja_id').value = unitKerjaId;
+            editPegawaiModal.querySelector('#modal_edit_status_pegawai').value = statusPegawai;
+
+            // Handle foto profil preview and delete option
+            const currentFotoProfilContainer = editPegawaiModal.querySelector('#modal_current_foto_profil_container');
+            const currentFotoProfil = editPegawaiModal.querySelector('#modal_current_foto_profil');
+            const hapusFotoProfilCheckbox = editPegawaiModal.querySelector('#modal_edit_hapus_foto_profil');
+
+            if (fotoProfilPath) {
+                currentFotoProfil.src = fotoProfilPath;
+                currentFotoProfilContainer.style.display = 'flex'; // Changed to flex
+                hapusFotoProfilCheckbox.checked = false; // Uncheck by default when modal opens
+            } else {
+                currentFotoProfilContainer.style.display = 'none';
+            }
+        });
+
+        // Handle validation errors after submission for editPegawaiModal
+        @if ($errors->any() && session('modal_target') == 'editPegawaiModal')
+            var editModal = new bootstrap.Modal(document.getElementById('editPegawaiModal'));
+            editModal.show();
+        @endif
+    }
+
+    // Handle validation errors after submission for tambahPegawaiModal
+    @if ($errors->any() && session('modal_target') == 'tambahPegawaiModal')
+        var tambahModal = new bootstrap.Modal(document.getElementById('tambahPegawaiModal'));
+        tambahModal.show();
+    @endif
 });
 </script>
 @endsection

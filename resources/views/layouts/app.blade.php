@@ -88,11 +88,6 @@
         @yield('content')
     </main>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        xintegrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
-        crossorigin="anonymous">
-</script>
-    
 
 <footer class="text-center mt-5 mb-3 text-muted" style="font-size: 14px;">
     © 2025 Sistem Informasi Kepegawaian - Dikelola oleh Bagian Kepegawaian
@@ -100,5 +95,10 @@
 
 @yield('scripts')
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        xintegrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
+        crossorigin="anonymous">
+</script>
+    
 </body>
 </html>

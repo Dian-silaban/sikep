@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Pegawai</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Ensure Bootstrap CSS is loaded -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* CSS Global untuk Body */
@@ -168,7 +170,7 @@
             transform: translateY(-2px);
         }
 
-        /* Styling untuk Form Input */
+        /* Styling untuk Form Input (used by modal forms) */
         form p {
             margin-bottom: 15px;
         }
@@ -413,7 +415,8 @@
                     @if ($pegawai->foto_profil_path)
                         <img src="{{ asset($pegawai->foto_profil_path) }}" alt="Foto Profil" class="foto-profil">
                     @else
-                        <p>Tidak ada foto profil.</p>
+                        {{-- Menggunakan logika default dari controller yang sudah disesuaikan --}}
+                        <img src="{{ asset('img/' . ($pegawai->jenis_kelamin == 'Perempuan' ? 'wanita.jpg' : 'pria.jpg')) }}" alt="Foto Profil Default" class="foto-profil">
                     @endif
                 </div>
 
@@ -462,7 +465,7 @@
                         {{ $pegawai->golongan_pangkat ?? '-' }}
                     </div>
                     <div class="item-kotak">
-                        <strong>Unit Kerja</strong>
+                        <strong>Bidang</strong>
                         {{ $pegawai->unit_kerja->nama_unit ?? '-' }}
                     </div>
                     <div class="item-kotak">
@@ -547,12 +550,20 @@
                                         </svg>
                                     </a>
 
-                                    {{-- Tombol Rename --}}
-                                    <a href="{{ route('dokumen.edit', $doc->id) }}" class="btn-aksi btn-rename" title="Rename Dokumen">
+                                    {{-- Tombol Rename (Trigger Modal) --}}
+                                    <button type="button" class="btn-aksi btn-rename" title="Rename Dokumen"
+                                        data-bs-toggle="modal" data-bs-target="#renameFileModal"
+                                        data-id="{{ $doc->id }}"
+                                        data-nama-file-asli="{{ $doc->nama_file_asli }}"
+                                        data-jenis-dokumen-id="{{ $doc->jenis_dokumen_id }}"
+                                        data-keterangan="{{ $doc->keterangan ?? '' }}"
+                                        data-versi="{{ $doc->versi_dokumen }}"
+                                        data-pegawai-nama="{{ $pegawai->nama_lengkap }}"
+                                        data-pegawai-nip="{{ $pegawai->nip }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                             <path d="M12.854.146a.5.5 0 0 1 .707 0l2.293 2.293a.5.5 0 0 1 0 .707l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5zM11.207 2.5 13.5 4.793 12.5 5.793 10.207 3.5 11.207 2.5zm1.586 3L10.5 3.207l-8.646 8.647-.854 2.146 2.146-.854L12.793 5.5z"/>
                                         </svg>
-                                    </a>
+                                    </button>
 
                                     {{-- Tombol Hapus --}}
                                     <form action="{{ route('dokumen.delete', $doc->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('PERINGATAN! Anda akan menghapus dokumen ini secara PERMANEN. Lanjutkan?');">
@@ -578,10 +589,135 @@
             
         </div>
         <footer class="text-center mt-5 mb-3 text-muted" style="font-size: 14px;">
-    © 2025 Sistem Informasi Kepegawaian - Dikelola oleh Bagian Kepegawaian
-</footer>
+            © 2025 Sistem Informasi Kepegawaian - Dikelola oleh Bagian Kepegawaian
+        </footer>
         
     </div>
-    
+
+    {{-- NEW: Modal for Rename File --}}
+    <div class="modal fade" id="renameFileModal" tabindex="-1" aria-labelledby="renameFileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="renameFileModalLabel">Edit Dokumen</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex align-items-center p-3 mb-4 rounded shadow-sm" style="background-color: #f9fafb;">
+                        <i class="bi bi-person-badge-fill fs-3 text-primary me-3"></i>
+                        <div>
+                            <div class="fw-semibold text-dark" id="modalEmployeeName"></div>
+                            <small class="text-muted" id="modalEmployeeNIP"></small>
+                        </div>
+                    </div>
+
+                    <form id="renameDocumentForm" method="POST" action="" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT') {{-- PENTING: Untuk metode UPDATE --}}
+
+                        <div class="form-group">
+                            <label for="modal_nama_file_asli">Nama File Dokumen:</label>
+                            <input type="text" name="nama_file_asli" id="modal_nama_file_asli" class="form-input-text" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="modal_jenis_dokumen_id">Jenis Dokumen:</label>
+                            <select name="jenis_dokumen_id" id="modal_jenis_dokumen_id" class="form-select" required>
+                                <option value="">Pilih Jenis Dokumen</option>
+                                @foreach ($jenis_dokumen as $jenis)
+                                    <option value="{{ $jenis->id }}">{{ $jenis->nama_jenis }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="modal_keterangan">Keterangan (Opsional):</label>
+                            <textarea name="keterangan" id="modal_keterangan" class="form-textarea"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="modal_file_dokumen">Upload File Baru (untuk membuat versi baru):</label>
+                            <input type="file" name="file_dokumen" id="modal_file_dokumen" class="form-input-file">
+                            <small class="form-hint">
+                                Kosongkan jika hanya ingin mengubah detail dokumen. Jika diisi, akan menjadi V<span id="modal_next_version"></span> dan menggantikan versi aktif saat ini.
+                            </small>
+                        </div>
+                        <div class="form-group" id="modal_current_file_link_container" style="display: none;">
+                            <p class="form-hint mb-2">File saat ini:</p>
+                            <a href="#" target="_blank" id="modal_current_file_link"
+                            class="btn btn-primary">
+                            🔍 Lihat File Saat Ini V<span id="modal_current_version_display"></span>
+                            </a>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Perbarui Dokumen</button>
+                            <button type="button" class="btn-batal" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (must be loaded after jQuery if you use it, or before </body>) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const renameFileModal = document.getElementById('renameFileModal');
+            renameFileModal.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                const button = event.relatedTarget;
+
+                // Extract info from data-* attributes
+                const documentId = button.getAttribute('data-id');
+                const namaFileAsli = button.getAttribute('data-nama-file-asli');
+                const jenisDokumenId = button.getAttribute('data-jenis-dokumen-id');
+                const keterangan = button.getAttribute('data-keterangan');
+                const versi = parseInt(button.getAttribute('data-versi'));
+                const pegawaiNama = button.getAttribute('data-pegawai-nama');
+                const pegawaiNip = button.getAttribute('data-pegawai-nip');
+                const currentFilePath = button.closest('tr').querySelector('.btn-lihat').getAttribute('href'); // Get current file path from "Lihat" button
+
+                // Update the modal's content.
+                const modalTitle = renameFileModal.querySelector('.modal-title');
+                const form = renameFileModal.querySelector('#renameDocumentForm');
+                const inputNamaFileAsli = renameFileModal.querySelector('#modal_nama_file_asli');
+                const selectJenisDokumen = renameFileModal.querySelector('#modal_jenis_dokumen_id');
+                const textareaKeterangan = renameFileModal.querySelector('#modal_keterangan');
+                const modalNextVersionSpan = renameFileModal.querySelector('#modal_next_version');
+                const modalCurrentVersionDisplay = renameFileModal.querySelector('#modal_current_version_display');
+                const modalCurrentFileLink = renameFileModal.querySelector('#modal_current_file_link');
+                const modalCurrentFileLinkContainer = renameFileModal.querySelector('#modal_current_file_link_container');
+                const modalEmployeeName = renameFileModal.querySelector('#modalEmployeeName');
+                const modalEmployeeNIP = renameFileModal.querySelector('#modalEmployeeNIP');
+
+
+                // Set modal title and employee info
+                modalTitle.textContent = `Edit Dokumen: ${namaFileAsli}`;
+                modalEmployeeName.textContent = pegawaiNama;
+                modalEmployeeNIP.textContent = `NIP: ${pegawaiNip}`;
+
+                // Set form action
+                form.action = `/dokumen/${documentId}`; // Adjust this route as per your Laravel routes
+
+                // Populate form fields
+                inputNamaFileAsli.value = namaFileAsli;
+                selectJenisDokumen.value = jenisDokumenId;
+                textareaKeterangan.value = keterangan;
+                modalNextVersionSpan.textContent = versi + 1;
+                modalCurrentVersionDisplay.textContent = versi;
+
+                // Set current file link
+                if (currentFilePath) {
+                    modalCurrentFileLink.href = currentFilePath;
+                    modalCurrentFileLinkContainer.style.display = 'block';
+                } else {
+                    modalCurrentFileLinkContainer.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

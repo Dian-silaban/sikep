@@ -413,12 +413,12 @@ small {
 }
 
 .btn-edit {
-    background-color: #10b981; /* kuning */
+    background-color: #10b981 !important; /* kuning */
     color: white;
 }
 
 .btn-edit:hover {
-    background-color: #0e9266;
+    background-color: #0e9266 !important;
 }
 
 .btn-hapus {
@@ -988,5 +988,56 @@ small.form-hint {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Add this section to your CSS file, e.g., near other form styling */
+
+/* Two-column layout for forms */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 20px; /* Gap between columns and rows */
+}
+
+/* Ensure form groups within the grid don't have excessive bottom margin pushing them down */
+.form-grid p.form-group {
+    margin-bottom: 0; /* Remove default paragraph margin */
+}
+
+/* Ensure inputs/selects inside form-group within the grid take full width of their grid cell */
+.form-grid .form-group input,
+.form-grid .form-group select,
+.form-grid .form-group textarea,
+.form-grid .form-group input[type="file"] {
+    margin-bottom: 0; /* Important: Remove the margin-bottom that pushes elements to new lines */
+}
+
+
+/* app.blade.php */
+* {
+    font-family: 'Poppins';
+}
+.navbar-brand{
+    color: #363d53;
+}
+
+/* create.blade.php */
+/* Container form */
+.container-detail {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    max-width: 700px;
+    margin: 0 auto 30px;
+}
+
+/* edit.blade.php */
+.form-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    max-width: 800px;
+    margin: 0 auto;
+}
 
 

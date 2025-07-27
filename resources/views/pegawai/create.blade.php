@@ -319,9 +319,9 @@
                         </p>
 
                         <p class="form-group">
-                            <label for="unit_kerja_id">Unit Kerja:</label>
+                            <label for="unit_kerja_id">Bidang:</label>
                             <select name="unit_kerja_id" id="unit_kerja_id">
-                                <option value="">Pilih Unit Kerja</option>
+                                <option value="">Pilih Bidang</option>
                                 @foreach ($unit_kerja as $unit)
                                     <option value="{{ $unit->id }}" {{ old('unit_kerja_id') == $unit->id ? 'selected' : '' }}>
                                         {{ $unit->nama_unit }}
