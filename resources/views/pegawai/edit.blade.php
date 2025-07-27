@@ -3,32 +3,27 @@
 @section('title', 'Edit Pegawai')
 
 @section('content')
-
 <div class="min-h-screen bg-gray-100 flex items-center justify-center p-4 sm:p-6 lg:p-8 font-inter">
     <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8 lg:p-10 w-full max-w-4xl">
         <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">{{ $pegawai->nama_lengkap }}</h2>
-
         <form method="POST" action="{{ route('pegawai.update', $pegawai->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
-            {{-- Input tersembunyi untuk menyimpan URL pengalihan --}}
             @if(request()->has('_redirect_to'))
                 <input type="hidden" name="_redirect_to" value="{{ request('_redirect_to') }}">
             @endif
 
-            {{-- Bagian Foto Profil --}}
+            {{-- Foto Profil --}}
             <div class="flex flex-col items-center mb-8">
                 <div class="relative w-32 h-32 overflow-hidden border-1 border-white-600 shadow-md">
-    {{-- Image element for profile picture preview --}}
-    <img id="profile-preview-image"
-        src="{{ $pegawai->foto_profil_path ? asset($pegawai->foto_profil_path) : 'https://placehold.co/128x128/e0e0e0/ffffff?text=No+Photo' }}"
-        alt="Foto Profil Saat Ini"
-        class="w-full h-full object-cover">
-    <input type="file" name="foto_profil" id="foto_profil" class="hidden" accept="image/*">
-</div>
+                    <img id="profile-preview-image"
+                        src="{{ $pegawai->foto_profil_path ? asset($pegawai->foto_profil_path) : 'https://placehold.co/128x128/e0e0e0/ffffff?text=No+Photo' }}"
+                        alt="Foto Profil Saat Ini"
+                        class="w-full h-full object-cover">
+                    <input type="file" name="foto_profil" id="foto_profil" class="hidden" accept="image/*">
+                </div>
                 <div class="mt-4 flex space-x-4">
-                    {{-- "Upload New" button now triggers the hidden file input --}}
                     <button type="button" id="upload-new-button" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md">Upload New</button>
                     @if ($pegawai->foto_profil_path)
                         <label for="hapus_foto_profil" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors shadow-md cursor-pointer">
@@ -47,42 +42,49 @@
                 <div>
                     <label for="nip" class="block text-gray-700 text-sm font-semibold mb-2">NIP:</label>
                     <input type="text" name="nip" id="nip" value="{{ old('nip', $pegawai->nip) }}" required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
                     @error('nip')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
-
                 {{-- NIK --}}
                 <div>
                     <label for="nik" class="block text-gray-700 text-sm font-semibold mb-2">NIK:</label>
                     <input type="text" name="nik" id="nik" value="{{ old('nik', $pegawai->nik) }}"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
                     @error('nik')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
-
                 {{-- Nama Lengkap --}}
                 <div>
                     <label for="nama_lengkap" class="block text-gray-700 text-sm font-semibold mb-2">Nama Lengkap:</label>
                     <input type="text" name="nama_lengkap" id="nama_lengkap" value="{{ old('nama_lengkap', $pegawai->nama_lengkap) }}" required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
                     @error('nama_lengkap')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
-
                 {{-- Tanggal Lahir --}}
                 <div>
                     <label for="tanggal_lahir" class="block text-gray-700 text-sm font-semibold mb-2">Tanggal Lahir:</label>
                     <input type="date" name="tanggal_lahir" id="tanggal_lahir" value="{{ old('tanggal_lahir', $pegawai->tanggal_lahir ? \Carbon\Carbon::parse($pegawai->tanggal_lahir)->format('Y-m-d') : '') }}"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
                     @error('tanggal_lahir')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
+
+                {{-- TMT (Tanggal Mulai Terhitung) --}}
+                        <div>
+                            <label for="tmt" class="block text-gray-700 text-sm font-semibold mb-2">TMT (Tanggal Mulai Terhitung):</label>
+                            <input type="date" name="tmt" id="tmt" value="{{ old('tmt', $pegawai->tmt ? \Carbon\Carbon::parse($pegawai->tmt)->format('Y-m-d') : '') }}"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
+                            @error('tmt')
+                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
                 {{-- Jenis Kelamin --}}
                 <div>
                     <label class="block text-gray-700 text-sm font-semibold mb-2">Jenis Kelamin:</label>
@@ -100,46 +102,83 @@
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
-
                 {{-- Email --}}
                 <div>
                     <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Email:</label>
                     <input type="email" name="email" id="email" value="{{ old('email', $pegawai->email) }}"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
                     @error('email')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
-
                 {{-- Nomor Telepon --}}
                 <div>
                     <label for="nomor_telepon" class="block text-gray-700 text-sm font-semibold mb-2">Nomor Telepon:</label>
                     <input type="text" name="nomor_telepon" id="nomor_telepon" value="{{ old('nomor_telepon', $pegawai->nomor_telepon) }}"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
                     @error('nomor_telepon')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
-
                 {{-- Jabatan --}}
                 <div>
                     <label for="jabatan" class="block text-gray-700 text-sm font-semibold mb-2">Jabatan:</label>
                     <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan', $pegawai->jabatan) }}"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
                     @error('jabatan')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
-
                 {{-- Golongan Pangkat --}}
                 <div>
-                    <label for="golongan_pangkat" class="block text-gray-700 text-sm font-semibold mb-2">Pangkat dan Golongan:</label>
-                    <input type="text" name="golongan_pangkat" id="golongan_pangkat" value="{{ old('golongan_pangkat', $pegawai->golongan_pangkat) }}"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
-                    @error('golongan_pangkat')
+                    <label for="golongan_id" class="block text-gray-700 text-sm font-semibold mb-2">Golongan:</label>
+                    <select name="golongan_id" id="golongan_id"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
+                        <option value="">Pilih Golongan</option>
+                        @foreach ($golongans as $golongan)
+                            <option value="{{ $golongan->id }}" {{ old('golongan_id', $pegawai->golongan_id) == $golongan->id ? 'selected' : '' }}>
+                                {{ $golongan->nama_golongan }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('golongan_id')
                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                     @enderror
                 </div>
+                {{-- Eselon --}}
+                <div>
+                    <label for="eselon_id" class="block text-gray-700 text-sm font-semibold mb-2">Eselon:</label>
+                    <select name="eselon_id" id="eselon_id"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">
+                        <option value="">Pilih Eselon</option>
+                        @foreach ($eselons as $eselon)
+                            <option value="{{ $eselon->id }}" {{ old('eselon_id', $pegawai->eselon_id) == $eselon->id ? 'selected' : '' }}>
+                                {{ $eselon->nama_eselon }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('eselon_id')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
+                {{-- Pendidikan --}}
+                <div>
+                    <label for="pendidikan_id" class="block text-gray-700 text-sm font-semibold mb-2">Pendidikan:</label>
+                    <select name="pendidikan_id" id="pendidikan_id"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-gray-900">    
+                        <option value="">Pilih Pendidikan</option>
+                        @foreach ($pendidikans as $pendidikan)
+                            <option value="{{ $pendidikan->id }}" {{ old('pendidikan_id', $pegawai->pendidikan_id) == $pendidikan->id ? 'selected' : '' }}>
+                                {{ $pendidikan->nama_pendidikan }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('pendidikan_id')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
+                </div>  
+            </div>
+
 
                 {{-- Unit Kerja --}}
                 <div>
@@ -173,6 +212,8 @@
                     @enderror
                 </div>
             </div>
+
+            
 
             {{-- Alamat (Full Width) --}}
             <div class="mb-8">

@@ -21,6 +21,14 @@
             <i class="bi bi-file-earmark-text me-2"></i>Manajemen Dokumen
         </a>
 
+        <a href="{{ route('settings.bezetting.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('settings.bezetting.index') || request()->routeIs('settings.bezetting.export_excel') ? 'active' : '' }}">
+            <i class="bi bi-bar-chart-fill me-2"></i>Laporan Bezetting
+        </a>
+        {{-- Link untuk Manajemen Data Bezetting Kontrak --}}
+        <a href="{{ route('settings.bezetting_kontrak.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('settings.bezetting_kontrak.*') ? 'active' : '' }}">
+            <i class="bi bi-person-lines-fill me-2"></i>Data Kontrak (Bezetting)
+        </a>
+
         {{-- Tambahkan menu pengaturan lainnya di sini --}}
     </div>
 </div>

@@ -438,6 +438,10 @@
                         {{ $pegawai->tanggal_lahir ? \Carbon\Carbon::parse($pegawai->tanggal_lahir)->format('d-m-Y') : '-' }}
                     </div>
                     <div class="item-kotak">
+                        <strong>TMT</strong>
+                        {{ $pegawai->tmt ? \Carbon\Carbon::parse($pegawai->tmt)->format('d-m-Y') : '-' }}
+                    </div>
+                    <div class="item-kotak">
                         <strong>Jenis Kelamin</strong>
                         {{ $pegawai->jenis_kelamin ?? '-' }}
                     </div>
@@ -457,10 +461,22 @@
                         <strong>Jabatan</strong>
                         {{ $pegawai->jabatan ?? '-' }}
                     </div>
+                    
                     <div class="item-kotak">
-                        <strong>Pangkat dan Golongan</strong>
-                        {{ $pegawai->golongan_pangkat ?? '-' }}
+                        <strong>Golongan</strong>
+                        {{ $pegawai->golongan->nama_golongan ?? '-' }}
                     </div>
+
+                    <div class="item-kotak">
+                        <strong>Eselon</strong>
+                        {{ $pegawai->eselon->nama_eselon ?? '-' }}
+                    </div>
+
+                    <div class="item-kotak">
+                        <strong>Pendidikan</strong>
+                        {{ $pegawai->pendidikan->nama_pendidikan ?? '-' }}
+                    </div>
+
                     <div class="item-kotak">
                         <strong>Unit Kerja</strong>
                         {{ $pegawai->unit_kerja->nama_unit ?? '-' }}
@@ -468,6 +484,10 @@
                     <div class="item-kotak">
                         <strong>Status Pegawai</strong>
                         {{ $pegawai->status_pegawai ?? '-' }}
+                    </div>
+                    <div class="item-kotak">
+                        <strong>TMT Status</strong>
+                        {{ $pegawai->tmt_status ? \Carbon\Carbon::parse($pegawai->tmt_status)->format('d-m-Y') : '-' }}
                     </div>
                 </div>
 
@@ -494,6 +514,13 @@
                         <label for="file_dokumen">File Dokumen:</label><br>
                         <input type="file" name="file_dokumen" id="file_dokumen" required>
                     </p>
+
+                    <p>
+                        <label for="tmt_dokumen">TMT Dokumen:</label><br>
+                        <input type="date" name="tmt_dokumen" id="tmt_dokumen" value="{{ old('tmt_dokumen') }}">
+                    </p>
+
+                    
                     <p>
                         <label for="keterangan">Keterangan (Asli/FotoCopy):</label><br>
                         <textarea name="keterangan" id="keterangan">{{ old('keterangan') }}</textarea>
@@ -516,6 +543,7 @@
                             <th>Keterangan</th>
                             <th>Status</th>
                             <th>Tgl. Unggah</th>
+                            <th>TMT Dokumen</th> {{-- BARU: Kolom TMT Dokumen --}}
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -530,6 +558,7 @@
                                     <strong>{{ $doc->status_dokumen }}</strong>
                                 </td>
                                 <td>{{ $doc->tanggal_upload->format('d-m-Y H:i') }}</td>
+                                <td>{{ $doc->tmt_dokumen ? \Carbon\Carbon::parse($doc->tmt_dokumen)->format('d-m-Y') : '-' }}</td> {{-- BARU: Tampilkan TMT Dokumen --}}
                                 <td class="action-buttons">
                                     {{-- Tombol Lihat --}}
                                     <a href="{{ asset($doc->path_file) }}" target="_blank" class="btn-aksi btn-lihat" title="Lihat Dokumen">
@@ -568,7 +597,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7">Tidak ada dokumen aktif atau revisi untuk pegawai ini.</td>
+                                <td colspan="8">Tidak ada dokumen aktif atau revisi untuk pegawai ini.</td> {{-- Perbarui colspan --}}
                             </tr>
                         @endforelse
                     </tbody>

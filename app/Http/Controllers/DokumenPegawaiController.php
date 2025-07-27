@@ -38,6 +38,7 @@ class DokumenPegawaiController extends Controller
             'jenis_dokumen_id' => 'required|exists:jenis_dokumen,id',
             'file_dokumen' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:30720',  
             'keterangan' => 'nullable|string|max:255',
+            'tmt_dokumen' => 'nullable|date', // Validasi untuk TMT Dokumen
         ]);
 
         $jenisDokumen = JenisDokumen::find($request->jenis_dokumen_id);
@@ -80,6 +81,7 @@ class DokumenPegawaiController extends Controller
             'versi_dokumen' => $newVersion,
             'status_dokumen' => 'Aktif',
             'keterangan' => $request->keterangan,
+            'tmt_dokumen' => $request->tmt_dokumen,
         ]);
 
         return redirect()->route('pegawai.show', $pegawai->id)->with('success', 'Dokumen berhasil diunggah dan versi dikelola.');
@@ -139,6 +141,7 @@ class DokumenPegawaiController extends Controller
             'nama_file_asli' => 'required|string|max:255', // Nama file baru harus diisi dari FORM
             'keterangan' => 'nullable|string|max:255',
             'file_dokumen' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:30720', // File baru opsional
+            'tmt_dokumen' => 'nullable|date', // Validasi untuk TMT Dokumen
         ]);
 
         $jenisDokumen = JenisDokumen::find($request->jenis_dokumen_id);
@@ -149,6 +152,7 @@ class DokumenPegawaiController extends Controller
             'jenis_dokumen_id' => $request->jenis_dokumen_id,
             'nama_file_asli' => $request->nama_file_asli, // BARIS UTAMA PERUBAHAN: Selalu ambil dari input form
             'keterangan' => $request->keterangan,
+            'tmt_dokumen' => $request->tmt_dokumen, // BARU: Tambahkan TMT Dokumen
         ];
 
         // Logika untuk file baru (jika diupload)

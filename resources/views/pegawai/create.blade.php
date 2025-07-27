@@ -271,21 +271,25 @@
                         <p class="form-group">
                             <label for="nip">NIP:</label>
                             <input type="text" name="nip" id="nip" value="{{ old('nip') }}" required>
+                            @error('nip') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
                             <label for="nik">NIK:</label>
                             <input type="text" name="nik" id="nik" value="{{ old('nik') }}">
+                            @error('nik') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
                             <label for="nama_lengkap">Nama Lengkap:</label>
                             <input type="text" name="nama_lengkap" id="nama_lengkap" value="{{ old('nama_lengkap') }}" required>
+                            @error('nama_lengkap') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
                             <label for="tanggal_lahir">Tanggal Lahir:</label>
                             <input type="date" name="tanggal_lahir" id="tanggal_lahir" value="{{ old('tanggal_lahir') }}">
+                            @error('tanggal_lahir') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
@@ -295,26 +299,68 @@
                                 <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                                 <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                             </select>
+                            @error('jenis_kelamin') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
                             <label for="email">Email:</label>
                             <input type="email" name="email" id="email" value="{{ old('email') }}">
+                            @error('email') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
                             <label for="nomor_telepon">Nomor Telepon:</label>
                             <input type="text" name="nomor_telepon" id="nomor_telepon" value="{{ old('nomor_telepon') }}">
+                            @error('nomor_telepon') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
+                        {{-- Input teks untuk nama jabatan --}}
                         <p class="form-group">
-                            <label for="jabatan">Jabatan:</label>
-                            <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan') }}">
+                            <label for="jabatan">Nama Jabatan:</label>
+                            <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan') }}" required>
+                            @error('jabatan') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
+                        {{-- Dropdown untuk Eselon --}}
                         <p class="form-group">
-                            <label for="pangkat_golongan">Pangkat dan Golongan:</label>
-                            <input type="text" name="pangkat_golongan" id="pangkat_golongan" value="{{ old('pangkat_golongan') }}">
+                            <label for="eselon_id">Eselon:</label>
+                            <select name="eselon_id" id="eselon_id" required>
+                                <option value="">Pilih Eselon</option>
+                                @foreach ($eselons as $eselon)
+                                    <option value="{{ $eselon->id }}" {{ old('eselon_id') == $eselon->id ? 'selected' : '' }}>
+                                        {{ $eselon->nama_eselon }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('eselon_id') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                        </p>
+
+                        {{-- Dropdown untuk Pangkat dan Golongan --}}
+                        <p class="form-group">
+                            <label for="golongan_id">Pangkat dan Golongan:</label>
+                            <select name="golongan_id" id="golongan_id">
+                                <option value="">Pilih Golongan</option>
+                                @foreach ($golongans as $golongan)
+                                    <option value="{{ $golongan->id }}" {{ old('golongan_id') == $golongan->id ? 'selected' : '' }}>
+                                        {{ $golongan->nama_golongan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('golongan_id') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                        </p>
+
+                        {{-- Dropdown untuk Pendidikan --}}
+                        <p class="form-group">
+                            <label for="pendidikan_id">Pendidikan:</label>
+                            <select name="pendidikan_id" id="pendidikan_id">
+                                <option value="">Pilih Pendidikan</option>
+                                @foreach ($pendidikans as $pendidikan)
+                                    <option value="{{ $pendidikan->id }}" {{ old('pendidikan_id') == $pendidikan->id ? 'selected' : '' }}>
+                                        {{ $pendidikan->nama_pendidikan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('pendidikan_id') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
@@ -327,6 +373,7 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('unit_kerja_id') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
@@ -337,12 +384,21 @@
                                 <option value="Non-aktif" {{ old('status_pegawai') == 'Non-aktif' ? 'selected' : '' }}>Non-aktif</option>
                                 <option value="Pensiun" {{ old('status_pegawai') == 'Pensiun' ? 'selected' : '' }}>Pensiun</option>
                             </select>
+                            @error('status_pegawai') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                        </p>
+
+                        {{-- BARU: Input untuk TMT Status --}}
+                        <p class="form-group">
+                            <label for="tmt_status">TMT Status:</label>
+                            <input type="date" name="tmt_status" id="tmt_status" value="{{ old('tmt_status') }}">
+                            @error('tmt_status') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
                             <label for="foto_profil">Foto Profil:</label>
                             <input type="file" name="foto_profil" id="foto_profil">
                             <img id="photo_preview" src="#" alt="Preview Foto Profil" class="hidden mt-2" style="max-width: 150px; max-height: 150px; border-radius: 8px;">
+                            @error('foto_profil') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
                     </div>
 
@@ -350,13 +406,17 @@
                     <p>
                         <label for="alamat">Alamat:</label>
                         <textarea name="alamat" id="alamat">{{ old('alamat') }}</textarea>
+                        @error('alamat') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                     </p>
 
                     <p>
                         <button type="submit">Simpan Pegawai</button>
                         <a href="{{ route('pegawai.index') }}" class="btn-custom">Batal</a>
                     </p>
+                    
+
                 </form>
+                
             </div>
 
 <script>
@@ -388,3 +448,4 @@
     </div>
 </body>
 </html>
+</form>

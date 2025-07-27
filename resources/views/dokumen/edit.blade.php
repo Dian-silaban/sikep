@@ -1,68 +1,69 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Dokumen')
-
 @section('content')
-    <div class="form-container">
-        <h2 class="form-header">Edit Dokumen: {{ $dokumen_pegawai->nama_file_asli }}</h2>
-        <div class="d-flex align-items-center p-3 mb-4 rounded shadow-sm" style="background-color: #f9fafb;">
-            <i class="bi bi-person-badge-fill fs-3 text-primary me-3"></i>
-            <div>
-                <div class="fw-semibold text-dark">Arda Putri</div>
-                <small class="text-muted">NIP: 1234567898765432</small>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-white">
+                    <h4 class="mb-0">Edit Dokumen: {{ $dokumen_pegawai->nama_file_asli }}</h4>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('dokumen.update', $dokumen_pegawai->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="jenis_dokumen_id" class="form-label">Jenis Dokumen <span class="text-danger">*</span></label>
+                            <select class="form-select @error('jenis_dokumen_id') is-invalid @enderror" id="jenis_dokumen_id" name="jenis_dokumen_id" required>
+                                <option value="">Pilih Jenis Dokumen</option>
+                                @foreach ($jenis_dokumen as $jenis)
+                                    <option value="{{ $jenis->id }}" {{ old('jenis_dokumen_id', $dokumen_pegawai->jenis_dokumen_id) == $jenis->id ? 'selected' : '' }}>
+                                        {{ $jenis->nama_jenis }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('jenis_dokumen_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="nama_file_asli" class="form-label">Nama File Asli <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('nama_file_asli') is-invalid @enderror" id="nama_file_asli" name="nama_file_asli" value="{{ old('nama_file_asli', $dokumen_pegawai->nama_file_asli) }}" required>
+                            @error('nama_file_asli')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        {{-- BARU: Input untuk TMT Dokumen --}}
+                        <div class="mb-3">
+                            <label for="tmt_dokumen" class="form-label">TMT Dokumen (Tanggal Mulai Terhitung Dokumen)</label>
+                            <input type="date" class="form-control @error('tmt_dokumen') is-invalid @enderror" id="tmt_dokumen" name="tmt_dokumen" value="{{ old('tmt_dokumen', $dokumen_pegawai->tmt_dokumen ? \Carbon\Carbon::parse($dokumen_pegawai->tmt_dokumen)->format('Y-m-d') : '') }}">
+                            @error('tmt_dokumen')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="file_dokumen" class="form-label">Ganti File Dokumen (Opsional)</label>
+                            <input type="file" class="form-control @error('file_dokumen') is-invalid @enderror" id="file_dokumen" name="file_dokumen">
+                            <div class="form-text">Biarkan kosong jika tidak ingin mengganti file. Max: 30MB (PDF, DOC, DOCX, JPG, JPEG, PNG)</div>
+                            @error('file_dokumen')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="keterangan" class="form-label">Keterangan (Opsional)</label>
+                            <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" name="keterangan" rows="3">{{ old('keterangan', $dokumen_pegawai->keterangan) }}</textarea>
+                            @error('keterangan')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-warning">Perbarui Dokumen</button>
+                            <a href="{{ route('pegawai.show', $dokumen_pegawai->pegawai_id) }}" class="btn btn-secondary">Batal</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-
-        <form method="POST" action="{{ route('dokumen.update', $dokumen_pegawai->id) }}" enctype="multipart/form-data">
-            @csrf
-            @method('PUT') {{-- PENTING: Untuk metode UPDATE --}}
-
-            <div class="form-group">
-                <label for="nama_file_asli">Nama File Dokumen:</label>
-                <input type="text" name="nama_file_asli" id="nama_file_asli" value="{{ old('nama_file_asli', $dokumen_pegawai->nama_file_asli) }}" class="form-input-text" required>
-            </div>
-
-            <div class="form-group">
-                <label for="jenis_dokumen_id">Jenis Dokumen:</label>
-                <select name="jenis_dokumen_id" id="jenis_dokumen_id" class="form-select" required>
-                    <option value="">Pilih Jenis Dokumen</option>
-                    @foreach ($jenis_dokumen as $jenis)
-                        <option value="{{ $jenis->id }}" {{ old('jenis_dokumen_id', $dokumen_pegawai->jenis_dokumen_id) == $jenis->id ? 'selected' : '' }}>
-                            {{ $jenis->nama_jenis }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="keterangan">Keterangan (Opsional):</label>
-                <textarea name="keterangan" id="keterangan" class="form-textarea">{{ old('keterangan', $dokumen_pegawai->keterangan) }}</textarea>
-            </div>
-
-            {{-- BLOK INI DIPINDAHKAN KE ATAS --}}
-            
-            {{-- AKHIR BLOK YANG DIPINDAHKAN --}}
-
-            <div class="form-group">
-                <label for="file_dokumen">Upload File Baru (untuk membuat versi baru):</label>
-                <input type="file" name="file_dokumen" id="file_dokumen" class="form-input-file">
-                <small class="form-hint">
-                    Kosongkan jika hanya ingin mengubah detail dokumen. Jika diisi, akan menjadi V{{ $dokumen_pegawai->versi_dokumen + 1 }} dan menggantikan versi aktif saat ini.
-                </small>
-            </div>
-            @if ($dokumen_pegawai->path_file)
-                <div class="form-group">
-                    <p class="form-hint mb-2">File saat ini:</p>
-                    <a href="{{ asset($dokumen_pegawai->path_file) }}" target="_blank"
-                    class="btn btn-primary"> <!-- Ganti kelas Tailwind dengan kelas Bootstrap -->
-                    🔍 Lihat File Saat Ini V{{ $dokumen_pegawai->versi_dokumen }}
-                    </a>
-                </div>
-            @endif
-            <div class="form-actions">
-                <button type="submit" class="btn-primary">Perbarui Dokumen</button>
-                <a href="{{ route('pegawai.show', $dokumen_pegawai->pegawai_id) }}" class="btn-batal">Batal</a>
-            </div>
-        </form>
     </div>
+</div>
 @endsection

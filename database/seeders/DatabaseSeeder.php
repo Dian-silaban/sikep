@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             JenisDokumenSeeder::class, // Panggil seeder jenis dokumen
             UnitKerjaSeeder::class,
+            GolonganSeeder::class,
+            PendidikanSeeder::class,
+            EselonSeeder::class,
         ]);
     }
 }

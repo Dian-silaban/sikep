@@ -3,10 +3,12 @@
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DokumenPegawaiController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController; // Pastikan ini juga ada jika menggunakan Manajemen Pengguna
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\DocumentMigrationController;
-use App\Http\Controllers\UnitKerjaController; // Tambahkan ini
-use App\Http\Controllers\JenisDokumenController; // Tambahkan ini
+use App\Http\Controllers\UnitKerjaController;
+use App\Http\Controllers\JenisDokumenController;
+use App\Http\Controllers\BezettingController;
+use App\Http\Controllers\BezettingKontrakController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +23,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Rute yang perlu dilindungi oleh autentikasi
-// Semua rute yang memerlukan otentikasi harus berada dalam satu grup middleware 'auth' ini.
 Route::middleware('auth')->group(function () {
-    // Rute default setelah login, mengarahkan ke daftar pegawai
     Route::get('/', function () {
         return redirect()->route('pegawai.index');
     });
@@ -35,7 +35,6 @@ Route::middleware('auth')->group(function () {
     Route::get('pegawai/export/excel', [PegawaiController::class, 'exportExcel'])->name('pegawai.export.excel');
 
     // Rute Manajemen Dokumen
-    // Perhatikan: 'dokumen.delete' di sini mengarah ke destroyPermanent, pastikan konsisten
     Route::delete('dokumen/{dokumen_pegawai}', [DokumenPegawaiController::class, 'destroyPermanent'])->name('dokumen.delete');
     Route::get('pegawai/{pegawai}/dokumen', [DokumenPegawaiController::class, 'index'])->name('pegawai.dokumen.index');
     Route::post('pegawai/{pegawai}/dokumen', [DokumenPegawaiController::class, 'store'])->name('pegawai.dokumen.store');
@@ -63,11 +62,24 @@ Route::middleware('auth')->group(function () {
 
         // Rute untuk Manajemen Jenis Dokumen
         Route::resource('jenis-dokumen', JenisDokumenController::class)->except(['show']);
+
+        // Rute untuk Laporan Bezetting
+        Route::prefix('bezetting')->name('bezetting.')->group(function () {
+            Route::get('/', [BezettingController::class, 'index'])->name('index');
+            Route::post('/export-excel', [BezettingController::class, 'exportExcel'])->name('export_excel');
+        });
+
+        // Rute untuk Manajemen Data Bezetting Kontrak Agregat
+        Route::prefix('bezetting-kontrak')->name('bezetting_kontrak.')->group(function () {
+            Route::get('/', [BezettingKontrakController::class, 'index'])->name('index');
+            Route::get('/create-edit', [BezettingKontrakController::class, 'createEdit'])->name('create_edit'); 
+            // BARU: Pisahkan store dan update
+            Route::post('/', [BezettingKontrakController::class, 'store'])->name('store'); // Untuk menyimpan data baru
+            Route::put('/{bezettingKontrakData}', [BezettingKontrakController::class, 'update'])->name('update'); // Untuk memperbarui data
+            Route::delete('/{bezettingKontrakData}', [BezettingKontrakController::class, 'destroy'])->name('destroy');
+        });
     });
 
     // Rute Manajemen Pengguna (jika Anda mengimplementasikannya)
-    // Route::resource('users', UserController::class); // Contoh: jika Anda menggunakan UserController
+    // Route::resource('users', UserController::class);
 });
-
-// Hapus atau komentari `require __DIR__.'/auth.php';` jika Anda tidak menggunakan Breeze.
-// require __DIR__.'/auth.php';

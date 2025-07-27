@@ -13,11 +13,13 @@ class DokumenPegawai extends Model
     protected $fillable = [
         'pegawai_id', 'jenis_dokumen_id', 'nama_file_asli',
         'nama_file_tersimpan', 'path_file', 'tanggal_upload',
+        'tmt_dokumen', // BARU: Tambahkan kolom TMT Dokumen
         'versi_dokumen', 'status_dokumen', 'keterangan'
     ];
 
     protected $casts = [
-        'tanggal_upload' => 'datetime', // Otomatis casting ke Carbon instance
+        'tanggal_upload' => 'datetime',
+        'tmt_dokumen' => 'date', // BARU: Cast TMT Dokumen sebagai tanggal
     ];
 
     /**

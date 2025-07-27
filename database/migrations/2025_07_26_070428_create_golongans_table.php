@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('golongans', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_golongan')->unique(); // Contoh: IV A, III B, II C
+            $table->string('keterangan')->nullable();
+            $table->integer('urutan')->nullable(); // Untuk pengurutan di dropdown atau laporan
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('golongans');
+    }
+};

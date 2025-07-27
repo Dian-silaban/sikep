@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'SIKEP Instansi') }}</title>
+    <title>Sistem Kepegawaian</title>
 
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -15,6 +16,7 @@
 
 <body class="bg-light">
 
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg shadow-sm mb-5" style="display: flex">
         <div class="container">
             <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ url('/') }}"> <img src="{{ asset('img/LOGO_KOTA_METRO.png') }}" alt="Logo" width="60" height="60" class="d-inline-block align-text-top">
@@ -37,7 +39,6 @@
 
                     @auth
                     <li class="nav-item">
-                        {{-- UBAH INI: Arahkan ke route pengaturan utama --}}
                         <a class="nav-link text-primary" href="{{ route('settings.index') }}" title="Pengaturan">
                             <i class="bi bi-gear fs-4"></i>
                         </a>
@@ -49,6 +50,7 @@
         </div>
     </nav>
         
+    <!-- Main Content -->
     <main class="container mb-5">
         {{-- Alert success --}}
         @if (session('success'))
