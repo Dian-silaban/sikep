@@ -13,7 +13,8 @@ class UnitKerjaController extends Controller
     public function index()
     {
         $unitKerjas = UnitKerja::orderBy('nama_unit')->get();
-        return view('settings.unit_kerja.index', compact('unitKerjas'));
+        // Perbaiki nama view: gunakan hyphen (-) agar konsisten
+        return view('settings.unit-kerja.index', compact('unitKerjas'));
     }
 
     /**
@@ -21,7 +22,8 @@ class UnitKerjaController extends Controller
      */
     public function create()
     {
-        return view('settings.unit_kerja.create');
+        // Perbaiki nama view: gunakan hyphen (-) agar konsisten
+        return view('settings.unit-kerja.create');
     }
 
     /**
@@ -44,6 +46,7 @@ class UnitKerjaController extends Controller
      */
     public function edit(UnitKerja $unitKerja)
     {
+        // Ini sudah benar menggunakan hyphen (-)
         return view('settings.unit-kerja.edit', compact('unitKerja'));
     }
 

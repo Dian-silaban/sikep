@@ -10,45 +10,45 @@
         {{-- Ganti div.card Bootstrap default dengan div.table-container kustom --}}
         <div class="table-container"> {{-- Menggunakan kelas kustom untuk styling tabel keseluruhan --}}
             <div class="table-header"> {{-- Header kustom untuk judul dan tombol tambah --}}
-                <h2>Manajemen Jenis Dokumen</h2>
-                {{-- Tombol "Tambah Jenis Dokumen" yang memicu modal --}}
-                <a href="#" class="btn-add-unit" data-bs-toggle="modal" data-bs-target="#addJenisDokumenModal">
-                    <i class="fas fa-plus me-2"></i>Tambah Jenis Dokumen
+                <h2>Manajemen Unit Kerja</h2>
+                {{-- Tombol "Tambah Unit Kerja" yang memicu modal --}}
+                <a href="#" class="btn-add-unit" data-bs-toggle="modal" data-bs-target="#addUnitKerjaModal">
+                    <i class="fas fa-plus me-2"></i>Tambah Unit Kerja
                 </a>
             </div>
 
-            @if ($jenisDokumens->isEmpty())
-                <p class="text-center" style="color: #6c757d;">Belum ada jenis dokumen yang ditambahkan.</p>
+            @if ($unitKerjas->isEmpty())
+                <p class="text-center" style="color: #6c757d;">Belum ada unit kerja yang ditambahkan.</p> {{-- Tambahkan style inline untuk warna teks --}}
             @else
                 <div class="table-responsive">
                     {{-- Ganti kelas tabel Bootstrap default dengan kelas kustom --}}
-                    <table class="table-unit-kerja"> {{-- Menggunakan kelas yang sama dengan tabel unit kerja --}}
+                    <table class="table-unit-kerja">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Nama Jenis</th>
+                                <th>Nama Unit</th>
                                 <th>Deskripsi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($jenisDokumens as $index => $jenisDokumen)
+                            @foreach ($unitKerjas as $index => $unitKerja)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ $jenisDokumen->nama_jenis }}</td>
-                                <td>{{ $jenisDokumen->deskripsi ?? '-' }}</td>
+                                <td>{{ $unitKerja->nama_unit }}</td>
+                                <td>{{ $unitKerja->deskripsi ?? '-' }}</td>
                                 <td>
                                     <div class="action-buttons">
-                                        {{-- Tombol "Edit" yang memicu modal, dengan data jenis dokumen sebagai atribut --}}
-                                        <a href="#" class="btn-action btn-edit edit-jenis-dokumen" title="Edit"
-                                           data-bs-toggle="modal" data-bs-target="#editJenisDokumenModal"
-                                           data-id="{{ $jenisDokumen->id }}"
-                                           data-nama="{{ $jenisDokumen->nama_jenis }}"
-                                           data-deskripsi="{{ $jenisDokumen->deskripsi ?? '' }}">
+                                        {{-- Tombol "Edit" yang memicu modal, dengan data unit kerja sebagai atribut --}}
+                                        <a href="#" class="btn-action btn-edit edit-unit-kerja" title="Edit"
+                                           data-bs-toggle="modal" data-bs-target="#editUnitKerjaModal"
+                                           data-id="{{ $unitKerja->id }}"
+                                           data-nama="{{ $unitKerja->nama_unit }}"
+                                           data-deskripsi="{{ $unitKerja->deskripsi ?? '' }}">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
                                         {{-- Form Hapus tetap seperti biasa --}}
-                                        <form action="{{ route('settings.jenis-dokumen.destroy', $jenisDokumen->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus jenis dokumen ini? Pastikan tidak ada dokumen pegawai yang terhubung dengan jenis ini.');">
+                                        <form action="{{ route('settings.unit-kerja.destroy', $unitKerja->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus unit kerja ini? Pastikan tidak ada pegawai yang terhubung dengan unit ini.');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn-action btn-delete" title="Hapus">
@@ -67,20 +67,21 @@
     </div>
 </div>
 
-{{-- MODAL TAMBAH JENIS DOKUMEN --}}
-<div class="modal fade" id="addJenisDokumenModal" tabindex="-1" aria-labelledby="addJenisDokumenModalLabel" aria-hidden="true">
+{{-- MODAL TAMBAH UNIT KERJA --}}
+<div class="modal fade" id="addUnitKerjaModal" tabindex="-1" aria-labelledby="addUnitKerjaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addJenisDokumenModalLabel">Tambah Jenis Dokumen Baru</h5>
+                <h5 class="modal-title" id="addUnitKerjaModalLabel">Tambah Unit Kerja Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('settings.jenis-dokumen.store') }}" method="POST">
+            <form action="{{ route('settings.unit-kerja.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="nama_jenis" class="form-label">Nama Jenis Dokumen <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="nama_jenis" name="nama_jenis" value="{{ old('nama_jenis') }}" required>
+                        <label for="nama_unit" class="form-label">Nama Unit Kerja <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="nama_unit" name="nama_unit" value="{{ old('nama_unit') }}" required>
+                        {{-- Error handling untuk validasi akan muncul di halaman jika form disubmit tanpa AJAX --}}
                     </div>
                     <div class="mb-3">
                         <label for="deskripsi" class="form-label">Deskripsi</label>
@@ -96,22 +97,22 @@
     </div>
 </div>
 
-{{-- MODAL EDIT JENIS DOKUMEN --}}
-<div class="modal fade" id="editJenisDokumenModal" tabindex="-1" aria-labelledby="editJenisDokumenModalLabel" aria-hidden="true">
+{{-- MODAL EDIT UNIT KERJA --}}
+<div class="modal fade" id="editUnitKerjaModal" tabindex="-1" aria-labelledby="editUnitKerjaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editJenisDokumenModalLabel">Edit Jenis Dokumen</h5>
+                <h5 class="modal-title" id="editUnitKerjaModalLabel">Edit Unit Kerja</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             {{-- Form akan diisi oleh JavaScript --}}
-            <form id="editJenisDokumenForm" method="POST">
+            <form id="editUnitKerjaForm" method="POST">
                 @csrf
                 @method('PUT') {{-- Penting untuk method PUT --}}
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="edit_nama_jenis" class="form-label">Nama Jenis Dokumen <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="edit_nama_jenis" name="nama_jenis" required>
+                        <label for="edit_nama_unit" class="form-label">Nama Unit Kerja <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="edit_nama_unit" name="nama_unit" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit_deskripsi" class="form-label">Deskripsi</label>
@@ -132,21 +133,24 @@
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Script untuk Modal Edit Jenis Dokumen
-        var editJenisDokumenModal = document.getElementById('editJenisDokumenModal');
-        editJenisDokumenModal.addEventListener('show.bs.modal', function (event) {
+        var editUnitKerjaModal = document.getElementById('editUnitKerjaModal');
+        editUnitKerjaModal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
             var button = event.relatedTarget;
+
+            // Extract info from data-bs-* attributes
             var id = button.getAttribute('data-id');
             var nama = button.getAttribute('data-nama');
             var deskripsi = button.getAttribute('data-deskripsi');
 
-            var modalTitle = editJenisDokumenModal.querySelector('.modal-title');
-            var form = editJenisDokumenModal.querySelector('#editJenisDokumenForm');
-            var inputNama = editJenisDokumenModal.querySelector('#edit_nama_jenis');
-            var inputDeskripsi = editJenisDokumenModal.querySelector('#edit_deskripsi');
+            // Update the modal's content.
+            var modalTitle = editUnitKerjaModal.querySelector('.modal-title');
+            var form = editUnitKerjaModal.querySelector('#editUnitKerjaForm');
+            var inputNama = editUnitKerjaModal.querySelector('#edit_nama_unit');
+            var inputDeskripsi = editUnitKerjaModal.querySelector('#edit_deskripsi');
 
-            modalTitle.textContent = 'Edit Jenis Dokumen: ' + nama;
-            form.action = '{{ route('settings.jenis-dokumen.update', '') }}/' + id;
+            modalTitle.textContent = 'Edit Unit Kerja: ' + nama;
+            form.action = '{{ route('settings.unit-kerja.update', '') }}/' + id; // Set action URL dynamically
             inputNama.value = nama;
             inputDeskripsi.value = deskripsi;
         });

@@ -987,3 +987,135 @@ small.form-hint {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+/* --- Styling untuk Tabel (Manajemen Unit Kerja) --- */
+/* Memberi jarak pada kolom konten utama dari sidebar */
+.col-md-9 {
+    padding-left: 30px; /* Menambah padding kiri untuk jarak dari sidebar */
+    padding-right: 15px;
+    font-family: 'Poppins', sans-serif; /* Padding kanan default Bootstrap */
+}
+
+/* Styling umum untuk container tabel */
+.table-container {
+    background-color: #fff; /* Latar belakang putih untuk keseluruhan tabel */
+    border-radius: 12px; /* Sudut melengkung untuk container tabel */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Bayangan lembut */
+    padding: 20px; /* Padding di dalam container tabel */
+    font-family: 'Poppins', sans-serif;
+   
+}
+
+/* Header tabel */
+.table-container .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0; /* Garis bawah header */
+    border-radius:  8px !important;
+}
+
+.table-container .table-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0; /* Hapus margin default h2 */
+}
+
+/* Tombol "Tambah Unit Kerja" */
+.table-container .btn-add-unit {
+    background-color: #0d6efd; /* Warna primary Bootstrap */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.table-container .btn-add-unit:hover {
+    background-color: #0a58ca; /* Warna primary sedikit lebih gelap saat hover */
+}
+
+/* Styling tabel utama */
+.table-unit-kerja {
+    width: 100%;
+    border-collapse: separate; /* Penting untuk border-spacing */
+    border-spacing: 0 10px; /* Jarak antar baris */
+    font-size: 14px;
+}
+
+.table-unit-kerja thead {
+    background-color: transparent; /* Transparan untuk header */
+    background-color: #f0f2f5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-unit-kerja th {
+    font-weight: 600;
+    color: #6c757d; /* Warna teks header lebih soft */
+    text-align: left;
+    padding: 10px 15px; /* Padding header */
+    text-transform: uppercase;
+    font-size: 13px;
+    border-bottom: 1px solid #e0e0e0; /* Garis bawah untuk header kolom */
+}
+
+.table-unit-kerja tbody tr {
+    background-color: #fff; /* Latar belakang putih untuk setiap baris */
+    border-radius: 8px; /* Sudut melengkung untuk setiap baris */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Bayangan lembut untuk setiap baris */
+    transition: all 0.2s ease-in-out;
+    display: table-row; /* Pastikan tetap sebagai baris tabel */
+}
+
+.table-unit-kerja tbody tr:hover {
+    transform: translateY(-2px); /* Efek sedikit naik saat hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Bayangan lebih kuat saat hover */
+}
+
+.table-unit-kerja td {
+    border: none; /* Hapus border sel */
+    padding: 12px 15px; /* Padding sel data */
+    vertical-align: middle;
+    color: #343a40; /* Warna teks data */
+}
+
+/* Styling untuk kolom aksi */
+.table-unit-kerja .action-buttons {
+    display: flex;
+    gap: 8px; /* Jarak antar tombol aksi */
+    justify-content: flex-end; /* Posisikan tombol ke kanan */
+    padding-right: 15px; /* Padding kanan untuk tombol aksi */
+}
+
+.table-unit-kerja .btn-action {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: white; /* Warna teks tombol aksi */
+}
+
+.table-unit-kerja .btn-edit {
+    background-color: #ffc107; /* Warna kuning untuk edit */
+}
+
+.table-unit-kerja .btn-edit:hover {
+    background-color: #e0a800;
+}
+
+.table-unit-kerja .btn-delete {
+    background-color: #dc3545; /* Warna merah untuk hapus */
+}
+
+.table-unit-kerja .btn-delete:hover {
+    background-color: #c82333;
+}
