@@ -1,8 +1,13 @@
 @extends('layouts.app')
 
+
 @section('title', 'Migrasi Dokumen Massal')
 
 @section('content')
+  <div class="row">
+    <div class="col-md-3">
+        @include('settings.sidebar') {{-- Sidebar pengaturan --}}
+    </div>
   <div class="form-container">
     <h2 class="form-header fw-bold mb-4">Salin Semua Dokumen ke Lokasi Lain</h2>
 
@@ -38,11 +43,9 @@
 
       <div class="d-flex gap-2">
 
-  <button type="submit" class="btn btn-primary">
+  <button type="submit" class="btn-add-unit" style="background: linear-gradient(to right, #363d53, #0d3f8b);">
     Mulai Penyalinan Semua Dokumen
   </button>
-
-  <a href="{{ route('pegawai.index') }}" class="btn btn-secondary">Kembali ke Daftar Pegawai</a>
 </div>
 
 
@@ -59,6 +62,8 @@
         <li>Jika ada file dengan nama yang sama di folder tujuan, file tersebut akan diganti (ditimpa).</li>
       </ul>
     </div>
+  </div>
+
   </div>
 
 @endsection

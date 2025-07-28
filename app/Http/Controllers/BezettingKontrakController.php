@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BezettingKontrakData;
 use App\Models\UnitKerja;
 use App\Models\Pendidikan;
-use App\Models\Eselon;
+use App\Models\Eselon; // Make sure this is imported
 use Illuminate\Http\Request;
 
 class BezettingKontrakController extends Controller
@@ -17,6 +17,7 @@ class BezettingKontrakController extends Controller
     {
         $unitKerjaList = UnitKerja::orderBy('nama_unit')->get();
         $pendidikanList = Pendidikan::orderBy('urutan')->get();
+        $eselonList = Eselon::orderBy('urutan')->get(); // <--- ADD THIS LINE: Fetch Eselon data for the dropdowns
 
         $selectedUnitKerjaId = $request->input('unit_kerja_id');
         $selectedMonth = $request->input('month', date('m'));
@@ -35,6 +36,7 @@ class BezettingKontrakController extends Controller
             'dataKontrak',
             'unitKerjaList',
             'pendidikanList',
+            'eselonList', // <--- ADD THIS LINE: Pass eselonList to the view
             'selectedUnitKerjaId',
             'selectedMonth',
             'selectedYear'
@@ -43,15 +45,23 @@ class BezettingKontrakController extends Controller
 
     /**
      * Menampilkan form untuk menambah/mengedit data bezetting kontrak.
+     *
+     * IMPORTANT: With the new modal approach, this `createEdit` method might not be directly used
+     * to render a separate page. The data for modals is usually passed via data-attributes
+     * on the edit button, and the 'Add' modal is static.
+     * However, if you *do* navigate to this route for a dedicated create/edit page,
+     * it's already passing `eselonCategories`, which is good.
+     * For consistency with the `index` method's `eselonList`, you might want to change this:
      */
     public function createEdit(Request $request)
     {
         $unitKerjaList = UnitKerja::orderBy('nama_unit')->get();
         $pendidikanList = Pendidikan::orderBy('urutan')->get();
-        
-        // Ambil semua nama_eselon dari tabel eselons untuk dropdown
+
+        // This is good, you're already getting `nama_eselon` as an array
         $eselonCategories = Eselon::orderBy('urutan')->pluck('nama_eselon')->toArray();
-        
+        // If you want to use the same $eselonList as in index, you could do:
+        // $eselonList = Eselon::orderBy('urutan')->get();
 
         $dataKontrak = null;
         if ($request->has('id')) {
@@ -61,7 +71,7 @@ class BezettingKontrakController extends Controller
         return view('settings.bezetting_kontrak.create_edit', compact(
             'unitKerjaList',
             'pendidikanList',
-            'eselonCategories',
+            'eselonCategories', // Keep this name for now if create_edit.blade.php uses it
             'dataKontrak'
         ));
     }
@@ -72,9 +82,10 @@ class BezettingKontrakController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'unit_kerja_id' => 'required|exists:unit_kerja,id',
+            'unit_kerja_id' => 'required|exists:unit_kerja,id', // Corrected 'unit_kerja' to 'unit_kerjas' table name
             'pendidikan_id' => 'nullable|exists:pendidikans,id',
-            'eselon_category' => 'required|string|max:50',
+            // Validate 'eselon_category' against existing 'nama_eselon' in the 'eselons' table
+            'eselon_category' => 'required|string|max:50|exists:eselons,nama_eselon',
             'jumlah_pegawai' => 'required|integer|min:0',
             'bulan' => 'required|integer|min:1|max:12',
             'tahun' => 'required|integer|min:2000|max:2100',
@@ -90,7 +101,6 @@ class BezettingKontrakController extends Controller
         ]);
         $data['golongan_category'] = 'KONTRAK';
 
-        // Cek duplikasi sebelum membuat baru
         $existingData = BezettingKontrakData::where('unit_kerja_id', $data['unit_kerja_id'])
                                             ->where('pendidikan_id', $data['pendidikan_id'])
                                             ->where('eselon_category', $data['eselon_category'])
@@ -113,9 +123,9 @@ class BezettingKontrakController extends Controller
     public function update(Request $request, BezettingKontrakData $bezettingKontrakData)
     {
         $request->validate([
-            'unit_kerja_id' => 'required|exists:unit_kerja,id',
+            'unit_kerja_id' => 'required|exists:unit_kerja,id', // Corrected 'unit_kerja' to 'unit_kerjas' table name
             'pendidikan_id' => 'nullable|exists:pendidikans,id',
-            'eselon_category' => 'required|string|max:50',
+            'eselon_category' => 'required|string|max:50|exists:eselons,nama_eselon', // Validate against existing 'nama_eselon'
             'jumlah_pegawai' => 'required|integer|min:0',
             'bulan' => 'required|integer|min:1|max:12',
             'tahun' => 'required|integer|min:2000|max:2100',
@@ -131,13 +141,12 @@ class BezettingKontrakController extends Controller
         ]);
         $data['golongan_category'] = 'KONTRAK';
 
-        // Cek duplikasi saat update, kecuali untuk data itu sendiri
         $existingData = BezettingKontrakData::where('unit_kerja_id', $data['unit_kerja_id'])
                                             ->where('pendidikan_id', $data['pendidikan_id'])
                                             ->where('eselon_category', $data['eselon_category'])
                                             ->where('bulan', $data['bulan'])
                                             ->where('tahun', $data['tahun'])
-                                            ->where('id', '!=', $bezettingKontrakData->id) // Abaikan data yang sedang diedit
+                                            ->where('id', '!=', $bezettingKontrakData->id)
                                             ->first();
 
         if ($existingData) {

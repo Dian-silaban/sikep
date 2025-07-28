@@ -987,3 +987,466 @@ small.form-hint {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+/* --- Styling untuk Tabel (Manajemen Unit Kerja) --- */
+/* Memberi jarak pada kolom konten utama dari sidebar */
+.col-md-9 {
+    padding-left: 30px; /* Menambah padding kiri untuk jarak dari sidebar */
+    padding-right: 15px;
+    font-family: 'Poppins', sans-serif; /* Padding kanan default Bootstrap */
+}
+
+/* Styling umum untuk container tabel */
+.table-container {
+    background-color: #fff; /* Latar belakang putih untuk keseluruhan tabel */
+    border-radius: 12px; /* Sudut melengkung untuk container tabel */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Bayangan lembut */
+    padding: 20px; /* Padding di dalam container tabel */
+    font-family: 'Poppins', sans-serif;
+   
+}
+
+/* Header tabel */
+.table-container .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0; /* Garis bawah header */
+    border-radius:  8px !important;
+}
+
+.table-container .table-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0; /* Hapus margin default h2 */
+}
+
+/* Tombol "Tambah Unit Kerja" */
+.table-container .btn-add-unit {
+    background: linear-gradient(to right, #363d53, #0d3f8b); /* Warna primary Bootstrap */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.table-container .btn-add-unit:hover {
+    background-color: #0a58ca; /* Warna primary sedikit lebih gelap saat hover */
+}
+
+/* Styling tabel utama */
+.table-unit-kerja {
+    width: 100%;
+    border-collapse: separate; /* Penting untuk border-spacing */
+    border-spacing: 0 10px; /* Jarak antar baris */
+    font-size: 14px;
+}
+
+.table-unit-kerja thead {
+    background-color: transparent; /* Transparan untuk header */
+    background-color: #f0f2f5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-unit-kerja th {
+    font-weight: 600;
+    color: #6c757d; /* Warna teks header lebih soft */
+    text-align: left;
+    padding: 10px 15px; /* Padding header */
+    text-transform: uppercase;
+    font-size: 13px;
+    border-bottom: 1px solid #e0e0e0; /* Garis bawah untuk header kolom */
+}
+
+.table-unit-kerja tbody tr {
+    background-color: #fff; /* Latar belakang putih untuk setiap baris */
+    border-radius: 8px; /* Sudut melengkung untuk setiap baris */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Bayangan lembut untuk setiap baris */
+    transition: all 0.2s ease-in-out;
+    display: table-row; /* Pastikan tetap sebagai baris tabel */
+}
+
+.table-unit-kerja tbody tr:hover {
+    transform: translateY(-2px); /* Efek sedikit naik saat hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Bayangan lebih kuat saat hover */
+}
+
+.table-unit-kerja td {
+    border: none; /* Hapus border sel */
+    padding: 12px 15px; /* Padding sel data */
+    vertical-align: middle;
+    color: #343a40; /* Warna teks data */
+}
+
+/* Styling untuk kolom aksi */
+.table-unit-kerja .action-buttons {
+    display: flex;
+    gap: 8px; /* Jarak antar tombol aksi */
+    justify-content: flex-end; /* Posisikan tombol ke kanan */
+    padding-right: 15px; /* Padding kanan untuk tombol aksi */
+}
+
+.table-unit-kerja .btn-action {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: white; /* Warna teks tombol aksi */
+}
+
+.table-unit-kerja .btn-edit {
+    background-color: #ffc107; /* Warna kuning untuk edit */
+}
+
+.table-unit-kerja .btn-edit:hover {
+    background-color: #e0a800;
+}
+
+.table-unit-kerja .btn-delete {
+    background-color: #dc3545; /* Warna merah untuk hapus */
+}
+
+.table-unit-kerja .btn-delete:hover {
+    background-color: #c82333;
+}
+
+/* Styling untuk form filter */
+.filter-form {
+    background-color: #fff; /* Latar belakang putih */
+    border-radius: 12px; /* Sudut melengkung */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Bayangan */
+    padding: 20px; /* Padding di dalam form */
+    margin-bottom: 20px; /* Jarak dari elemen di bawahnya */
+}
+
+.filter-form .filter-header {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.filter-form .filter-header i {
+    color: #0d6efd; /* Warna ikon filter */
+    margin-right: 10px;
+}
+
+.filter-form .form-label {
+    font-weight: 500; /* Sedikit lebih ringan dari 600 */
+    color: #495057; /* Warna teks label */
+    margin-bottom: 8px; /* Jarak antara label dan input */
+}
+
+.filter-form .form-select,
+.filter-form .form-control {
+    border-radius: 8px;
+    border: 1px solid #d1d5db; /* Border lebih lembut */
+    padding: 10px 15px; /* Padding lebih besar */
+    font-size: 15px; /* Ukuran font sedikit lebih besar */
+    height: 40px;/* Biarkan tinggi menyesuaikan padding */
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); /* Sedikit bayangan dalam */
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.filter-form .form-select:focus,
+.filter-form .form-control:focus {
+    border-color: #86b7fe; /* Warna border saat fokus */
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25); /* Efek fokus Bootstrap */
+    outline: 0;
+}
+
+.filter-form .btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 10px 20px; /* Padding lebih besar untuk tombol */
+    font-size: 15px;
+    height: 40px;
+}
+
+.filter-form .btn-primary:hover {
+    background-color: #0a58ca;
+    border-color: #0a58ca;
+}
+
+
+/* Styling untuk header laporan bezetting */
+.report-header-section {
+    background: linear-gradient(to right, #0d6efd, #36a2eb); /* Gradien biru */
+    color: white;
+    padding: 25px 30px; /* Padding vertikal dan horizontal */
+    border-radius: 12px; /* Sudut melengkung */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Bayangan */
+    display: flex;
+    justify-content: space-between; /* Untuk menempatkan konten di kiri dan kanan */
+    align-items: center;
+    margin-bottom: 20px; /* Jarak dari elemen di bawahnya */
+}
+
+.report-header-section .report-header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Jarak antara tombol kembali dan judul */
+}
+
+.report-header-section .btn-back-report {
+    background-color: rgba(255, 255, 255, 0.2); /* Latar belakang transparan */
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+    display: flex; /* Untuk ikon dan teks */
+    align-items: center;
+}
+
+.report-header-section .btn-back-report:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.report-header-section .report-title {
+    font-size: 28px; /* Ukuran judul laporan */
+    font-weight: 700;
+    color: white;
+    margin: 0; /* Hapus margin default h2 */
+}
+
+.btn-export-excel{
+    background-color: #28a745 !important; /* Warna hijau untuk export */
+    color: white;
+}
+
+.report-header-section .btn-export-excel {
+    background-color: #28a745; /* Warna hijau untuk export */
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+}
+
+.report-header-section .btn-export-excel:hover {
+    background-color: #218838;
+}
+
+.report-sub-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #343a40; /* Warna teks gelap */
+    margin-bottom: 15px;
+}
+
+/* Styling khusus untuk tabel bezetting */
+.table-unit-kerja.bezetting-table th {
+    background-color: #0d6efd; /* Latar belakang biru primary untuk header bezetting */
+    color: white; /* Teks putih */
+    font-weight: 700;
+    text-align: center; /* Pusatkan teks header */
+    border-right: 1px solid rgba(255, 255, 255, 0.2); /* Garis pemisah kolom */
+}
+
+.table-unit-kerja.bezetting-table th:last-child {
+    border-right: none; /* Hapus border kanan pada kolom terakhir */
+}
+
+.table-unit-kerja.bezetting-table td {
+    text-align: center; /* Pusatkan teks data */
+    border-right: 1px solid #e0e0e0; /* Garis pemisah kolom */
+}
+
+.table-unit-kerja.bezetting-table td:last-child {
+    border-right: none; /* Hapus border kanan pada kolom terakhir */
+}
+
+.table-unit-kerja.bezetting-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* Latar belakang abu-abu terang untuk baris genap */
+}
+
+/* Styling untuk item eselon dan pendidikan di dalam sel tabel */
+.eselon-item, .pendidikan-item {
+    display: inline-block; /* Agar bisa diatur marginnya */
+    min-width: 25px; /* Lebar minimum agar angka tidak terlalu dempet */
+    text-align: center;
+    padding: 2px 0;
+    margin: 0 2px; /* Jarak antar angka */
+    font-weight: 500;
+}
+
+/* Styling untuk header laporan bezetting */
+.report-header-section {
+   background: linear-gradient(to right, #363d53, #0d3f8b); /* Gradien biru */
+    color: white;
+    padding: 25px 30px; /* Padding vertikal dan horizontal */
+    border-radius: 12px; /* Sudut melengkung */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Bayangan */
+    display: flex;
+    justify-content: space-between; /* Untuk menempatkan konten di kiri dan kanan */
+    align-items: center;
+    margin-bottom: 20px; /* Jarak dari elemen di bawahnya */
+}
+
+.report-header-section .report-header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Jarak antara tombol kembali dan judul */
+}
+
+.report-header-section .btn-back-report {
+    background-color: rgba(255, 255, 255, 0.2); /* Latar belakang transparan */
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+    display: flex; /* Untuk ikon dan teks */
+    align-items: center;
+}
+
+.report-header-section .btn-back-report:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.report-header-section .report-title {
+    font-size: 28px; /* Ukuran judul laporan */
+    font-weight: 700;
+    color: white;
+    margin: 0; /* Hapus margin default h2 */
+}
+
+.report-header-section .btn-export-excel {
+    background-color: #28a745; /* Warna hijau untuk export */
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+}
+
+.report-header-section .btn-export-excel:hover {
+    background-color: #218838;
+}
+
+.report-sub-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #343a40; /* Warna teks gelap */
+    margin-bottom: 15px;
+}
+
+/* Styling khusus untuk tabel bezetting */
+.table-unit-kerja.bezetting-table th {
+   background: linear-gradient(to bottom, #363d53, #0d3f8b); /* Latar belakang biru primary untuk header bezetting */
+    color: white; /* Teks putih */
+    font-weight: 700;
+    text-align: center; /* Pusatkan teks header */
+    border-right: 1px solid rgba(255, 255, 255, 0.2); /* Garis pemisah kolom */
+}
+
+.table-unit-kerja.bezetting-table th:last-child {
+    border-right: none; /* Hapus border kanan pada kolom terakhir */
+}
+
+.table-unit-kerja.bezetting-table td {
+    text-align: center; /* Pusatkan teks data */
+    border-right: 1px solid #e0e0e0; /* Garis pemisah kolom */
+}
+
+.table-unit-kerja.bezetting-table td:last-child {
+    border-right: none; /* Hapus border kanan pada kolom terakhir */
+}
+
+.table-unit-kerja.bezetting-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* Latar belakang abu-abu terang untuk baris genap */
+}
+
+/* Styling untuk item eselon dan pendidikan di dalam sel tabel */
+.eselon-item, .pendidikan-item {
+    display: inline-block; /* Agar bisa diatur marginnya */
+    min-width: 25px; /* Lebar minimum agar angka tidak terlalu dempet */
+    text-align: center;
+    padding: 2px 0;
+    margin: 0 2px; /* Jarak antar angka */
+    font-weight: 500;
+}
+
+/* In your CSS file (e.g., public/css/app.css) or a <style> block */
+
+/* Centering the image and its controls in the modal */
+.modal-body .d-flex.flex-column.align-items-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* This centers items horizontally */
+    width: 100%; /* Ensure it takes full width to center its content */
+}
+
+.modal-body .relative.w-32.h-32.overflow-hidden.border-1.border-white-600.shadow-md.rounded-full {
+    margin: 0 auto; /* This will center the image container itself */
+    display: block; /* Ensure it behaves like a block for margin auto to work */
+}
+
+/* Ensure the buttons below the image are also centered */
+.modal-body .d-flex.mt-2.justify-content-center.align-items-center {
+    width: 100%; /* Ensure this container also takes full width */
+    justify-content: center !important; /* Force center alignment for buttons */
+}
+
+/* Specific styling for the Choose File and No file chosen elements */
+.modal-body .file-input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center these elements horizontally */
+    width: 100%;
+    margin-top: 15px; /* Add some space above the file input */
+    margin-bottom: 15px; /* Add some space below the file input */
+}
+
+.modal-body .file-input-wrapper input[type="file"] {
+    display: none; /* Hide the default file input */
+}
+
+.modal-body .file-input-wrapper .file-chooser-button {
+    background-color: #007bff; /* Bootstrap primary blue */
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    margin-right: 8px; /* Space between button and text */
+}
+
+.modal-body .file-input-wrapper .file-name-display {
+    border: 1px solid #ced4da; /* Light gray border */
+    padding: 8px 12px;
+    border-radius: 5px;
+    background-color: #e9ecef; /* Light gray background */
+    color: #495057;
+    flex-grow: 1; /* Allow it to take up available space */
+    max-width: 200px; /* Limit width */
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
