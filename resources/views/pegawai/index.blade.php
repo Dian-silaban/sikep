@@ -7,6 +7,7 @@
     <div class="stats-container">
         <div class="stat-card">
             <div class="icon-wrapper total">
+                {{-- Icon untuk Total Karyawan (contoh: grup orang) --}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#8B0000" class="bi bi-people-fill" viewBox="0 0 16 16">
                     <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                     <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 0 5 13c0-1.052.244-2.002.73-2.88.35-.607.676-1.135 1.03-1.652A7.116 7.116 0 0 0 4.5 11c-1.47 0-2.766-.324-3.697-.884C.246 10.156 0 10.082 0 10V9.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H1.085c.67 1.075 1.827 1.745 3.42 1.745.474 0 .92-.066 1.302-.182l.302.264c.545.479 1.002.825 1.348 1.054.346.23.617.348.818.348h.001zm-2.766-.884C.246 10.156 0 10.082 0 10V9.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H1.085c.67 1.075 1.827 1.745 3.42 1.745.474 0 .92-.066 1.302-.182l.302.264c.545.479 1.002.825 1.348 1.054.346.23.617.348.818.348h.001z"/>
@@ -19,6 +20,7 @@
         </div>
         <div class="stat-card">
             <div class="icon-wrapper active">
+                {{-- Icon for Active (e.g., checkmark) --}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#1e7e34" class="bi bi-person-check-fill" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
                     <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -31,6 +33,7 @@
         </div>
         <div class="stat-card">
             <div class="icon-wrapper non-active">
+                {{-- Icon for Inactive (e.g., cross) --}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#d39e00" class="bi bi-person-x-fill" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M11.854 10.146a.5.5 0 0 1 0-.708L13.293 8l-1.439-1.439a.5.5 0 1 1 .708-.708l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0z"/>
                     <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -43,6 +46,7 @@
         </div>
         <div class="stat-card">
             <div class="icon-wrapper retired">
+                {{-- Icon for Retired (e.g., hourglass) --}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#0f6674" class="bi bi-hourglass-bottom" viewBox="0 0 16 16">
                     <path d="M2 1.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0 13a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11a.5.5 0 0 0-.5.5z"/>
                     <path d="M2.5 2a.5.5 0 0 0-.5.5v10.5c0 .354.148.68.417.913.29.25.66.387 1.103.387h7.8a1.5 1.5 0 0 0 1.103-.387c.269-.233.417-.56.417-.913V2.5a.5.5 0 0 0-.5-.5h-11zm0 1h11v10.5c0 .092-.02.176-.057.25-.037.074-.09.13-.153.18L8 9.586 3.71 13.937c-.063-.05-.116-.106-.153-.18-.037-.074-.057-.158-.057-.25V3z"/>
@@ -58,54 +62,62 @@
     <div class="header-pegawai">
         <h2>Daftar Pegawai</h2>
         <p>
-            <button type="button" class="btn-tambah" data-bs-toggle="modal" data-bs-target="#addPegawaiModal"> + Tambah Pegawai Baru</button>
+            {{-- Changed to Bootstrap Modal Trigger --}}
+            <button type="button" class="btn-tambah" style="border: none;" data-bs-toggle="modal" data-bs-target="#tambahPegawaiModal">
+                + Tambah Pegawai Baru
+            </button>
             <button type="button" class="btn-tambah" style="border: none; background-color: #28a745;" data-bs-toggle="modal" data-bs-target="#exportOptionsModal">
                 Export Excel
             </button>
         </p>
     </div>
 
-    {{-- Form Pencarian --}}
+    {{-- Search Form --}}
     <form class="form-pencarian" method="GET" action="{{ route('pegawai.index') }}" >
-        <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..." value="{{ $searchTerm ?? '' }}" >
+        <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Bidang..." value="{{ $searchTerm ?? '' }}" >
         <button type="submit">Cari</button>
         @if ($searchTerm ?? '')
             <a href="{{ route('pegawai.index') }}" class="btn-reset-pencarian">Reset Pencarian</a>
         @endif
     </form>
     <form class="form-pencarian" method="GET" action="{{ route('pegawai.index') }}">
-        <div class="box" style="display: flex">
-            <div class="unit" style="height: 44px;">
-                <select class="filter" name="unit_kerja">
-                    <option value="">Bidang</option>
-                    @foreach($unitKerjaList as $unit)
-                        <option value="{{ $unit->id }}" {{ (isset($unitKerjaFilter) && $unitKerjaFilter == $unit->id) ? 'selected' : '' }}>
-                            {{ $unit->nama_unit }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+    {{-- Unit Kerja Filter --}}
 
-            <div class="status" style="height: 44px; " >
-                <select class="filter" name="status_pegawai">
-                    <option value="">Semua Status</option>
-                    <option value="Aktif" {{ (isset($statusFilter) && $statusFilter == 'Aktif') ? 'selected' : '' }}>Aktif</option>
-                    <option value="Non-aktif" {{ (isset($statusFilter) && $statusFilter == 'Non-aktif') ? 'selected' : '' }}>Non-aktif</option>
-                    <option value="Pensiun" {{ (isset($statusFilter) && $statusFilter == 'Pensiun') ? 'selected' : '' }}>Pensiun</option>
-                </select>
-            </div>
+    {{-- Employee Filter --}}
 
-            <div class="btn-filter">
-                <button type="submit" class="btn btn-primary">Filter</button>
-            </div>
+    <div class="box" style="display: flex">
+    <div class="unit" style="height: 44px;">
+    <select class="filter" name="unit_kerja">
+        <option value="">Bidang</option>
+        @foreach($unitKerjaList as $unit)
+            <option value="{{ $unit->id }}" {{ (isset($unitKerjaFilter) && $unitKerjaFilter == $unit->id) ? 'selected' : '' }}>
+                {{ $unit->nama_unit }}
+            </option>
+        @endforeach
+    </select>
+    </div>
 
-            <div>
-                @if ($searchTerm || $unitKerjaFilter || $statusFilter)
-                    <a href="{{ route('pegawai.index') }}" class="btn-reset-pencarian">Reset</a>
-                @endif
-            </div>
-        </div>
+    {{-- Employee Status Filter --}}
+    <div class="status" style="height: 44px; " >
+    <select class="filter" name="status_pegawai">
+        <option value="">Status</option>
+        <option value="Aktif">Aktif</option>
+        <option value="Non-aktif">Non-aktif</option>
+        <option value="Pensiun">Pensiun</option>
+    </select>
+    </div>
+
+    <div class="btn-filter">
+    <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+
+    <div>
+    @if ($searchTerm || $unitKerjaFilter || $statusFilter)
+        <a href="{{ route('pegawai.index') }}" class="btn-reset-pencarian">Reset</a>
+    @endif
     </form>
+    </div>
+    </div>
 
     <table class="tabel-daftar">
         <thead>
@@ -126,16 +138,18 @@
                     <td>{{ $loop->iteration + $pegawai->firstItem() - 1 }}</td>
                     <td>
                         @if ($p->foto_profil_path)
-                            <img src="{{ asset($p->foto_profil_path) }}" alt="Foto Profil {{ $p->nama_lengkap }}">
+                            <img src="{{ asset($p->foto_profil_path) }}" alt="Foto Profil {{ $p->nama_lengkap }}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
                         @else
-                            <img src="{{ asset('img/' . ($p->jenis_kelamin == 'Perempuan' ? 'wanita.jpg' : 'pria.jpg')) }}" alt="Foto Profil Default">
+                            {{-- Using default logic from adjusted controller --}}
+                            <img src="{{ asset('img/' . ($p->jenis_kelamin == 'Perempuan' ? 'wanita.jpg' : 'pria.jpg')) }}" alt="Foto Profil Default" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
                         @endif
                     </td>
                     <td>{{ $p->nip }}</td>
                     <td>{{ $p->nama_lengkap }}</td>
                     <td>{{ $p->jabatan ?? '-' }}</td>
                     <td>{{ $p->unit_kerja->nama_unit ?? '-' }}</td>
-                    <td style="white-space: nowrap;"> {{-- Tambahkan style untuk mencegah baris terpotong --}}
+                    <td>
+                        {{-- Add status badge --}}
                         @php
                             $statusClass = '';
                             if ($p->status_pegawai == 'Aktif') {
@@ -145,57 +159,55 @@
                             } elseif ($p->status_pegawai == 'Pensiun') {
                                 $statusClass = 'pensiun';
                             }
-
-                            // Format tanggal TMT jika ada
-                            $tmtFormatted = $p->tmt_status ? \Carbon\Carbon::parse($p->tmt_status)->format('d-m-Y') : 'N/A';
-                            // Jika Anda ingin TMT dari 'tmt' (Tanggal Mulai Terhitung) bukan 'tmt_status'
-                            // $tmtFormatted = $p->tmt ? \Carbon\Carbon::parse($p->tmt)->format('d-m-Y') : 'N/A';
                         @endphp
                         <span class="status-badge {{ $statusClass }}">
                             {{ $p->status_pegawai == 'Non-aktif' ? 'Pindah' : $p->status_pegawai }}
                         </span>
-                        {{-- Tambahkan baris baru untuk TMT Status --}}
-                        <br>
-                        <small class="text-muted" style="font-size: 0.8em;">TMT: {{ $tmtFormatted }}</small>
+                        {{-- BARU: TMT di bawah status --}}
+                        @if ($p->tmt)
+                            <br><small class="text-muted" style="font-size: 0.85em;">TMT: {{ \Carbon\Carbon::parse($p->tmt)->format('d-m-Y') }}</small>
+                        @endif
                     </td>
                     <td class="action-buttons">
-                        {{-- Tombol Lihat (ikon mata) --}}
+                        {{-- View Button (eye icon) --}}
                         <a href="{{ route('pegawai.show', $p->id) }}" class="btn-aksi btn-lihat" title="Lihat">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
                             </svg>
                         </a>
-                        {{-- Tombol Edit (ikon pensil) --}}
-                        <a href="#" class="btn-aksi btn-edit edit-pegawai-btn" title="Edit"
-                           data-bs-toggle="modal" data-bs-target="#editPegawaiModal"
-                           data-id="{{ $p->id }}"
-                           data-nip="{{ $p->nip }}"
-                           data-nik="{{ $p->nik }}"
-                           data-nama_lengkap="{{ $p->nama_lengkap }}"
-                           data-tanggal_lahir="{{ $p->tanggal_lahir ? \Carbon\Carbon::parse($p->tanggal_lahir)->format('Y-m-d') : '' }}"
-                           data-tmt="{{ $p->tmt ? \Carbon\Carbon::parse($p->tmt)->format('Y-m-d') : '' }}"
-                           data-jenis_kelamin="{{ $p->jenis_kelamin }}"
-                           data-email="{{ $p->email }}"
-                           data-nomor_telepon="{{ $p->nomor_telepon }}"
-                           data-jabatan="{{ $p->jabatan }}"
-                           data-golongan_id="{{ $p->golongan_id }}"
-                           data-eselon_id="{{ $p->eselon_id }}"
-                           data-pendidikan_id="{{ $p->pendidikan_id }}"
-                           data-unit_kerja_id="{{ $p->unit_kerja_id }}"
-                           data-status_pegawai="{{ $p->status_pegawai }}"
-                           data-alamat="{{ $p->alamat }}"
-                           data-foto_profil_path="{{ $p->foto_profil_path ? asset($p->foto_profil_path) : 'https://placehold.co/128x128/e0e0e0/ffffff?text=No+Photo' }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                        {{-- Edit Button (pencil icon) --}}
+                        <button type="button" class="btn-aksi btn-edit" title="Edit"
+                            data-bs-toggle="modal" data-bs-target="#editPegawaiModal"
+                            data-id="{{ $p->id }}"
+                            data-nip="{{ $p->nip }}"
+                            data-nik="{{ $p->nik ?? '' }}"
+                            data-nama-lengkap="{{ $p->nama_lengkap }}"
+                            data-tanggal-lahir="{{ $p->tanggal_lahir ? \Carbon\Carbon::parse($p->tanggal_lahir)->format('Y-m-d') : '' }}"
+                            data-jenis-kelamin="{{ $p->jenis_kelamin ?? '' }}"
+                            data-alamat="{{ $p->alamat ?? '' }}"
+                            data-email="{{ $p->email ?? '' }}"
+                            data-nomor-telepon="{{ $p->nomor_telepon ?? '' }}"
+                            data-jabatan="{{ $p->jabatan ?? '' }}"
+                            data-tmt="{{ $p->tmt ? \Carbon\Carbon::parse($p->tmt)->format('Y-m-d') : '' }}" {{-- PASTIKAN 'tmt' ADA DI MODEL/DB --}}
+                            data-eselon-id="{{ $p->eselon_id ?? '' }}" {{-- PASTIKAN 'eselon_id' ADA DI MODEL/DB --}}
+                            data-golongan-id="{{ $p->golongan_id ?? '' }}" {{-- PASTIKAN 'golongan_id' ADA DI MODEL/DB --}}
+                            data-pendidikan-id="{{ $p->pendidikan_id ?? '' }}" 
+                            data-golongan-pangkat="{{ $p->golongan_pangkat ?? '' }}"
+                            data-unit-kerja-id="{{ $p->unit_kerja_id ?? '' }}"
+                            data-status-pegawai="{{ $p->status_pegawai ?? '' }}"
+                            data-tmt-status="{{ $p->tmt_status ? \Carbon\Carbon::parse($p->tmt_status)->format('Y-m-d') : '' }}" {{-- PASTIKAN 'tmt_status' ADA DI MODEL/DB --}}
+                            data-foto-profil-path="{{ $p->foto_profil_path ? asset($p->foto_profil_path) : '' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                 <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 15.5v.5H.5a.5.5 0 0 1-.5-.5V.5a.5.5 0 0 1 .5-.5H2V2h2V.5a.5.5 0 0 1 .5-.5h.5a.5.5 0 0 1 .5.5v1.5h1.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.207l6.5-6.5z"/>
                             </svg>
-                        </a>
-                        {{-- Tombol Hapus (ikon tempat sampah) --}}
+                        </button>
+                        {{-- Delete Button (trash can icon) --}}
                         <form action="{{ route('pegawai.destroy', $p->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn-aksi btn-hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus pegawai {{ $p->nama_lengkap }}?');" title="Hapus">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-trash-fill" viewBox="0 0 16 16">
                                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
                                 </svg>
                             </button>
@@ -211,10 +223,10 @@
     </table>
 
     <div class="d-flex justify-content-center mt-4">
-        {{ $pegawai->links('vendor.pagination.bootstrap-4') }}
-    </div>
+    {{ $pegawai->links('vendor.pagination.bootstrap-4') }}
+</div>
 
-    {{-- BARU: Modal untuk Export dengan Opsi (tetap di sini) --}}
+    {{-- NEW: Modal for Export with Options (already exists) --}}
     <div class="modal fade" id="exportOptionsModal" tabindex="-1" aria-labelledby="exportOptionsLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -232,13 +244,14 @@
                                     'nik' => 'NIK',
                                     'nama_lengkap' => 'Nama Lengkap',
                                     'nomor_telepon' => 'No. Telepon',
-                                    'unit_kerja.nama_unit' => 'Unit Kerja',
+                                    'unit_kerja.nama_unit' => 'Bidang',
                                     'jabatan' => 'Jabatan',
-                                    'golongan_pangkat' => 'Pangkat', // Assuming this comes from a relation or property
+                                    'golongan_pangkat' => 'Pangkat',
                                     'status_pegawai' => 'Status',
                                     'alamat' => 'Alamat',
                                     'tanggal_lahir' => 'Tanggal Lahir',
                                     'jenis_kelamin' => 'Jenis Kelamin',
+                                    'email' => 'Email',
                                 ];
                             @endphp
                             @foreach ($exportColumns as $key => $label)
@@ -266,9 +279,9 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="unit_kerja_filter_modal" class="form-label">Unit Kerja:</label>
+                            <label for="unit_kerja_filter_modal" class="form-label">Bidang:</label>
                             <select class="form-select" id="unit_kerja_filter_modal" name="unit_kerja_filter">
-                                <option value="">Semua Unit Kerja</option>
+                                <option value="">Bidang</option>
                                 @foreach ($unitKerjaList as $unit)
                                     <option value="{{ $unit->id }}">
                                         {{ $unit->nama_unit }}
@@ -286,571 +299,581 @@
         </div>
     </div>
 
-
-    {{-- NEW: MODAL UNTUK EDIT PEGAWAI --}}
-    <div class="modal fade" id="editPegawaiModal" tabindex="-1" aria-labelledby="editPegawaiModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg"> {{-- Use modal-lg for a larger modal to fit the form --}}
+    {{-- Modal Tambah Pegawai Baru --}}
+    <div class="modal fade" id="tambahPegawaiModal" tabindex="-1" aria-labelledby="tambahPegawaiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editPegawaiModalLabel">Edit Data Pegawai: <span id="pegawaiNamaModal"></span></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="tambahPegawaiModalLabel" style="text-align:center;">Tambah Pegawai Baru</h5>
+                    <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="editPegawaiForm" method="POST" action="" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-body">
-                        {{-- Hidden field to redirect back to index --}}
-                        <input type="hidden" name="_redirect_to" value="{{ route('pegawai.index') }}">
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('pegawai.store') }}" enctype="multipart/form-data">
+                        @csrf
 
-                        {{-- Foto Profil Section --}}
-
-                        {{-- Foto Profil Section --}}
-<div class="d-flex flex-column align-items-center mb-5">
-    <div class="relative w-32 h-32 overflow-hidden border-1 border-white-600 shadow-md rounded-full" style="width: 128px; height: 128px;">
-        <img id="edit-profile-preview-image"
-            src="https://placehold.co/128x128/e0e0e0/ffffff?text=No+Photo" {{-- Default placeholder --}}
-            alt="Foto Profil"
-            class="w-full h-full object-cover"
-            style="max-width: 150px; max-height: 150px; width: auto; height: auto;">
-        {{-- Input file ini akan disembunyikan dan dipicu oleh tombol "Upload New" --}}
-        <input type="file" name="foto_profil" id="edit_foto_profil" class="hidden" accept="image/*">
-    </div>
-    <div class="d-flex mt-2 justify-content-center align-items-center" style="gap: 8px; width: 100%;">
-        <button type="button" id="edit-upload-new-button" class="btn btn-primary btn-sm">Upload New</button>
-        <label for="edit_hapus_foto_profil" class="btn btn-warning btn-sm cursor-pointer mb-0">
-            <input type="checkbox" name="hapus_foto_profil" value="1" id="edit_hapus_foto_profil" class="form-check-input me-1">
-            Delete Avatar
-        </label>
-    </div>
-    {{-- Error handling for foto_profil (will show if form submission fails) --}}
-    <div id="edit-foto-profil-error" class="text-danger text-sm mt-1"></div>
-</div>
-
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_nip" class="form-label">NIP:</label>
-                                <input type="text" name="nip" id="edit_nip" class="form-control" required>
-                                <div id="edit-nip-error" class="text-danger text-sm mt-1"></div>
+                        {{-- Foto Profil di Tengah (gaya baru) --}}
+                        <div class="form-group text-center mb-4">
+                            <label for="foto_profil" class="d-block mb-2">Foto Profil:</label>
+                            <div class="profile-photo-upload-container">
+                                <img id="profile-preview-image" src="{{ asset('img/no-photo.jpg') }}" alt="No Photo" class="profile-photo-preview">
+                                <button type="button" id="upload-new-button" class="btn btn-sm btn-outline-primary upload-button">Unggah</button>
+                                <input type="file" name="foto_profil" id="foto_profil" class="d-none">
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_nik" class="form-label">NIK:</label>
-                                <input type="text" name="nik" id="edit_nik" class="form-control">
-                                <div id="edit-nik-error" class="text-danger text-sm mt-1"></div>
-                            </div>
+                            
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_nama_lengkap" class="form-label">Nama Lengkap:</label>
-                                <input type="text" name="nama_lengkap" id="edit_nama_lengkap" class="form-control" required>
-                                <div id="edit-nama_lengkap-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_tanggal_lahir" class="form-label">Tanggal Lahir:</label>
-                                <input type="date" name="tanggal_lahir" id="edit_tanggal_lahir" class="form-control">
-                                <div id="edit-tanggal_lahir-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                        </div>
+                        {{-- Grid dua kolom --}}
+                        <div class="form-grid mt-3">
+                            <p class="form-group">
+                                <label for="nip">NIP:</label>
+                                <input type="text" name="nip" id="nip" value="{{ old('nip') }}" required>
+                                
+                            </p>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <p class="form-group">
+                                <label for="nik">NIK:</label>
+                                <input type="text" name="nik" id="nik" value="{{ old('nik') }}">
+                                
+                            </p>
+
+                            <p class="form-group">
+                                <label for="nama_lengkap">Nama Lengkap:</label>
+                                <input type="text" name="nama_lengkap" id="nama_lengkap" value="{{ old('nama_lengkap') }}" required>
+                               
+                            </p>
+
+                            <p class="form-group">
+                                <label for="tanggal_lahir">Tanggal Lahir:</label>
+                                <input type="date" name="tanggal_lahir" id="tanggal_lahir" value="{{ old('tanggal_lahir') }}">
+                               
+                            </p>
+
+                            <p class="form-group">
+                                <label for="jenis_kelamin">Jenis Kelamin:</label>
+                                <select name="jenis_kelamin" id="jenis_kelamin">
+                                    <option value="">Pilih</option>
+                                    <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                    <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                </select>
+                                
+                            </p>
+
+                            <p class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" name="email" id="email" value="{{ old('email') }}">
+                                
+                            </p>
+
+                            <p class="form-group">
+                                <label for="nomor_telepon">Nomor Telepon:</label>
+                                <input type="text" name="nomor_telepon" id="nomor_telepon" value="{{ old('nomor_telepon') }}">
+                               
+                            </p>
+
+                            <p class="form-group">
                                 <label for="edit_tmt" class="form-label">TMT (Tanggal Mulai Terhitung):</label>
                                 <input type="date" name="tmt" id="edit_tmt" class="form-control">
-                                <div id="edit-tmt-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Jenis Kelamin:</label>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="jenis_kelamin" id="edit_jenis_kelamin_laki" value="Laki-laki">
-                                    <label class="form-check-label" for="edit_jenis_kelamin_laki">Laki-laki</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="jenis_kelamin" id="edit_jenis_kelamin_perempuan" value="Perempuan">
-                                    <label class="form-check-label" for="edit_jenis_kelamin_perempuan">Perempuan</label>
-                                </div>
-                                <div id="edit-jenis_kelamin-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                        </div>
+                            
+                             </p>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_email" class="form-label">Email:</label>
-                                <input type="email" name="email" id="edit_email" class="form-control">
-                                <div id="edit-email-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_nomor_telepon" class="form-label">Nomor Telepon:</label>
-                                <input type="text" name="nomor_telepon" id="edit_nomor_telepon" class="form-control">
-                                <div id="edit-nomor_telepon-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                        </div>
+                            {{-- Input teks untuk nama jabatan --}}
+                            <p class="form-group">
+                                <label for="jabatan">Jabatan:</label>
+                                <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan') }}" required>
+                                
+                            </p>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_jabatan" class="form-label">Jabatan:</label>
-                                <input type="text" name="jabatan" id="edit_jabatan" class="form-control">
-                                <div id="edit-jabatan-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_golongan_id" class="form-label">Golongan:</label>
-                                <select name="golongan_id" id="edit_golongan_id" class="form-select">
-                                    <option value="">Pilih Golongan</option>
-                                    @foreach ($golongans as $golongan)
-                                        <option value="{{ $golongan->id }}">{{ $golongan->nama_golongan }}</option>
-                                    @endforeach
-                                </select>
-                                <div id="edit-golongan_id-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                        </div>
+                             
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_eselon_id" class="form-label">Eselon:</label>
-                                <select name="eselon_id" id="edit_eselon_id" class="form-select">
+                            {{-- Dropdown untuk Eselon --}}
+                            <p class="form-group">
+                                <label for="eselon_id">Eselon:</label>
+                                <select name="eselon_id" id="eselon_id" required>
                                     <option value="">Pilih Eselon</option>
                                     @foreach ($eselons as $eselon)
-                                        <option value="{{ $eselon->id }}">{{ $eselon->nama_eselon }}</option>
+                                        <option value="{{ $eselon->id }}" {{ old('eselon_id') == $eselon->id ? 'selected' : '' }}>
+                                            {{ $eselon->nama_eselon }}
+                                        </option>
                                     @endforeach
                                 </select>
-                                <div id="edit-eselon_id-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_pendidikan_id" class="form-label">Pendidikan:</label>
-                                <select name="pendidikan_id" id="edit_pendidikan_id" class="form-select">
+                             
+                            </p>
+
+                            {{-- Dropdown untuk Pangkat dan Golongan --}}
+                            <p class="form-group">
+                                <label for="golongan_id">Pangkat dan Golongan:</label>
+                                <select name="golongan_id" id="golongan_id">
+                                    <option value="">Pilih Golongan</option>
+                                    @foreach ($golongans as $golongan)
+                                        <option value="{{ $golongan->id }}" {{ old('golongan_id') == $golongan->id ? 'selected' : '' }}>
+                                            {{ $golongan->nama_golongan }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                               
+                            </p>
+
+                            {{-- Dropdown untuk Pendidikan --}}
+                            <p class="form-group">
+                                <label for="pendidikan_id">Pendidikan:</label>
+                                <select name="pendidikan_id" id="pendidikan_id">
                                     <option value="">Pilih Pendidikan</option>
                                     @foreach ($pendidikans as $pendidikan)
-                                        <option value="{{ $pendidikan->id }}">{{ $pendidikan->nama_pendidikan }}</option>
+                                        <option value="{{ $pendidikan->id }}" {{ old('pendidikan_id') == $pendidikan->id ? 'selected' : '' }}>
+                                            {{ $pendidikan->nama_pendidikan }}
+                                        </option>
                                     @endforeach
                                 </select>
-                                <div id="edit-pendidikan_id-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                        </div>
+                               
+                            </p>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_unit_kerja_id" class="form-label">Unit Kerja:</label>
-                                <select name="unit_kerja_id" id="edit_unit_kerja_id" class="form-select">
-                                    <option value="">Pilih Unit Kerja</option>
+                            <p class="form-group">
+                                <label for="unit_kerja_id">Bidang:</label>
+                                <select name="unit_kerja_id" id="unit_kerja_id">
+                                    <option value="">Pilih Bidang</option>
                                     @foreach ($unitKerjaList as $unit)
-                                        <option value="{{ $unit->id }}">{{ $unit->nama_unit }}</option>
+                                        <option value="{{ $unit->id }}" {{ old('unit_kerja_id') == $unit->id ? 'selected' : '' }}>
+                                            {{ $unit->nama_unit }}
+                                        </option>
                                     @endforeach
                                 </select>
-                                <div id="edit-unit_kerja_id-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_status_pegawai" class="form-label">Status Pegawai:</label>
-                                <select name="status_pegawai" id="edit_status_pegawai" class="form-select">
+                            </p>
+
+                            <p class="form-group">
+                                <label for="status_pegawai">Status Pegawai:</label>
+                                <select name="status_pegawai" id="status_pegawai">
                                     <option value="">Pilih</option>
-                                    <option value="Aktif">Aktif</option>
-                                    <option value="Non-aktif">Non-aktif</option>
-                                    <option value="Pensiun">Pensiun</option>
+                                    <option value="Aktif" {{ old('status_pegawai') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                                    <option value="Non-aktif" {{ old('status_pegawai') == 'Non-aktif' ? 'selected' : '' }}>Pindah</option>
+                                    <option value="Pensiun" {{ old('status_pegawai') == 'Pensiun' ? 'selected' : '' }}>Pensiun</option>
                                 </select>
-                                <div id="edit-status_pegawai-error" class="text-danger text-sm mt-1"></div>
-                            </div>
+                               
+                            </p>
+
+                            {{-- BARU: Input untuk TMT Status --}}
+                            <p class="form-group">
+                                <label for="tmt_status">TMT Status:</label>
+                                <input type="date" name="tmt_status" id="tmt_status" value="{{ old('tmt_status') }}">
+                               
+                            </p>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="edit_alamat" class="form-label">Alamat:</label>
-                            <textarea name="alamat" id="edit_alamat" rows="3" class="form-control"></textarea>
-                            <div id="edit-alamat-error" class="text-danger text-sm mt-1"></div>
-                        </div>
+                        {{-- Alamat dan tombol tetap satu kolom --}}
+                        <p>
+                            <label for="alamat">Alamat:</label>
+                            <textarea name="alamat" id="alamat">{{ old('alamat') }}</textarea>
+                            
+                        </p>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Perbarui Data Pegawai</button>
-                    </div>
-                </form>
+                        {{-- Tombol simpan dan batal --}}
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Simpan Pegawai</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
 
-    {{-- NEW: MODAL UNTUK TAMBAH PEGAWAI --}}
-    <div class="modal fade" id="addPegawaiModal" tabindex="-1" aria-labelledby="addPegawaiModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg"> {{-- Use modal-lg for a larger modal to fit the form --}}
+    {{-- NEW: Modal for Edit Employee --}}
+    <div class="modal fade" id="editPegawaiModal" tabindex="-1" aria-labelledby="editPegawaiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addPegawaiModalLabel">Tambah Pegawai Baru</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="editPegawaiModalLabel">Edit Data Pegawai</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="addPegawaiForm" method="POST" action="{{ route('pegawai.store') }}" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        {{-- Hidden field to redirect back to index (optional, useful for non-AJAX submission) --}}
-                        <input type="hidden" name="_redirect_to" value="{{ route('pegawai.index') }}">
+                <div class="modal-body">
+                    <form id="editPegawaiForm" method="POST" action="" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
 
-                        {{-- Foto Profil Section for Add Modal (similar to Edit Modal but without existing path) --}}
-                        <div class="d-flex flex-column align-items-center mb-5">
-                            <div class="relative w-32 h-32 overflow-hidden border-1 border-white-600 shadow-md rounded-full" style="width: 128px; height: 128px;">
-                                <img id="add-profile-preview-image"
-                                    src="https://placehold.co/128x128/e0e0e0/ffffff?text=No+Photo" {{-- Default placeholder --}}
-                                    alt="Foto Profil"
-                                    class="w-full h-full object-cover"
-                                    style="max-width: 150px; max-height: 150px; width: auto; height: auto;">
-                                <input type="file" name="foto_profil" id="add_foto_profil" class="hidden" accept="image/*">
+                        {{-- Hidden input to store redirect URL --}}
+                        <input type="hidden" name="_redirect_to" value="{{ request()->fullUrl() }}">
+
+                        {{-- Foto Profil di Tengah (gaya baru untuk edit) --}}
+                        <div class="form-group text-center mb-4">
+                            <label for="modal_edit_foto_profil" class="d-block mb-2">Foto Profil:</label>
+                            <div class="profile-photo-upload-container">
+                                {{-- Image preview. Default will be no-photo.jpg or current profile photo --}}
+                                <img id="modal-edit-profile-preview-image" src="{{ asset('img/no-photo.jpg') }}" alt="No Photo" class="profile-photo-preview">
+                                <button type="button" id="modal-edit-upload-new-button" class="btn btn-sm btn-outline-primary upload-button">Unggah Baru</button>
+                                <input type="file" name="foto_profil" id="modal_edit_foto_profil" class="d-none">
                             </div>
-                            <div class="d-flex mt-2 justify-content-center align-items-center" style="gap: 8px; width: 100%;">
-                                <button type="button" id="add-upload-new-button" class="btn btn-primary btn-sm">Upload New</button>
-                                {{-- For Add Modal, usually no "Delete Avatar" checkbox, as there's no existing avatar to delete --}}
-                                {{-- If you want to allow users to remove a newly selected photo before saving, you can add a similar checkbox --}}
+                            <div class="form-check d-flex justify-content-center align-items-center mt-2">
+                                <input class="form-check-input me-1" type="checkbox" name="hapus_foto_profil" value="1" id="modal_edit_hapus_foto_profil">
+                                <label class="form-check-label" for="modal_edit_hapus_foto_profil">
+                                    Hapus Foto Profil Saat Ini
+                                </label>
                             </div>
-                            <div id="add-foto-profil-error" class="text-danger text-sm mt-1"></div>
+                            @error('foto_profil')
+                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="add_nip" class="form-label">NIP <span class="text-danger">*</span>:</label>
-                                <input type="text" name="nip" id="add_nip" class="form-control" value="{{ old('nip') }}" required>
-                                <div id="add-nip-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="add_nik" class="form-label">NIK:</label>
-                                <input type="text" name="nik" id="add_nik" class="form-control" value="{{ old('nik') }}">
-                                <div id="add-nik-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                        </div>
+                        <div class="form-grid">
+                            <p class="form-group">
+                                <label for="modal_edit_nip">NIP:</label>
+                                <input type="text" name="nip" id="modal_edit_nip" required>
+                
+                            </p>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="add_nama_lengkap" class="form-label">Nama Lengkap <span class="text-danger">*</span>:</label>
-                                <input type="text" name="nama_lengkap" id="add_nama_lengkap" class="form-control" value="{{ old('nama_lengkap') }}" required>
-                                <div id="add-nama_lengkap-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="add_tanggal_lahir" class="form-label">Tanggal Lahir:</label>
-                                <input type="date" name="tanggal_lahir" id="add_tanggal_lahir" class="form-control" value="{{ old('tanggal_lahir') }}">
-                                <div id="add-tanggal_lahir-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                        </div>
+                            <p class="form-group">
+                                <label for="modal_edit_nik">NIK:</label>
+                                <input type="text" name="nik" id="modal_edit_nik">
+                                
+                            </p>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="add_tmt" class="form-label">TMT (Tanggal Mulai Terhitung):</label>
-                                <input type="date" name="tmt" id="add_tmt" class="form-control" value="{{ old('tmt') }}">
-                                <div id="add-tmt-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Jenis Kelamin:</label>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="jenis_kelamin" id="add_jenis_kelamin_laki" value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="add_jenis_kelamin_laki">Laki-laki</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="jenis_kelamin" id="add_jenis_kelamin_perempuan" value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="add_jenis_kelamin_perempuan">Perempuan</label>
-                                </div>
-                                <div id="add-jenis_kelamin-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                        </div>
+                            <p class="form-group">
+                                <label for="modal_edit_nama_lengkap">Nama Lengkap:</label>
+                                <input type="text" name="nama_lengkap" id="modal_edit_nama_lengkap" required>
+                                
+                            </p>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="add_email" class="form-label">Email:</label>
-                                <input type="email" name="email" id="add_email" class="form-control" value="{{ old('email') }}">
-                                <div id="add-email-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="add_nomor_telepon" class="form-label">Nomor Telepon:</label>
-                                <input type="text" name="nomor_telepon" id="add_nomor_telepon" class="form-control" value="{{ old('nomor_telepon') }}">
-                                <div id="add-nomor_telepon-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                        </div>
+                            <p class="form-group">
+                                <label for="modal_edit_tanggal_lahir">Tanggal Lahir:</label>
+                                <input type="date" name="tanggal_lahir" id="modal_edit_tanggal_lahir">
+                                
+                            </p>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="add_jabatan" class="form-label">Jabatan:</label>
-                                <input type="text" name="jabatan" id="add_jabatan" class="form-control" value="{{ old('jabatan') }}">
-                                <div id="add-jabatan-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="add_golongan_id" class="form-label">Golongan:</label>
-                                <select name="golongan_id" id="add_golongan_id" class="form-select">
-                                    <option value="">Pilih Golongan</option>
-                                    @foreach ($golongans as $golongan)
-                                        <option value="{{ $golongan->id }}" {{ old('golongan_id') == $golongan->id ? 'selected' : '' }}>{{ $golongan->nama_golongan }}</option>
-                                    @endforeach
+                            <p class="form-group">
+                                <label for="modal_edit_jenis_kelamin">Jenis Kelamin:</label>
+                                <select name="jenis_kelamin" id="modal_edit_jenis_kelamin">
+                                    <option value="">Pilih</option>
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
                                 </select>
-                                <div id="add-golongan_id-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                        </div>
+                               
+                            </p>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="add_eselon_id" class="form-label">Eselon:</label>
-                                <select name="eselon_id" id="add_eselon_id" class="form-select">
+                            <p class="form-group">
+                                <label for="modal_edit_email">Email:</label>
+                                <input type="email" name="email" id="modal_edit_email">
+                              
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_nomor_telepon">Nomor Telepon:</label>
+                                <input type="text" name="nomor_telepon" id="modal_edit_nomor_telepon">
+                               
+                            </p>
+
+
+                            {{-- <<TMT>> --}}
+                            <p class="form-group">
+                                <label for="modal_edit_tmt" class="form-label">TMT (Tanggal Mulai Terhitung):</label>
+                                <input type="date" name="tmt" id="modal_edit_tmt" class="form-control">
+                                <div id="edit-tmt-error" class="text-danger text-sm mt-1"></div>
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_jabatan">Jabatan:</label>
+                                <input type="text" name="jabatan" id="modal_edit_jabatan">
+                               
+                            </p>
+
+                            {{-- <<ESELON>> --}}
+                            <p class="form-group">
+                                <label for="modal_edit_eselon_id" class="form-label">Eselon:</label>
+                                <select name="eselon_id" id="modal_edit_eselon_id" class="form-select">
                                     <option value="">Pilih Eselon</option>
                                     @foreach ($eselons as $eselon)
-                                        <option value="{{ $eselon->id }}" {{ old('eselon_id') == $eselon->id ? 'selected' : '' }}>{{ $eselon->nama_eselon }}</option>
+                                        <option value="{{ $eselon->id }}">{{ $eselon->nama_eselon }}</option>
                                     @endforeach
                                 </select>
-                                <div id="add-eselon_id-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="add_pendidikan_id" class="form-label">Pendidikan:</label>
-                                <select name="pendidikan_id" id="add_pendidikan_id" class="form-select">
+            
+                            </p>
+
+
+                            <p class="form-group">
+                                <label for="modal_edit_golongan_id" class="form-label">Golongan:</label>
+                                <select name="golongan_id" id="modal_edit_golongan_id" class="form-select">
+                                    <option value="">Pilih Golongan</option>
+                                    @foreach ($golongans as $golongan)
+                                        <option value="{{ $golongan->id }}">{{ $golongan->nama_golongan }}</option>
+                                    @endforeach
+                                </select>
+                                
+                            </p>
+
+                            <p class="form-group">
+                                <label for="modal_edit_pendidikan_id" class="form-label">Pendidikan:</label>
+                                <select name="pendidikan_id" id="modal_edit_pendidikan_id" class="form-select">
                                     <option value="">Pilih Pendidikan</option>
                                     @foreach ($pendidikans as $pendidikan)
-                                        <option value="{{ $pendidikan->id }}" {{ old('pendidikan_id') == $pendidikan->id ? 'selected' : '' }}>{{ $pendidikan->nama_pendidikan }}</option>
+                                        <option value="{{ $pendidikan->id }}">{{ $pendidikan->nama_pendidikan }}</option>
                                     @endforeach
                                 </select>
-                                <div id="add-pendidikan_id-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                        </div>
+                              
+                            </p>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="add_unit_kerja_id" class="form-label">Unit Kerja:</label>
-                                <select name="unit_kerja_id" id="add_unit_kerja_id" class="form-select">
-                                    <option value="">Pilih Unit Kerja</option>
-                                    @foreach ($unitKerjaList as $unit) {{-- Use $unitKerjaList, not $unit_kerja --}}
-                                        <option value="{{ $unit->id }}" {{ old('unit_kerja_id') == $unit->id ? 'selected' : '' }}>{{ $unit->nama_unit }}</option>
+                            <p class="form-group">
+                                <label for="modal_edit_unit_kerja_id">Bidang:</label>
+                                <select name="unit_kerja_id" id="modal_edit_unit_kerja_id">
+                                    <option value="">Pilih Bidang</option>
+                                    @foreach ($unitKerjaList as $unit)
+                                        <option value="{{ $unit->id }}">{{ $unit->nama_unit }}</option>
                                     @endforeach
                                 </select>
-                                <div id="add-unit_kerja_id-error" class="text-danger text-sm mt-1"></div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="add_status_pegawai" class="form-label">Status Pegawai:</label>
-                                <select name="status_pegawai" id="add_status_pegawai" class="form-select">
+                             
+                            </p>
+
+                            
+
+                            <p class="form-group">
+                                <label for="modal_edit_status_pegawai">Status Pegawai:</label>
+                                <select name="status_pegawai" id="modal_edit_status_pegawai">
                                     <option value="">Pilih</option>
-                                    <option value="Aktif" {{ old('status_pegawai') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
-                                    <option value="Non-aktif" {{ old('status_pegawai') == 'Non-aktif' ? 'selected' : '' }}>Non-aktif</option>
-                                    <option value="Pensiun" {{ old('status_pegawai') == 'Pensiun' ? 'selected' : '' }}>Pensiun</option>
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Non-aktif">Pindah</option>
+                                    <option value="Pensiun">Pensiun</option>
                                 </select>
-                                <div id="add-status_pegawai-error" class="text-danger text-sm mt-1"></div>
-                            </div>
+                              
+                            </p>
+
+                            {{-- BARU: Input untuk TMT Status di modal edit --}}
+                            <p class="form-group">
+                                <label for="modal_edit_tmt_status">TMT Status:</label>
+                                <input type="date" name="tmt_status" id="modal_edit_tmt_status">
+                               
+                            </p>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="add_tmt_status" class="form-label">TMT Status:</label>
-                            <input type="date" name="tmt_status" id="add_tmt_status" class="form-control" value="{{ old('tmt_status') }}">
-                            <div id="add-tmt_status-error" class="text-danger text-sm mt-1"></div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="add_alamat" class="form-label">Alamat:</label>
-                            <textarea name="alamat" id="add_alamat" rows="3" class="form-control">{{ old('alamat') }}</textarea>
-                            <div id="add-alamat-error" class="text-danger text-sm mt-1"></div>
-                        </div>
+                        <p>
+                            <label for="modal_edit_alamat">Alamat:</label>
+                            <textarea name="alamat" id="modal_edit_alamat"></textarea>
+                           
+                        </p>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan Pegawai</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Perbarui Pegawai</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
 @endsection
 
-@section('scripts')
-
+@section('scripts') {{-- For page-specific JavaScript --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // ... (Existing Export Modal Script) ...
+document.addEventListener('DOMContentLoaded', function () {
+    // Script for delete modal (already exists)
+    const confirmDeleteModalElement = document.getElementById('confirmDeleteModal');
+    const formDelete = document.getElementById('formDelete');
+    const namaPegawaiSpan = document.getElementById('namaPegawai');
 
-        // --- NEW: Add Pegawai Modal Script ---
-        var addPegawaiModal = document.getElementById('addPegawaiModal');
-        var addPegawaiForm = document.getElementById('addPegawaiForm');
-        var addProfilePreviewImage = document.getElementById('add-profile-preview-image');
-        var addFotoProfilInput = document.getElementById('add_foto_profil');
-        var addUploadNewButton = document.getElementById('add-upload-new-button');
-        
-        // Reset form dan preview gambar saat modal Add dibuka
-        addPegawaiModal.addEventListener('show.bs.modal', function (event) {
-            addPegawaiForm.reset(); // Reset semua input form
-            addProfilePreviewImage.src = 'https://placehold.co/128x128/e0e0e0/ffffff?text=No+Photo'; // Reset gambar preview
-            // Clear previous validation errors if any (important if validation fails and modal is reopened)
-            document.querySelectorAll('#addPegawaiForm .text-danger').forEach(function(element) {
-                element.textContent = '';
-            });
-            document.querySelectorAll('#addPegawaiForm .form-control.is-invalid, #addPegawaiForm .form-select.is-invalid').forEach(function(element) {
-                element.classList.remove('is-invalid');
-            });
+    if (confirmDeleteModalElement) {
+        confirmDeleteModalElement.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const nama = button.getAttribute('data-nama');
+            const action = button.getAttribute('data-action');
+
+            namaPegawaiSpan.textContent = nama;
+            formDelete.setAttribute('action', action);
         });
+    }
 
-        // Handle file input change for image preview in Add modal
-        if (addFotoProfilInput) {
-            addFotoProfilInput.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        addProfilePreviewImage.src = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    addProfilePreviewImage.src = 'https://placehold.co/128x128/e0e0e0/ffffff?text=No+Photo'; // Revert to default if no file selected
-                }
-            });
-        }
+    // Script for Export Options Modal (already exists)
+    const exportOptionsModalElement = document.getElementById('exportOptionsModal');
+    if (exportOptionsModalElement) {
+        exportOptionsModalElement.addEventListener('show.bs.modal', function (event) {
+            const exportForm = document.getElementById('exportForm');
+            exportForm.reset();
 
-        // Trigger the hidden file input when "Upload New" button is clicked in Add modal
-        if (addUploadNewButton) {
-            addUploadNewButton.addEventListener('click', function() {
-                addFotoProfilInput.click();
-            });
-        }
+            const currentSearchTerm = new URLSearchParams(window.location.search).get('search');
+            const currentUnitFilter = new URLSearchParams(window.location.search).get('unit_kerja'); // Use 'unit_kerja' as per your form name
+            const currentStatusFilter = new URLSearchParams(window.location.search).get('status_pegawai'); // Use 'status_pegawai' as per your form name
 
-        // --- Existing Edit Pegawai Modal Script (adjust IDs as needed, they seem fine) ---
-        var editPegawaiModal = document.getElementById('editPegawaiModal');
-        var editPegawaiForm = document.getElementById('editPegawaiForm');
-        var pegawaiNamaModal = document.getElementById('pegawaiNamaModal');
-        var editProfilePreviewImage = document.getElementById('edit-profile-preview-image');
-        var editFotoProfilInput = document.getElementById('edit_foto_profil');
-        var editUploadNewButton = document.getElementById('edit-upload-new-button');
-        var editHapusFotoProfilCheckbox = document.getElementById('edit_hapus_foto_profil');
-        var originalEditProfileSrc = editProfilePreviewImage.src; // Store the original placeholder
-
-        editPegawaiModal.addEventListener('show.bs.modal', function (event) {
-            // ... (Existing code for populating edit form fields) ...
-
-            // Handle photo preview and delete checkbox for EDIT MODAL
-            editProfilePreviewImage.src = foto_profil_path;
-            originalEditProfileSrc = foto_profil_path; // Update original source to the current photo
-            editHapusFotoProfilCheckbox.checked = false; // Uncheck delete on modal open
-            editFotoProfilInput.value = ''; // Clear file input
-            // Hide delete label if no photo exists
-            if (foto_profil_path === 'https://placehold.co/128x128/e0e0e0/ffffff?text=No+Photo') {
-                editHapusFotoProfilCheckbox.closest('label').style.display = 'none';
-            } else {
-                editHapusFotoProfilCheckbox.closest('label').style.display = 'inline-flex';
+            if (currentUnitFilter) {
+                document.getElementById('unit_kerja_filter_modal').value = currentUnitFilter;
+            }
+            if (currentStatusFilter) {
+                document.getElementById('status_filter').value = currentStatusFilter;
             }
 
-            // Clear previous validation errors if any
-            document.querySelectorAll('#editPegawaiForm .text-danger').forEach(function(element) {
-                element.textContent = '';
-            });
-            document.querySelectorAll('#editPegawaiForm .form-control.is-invalid, #editPegawaiForm .form-select.is-invalid').forEach(function(element) {
-                element.classList.remove('is-invalid');
+            const defaultColumns = ['nip', 'nama_lengkap', 'nomor_telepon', 'unit_kerja.nama_unit', 'jabatan', 'status_pegawai', 'alamat'];
+            exportForm.querySelectorAll('input[name="columns[]"]').forEach(checkbox => {
+                if (defaultColumns.includes(checkbox.value)) {
+                    checkbox.checked = true;
+                } else {
+                    checkbox.checked = false;
+                }
             });
         });
+    }
 
-        // Handle file input change for image preview in EDIT modal
-        if (editFotoProfilInput) {
-            editFotoProfilInput.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        editProfilePreviewImage.src = e.target.result;
-                        editHapusFotoProfilCheckbox.checked = false; // Uncheck "Delete avatar" if a new photo is uploaded
-                        editHapusFotoProfilCheckbox.closest('label').style.display = 'inline-flex'; // Ensure delete option is visible
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    editProfilePreviewImage.src = originalEditProfileSrc; // Revert to original if no file selected
-                }
-            });
+    // Script for Add New Employee Modal - Photo Upload
+    const tambahPegawaiModalElement = document.getElementById('tambahPegawaiModal');
+    const addFileInput = document.getElementById('foto_profil'); // Ini ID untuk modal tambah
+    const addPreviewImage = document.getElementById('profile-preview-image');
+    const addUploadButton = document.getElementById('upload-new-button');
+
+    if (tambahPegawaiModalElement && addFileInput && addPreviewImage && addUploadButton) {
+        addUploadButton.addEventListener('click', function() {
+            addFileInput.click(); // Memicu klik pada input file tersembunyi
+        });
+
+        addFileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    addPreviewImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Jika tidak ada file yang dipilih, kembali ke placeholder default
+                addPreviewImage.src = "{{ asset('img/no-photo.jpg') }}";
+            }
+        });
+
+        // Reset the image when the modal is hidden
+        tambahPegawaiModalElement.addEventListener('hidden.bs.modal', function() {
+            addPreviewImage.src = "{{ asset('img/no-photo.jpg') }}";
+            addFileInput.value = ''; // Clear the file input
+        });
+
+        // Handle validation errors after submission for tambahPegawaiModal
+        @if ($errors->any() && session('modal_target') == 'tambahPegawaiModal')
+            var tambahModal = new bootstrap.Modal(document.getElementById('tambahPegawaiModal'));
+            tambahModal.show();
+        @endif
+    }
+
+
+    // Script for Edit Employee Modal - Photo Upload
+const editPegawaiModal = document.getElementById('editPegawaiModal');
+if (editPegawaiModal) {
+    const editFileInput = document.getElementById('modal_edit_foto_profil');
+    const editPreviewImage = document.getElementById('modal-edit-profile-preview-image');
+    const editUploadButton = document.getElementById('modal-edit-upload-new-button');
+    const editHapusFotoProfilCheckbox = document.getElementById('modal_edit_hapus_foto_profil');
+
+    editPegawaiModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const id = button.getAttribute('data-id');
+        const nip = button.getAttribute('data-nip');
+        const nik = button.getAttribute('data-nik');
+        const namaLengkap = button.getAttribute('data-nama-lengkap');
+        const tanggalLahir = button.getAttribute('data-tanggal-lahir');
+        const jenisKelamin = button.getAttribute('data-jenis-kelamin');
+        const alamat = button.getAttribute('data-alamat');
+        const email = button.getAttribute('data-email');
+        const nomorTelepon = button.getAttribute('data-nomor-telepon');
+        const jabatan = button.getAttribute('data-jabatan');
+
+        // PASTIKAN DATA ATTRIBUTE INI ADA DI TOMBOL EDIT DI HTML
+        const golonganId = button.getAttribute('data-golongan-id'); // ID Golongan (dari dropdown)
+        const eselonId = button.getAttribute('data-eselon-id');     // ID Eselon (dari dropdown)
+        const pendidikanId = button.getAttribute('data-pendidikan-id'); // ID Pendidikan (dari dropdown)
+        const tmt = button.getAttribute('data-tmt'); // Tanggal Mulai Terhitung (TMT)
+        const tmtStatus = button.getAttribute('data-tmt-status'); // Tanggal Mulai Terhitung Status
+
+        const unitKerjaId = button.getAttribute('data-unit-kerja-id');
+        const statusPegawai = button.getAttribute('data-status-pegawai');
+        const fotoProfilPath = button.getAttribute('data-foto-profil-path'); // Path foto saat ini
+
+        const modalTitle = editPegawaiModal.querySelector('.modal-title');
+        const form = editPegawaiModal.querySelector('#editPegawaiForm');
+
+        modalTitle.textContent = `Edit Data Pegawai: ${namaLengkap}`;
+        form.action = `/pegawai/${id}`; // Sesuaikan route Laravel Anda
+
+        // Populate form fields - PERBAIKAN DI SINI
+        // editPegawaiModal.querySelector('#modal_edit_foto_profil').value = nip; // <-- INI SALAH, INPUT FILE TIDAK DIISI DENGAN VALUE
+        editPegawaiModal.querySelector('#modal_edit_nip').value = nip;
+        editPegawaiModal.querySelector('#modal_edit_nik').value = nik;
+        editPegawaiModal.querySelector('#modal_edit_nama_lengkap').value = namaLengkap;
+        editPegawaiModal.querySelector('#modal_edit_tanggal_lahir').value = tanggalLahir;
+        editPegawaiModal.querySelector('#modal_edit_jenis_kelamin').value = jenisKelamin;
+        editPegawaiModal.querySelector('#modal_edit_alamat').value = alamat;
+        editPegawaiModal.querySelector('#modal_edit_email').value = email;
+        editPegawaiModal.querySelector('#modal_edit_nomor_telepon').value = nomorTelepon;
+
+        // Populate TMT field
+        editPegawaiModal.querySelector('#modal_edit_tmt').value = tmt; // Mengisi TMT dengan data 'data-tmt'
+
+        editPegawaiModal.querySelector('#modal_edit_jabatan').value = jabatan;
+
+        // Populate Eselon dropdown
+        editPegawaiModal.querySelector('#modal_edit_eselon_id').value = eselonId; // Mengisi dropdown Eselon dengan ID
+
+        // Populate Golongan dropdown (menggunakan modal_edit_golongan_id)
+        editPegawaiModal.querySelector('#modal_edit_golongan_id').value = golonganId; // Mengisi dropdown Golongan dengan ID
+
+        // Populate Pendidikan dropdown
+        editPegawaiModal.querySelector('#modal_edit_pendidikan_id').value = pendidikanId; // Mengisi dropdown Pendidikan dengan ID
+
+        editPegawaiModal.querySelector('#modal_edit_unit_kerja_id').value = unitKerjaId;
+        editPegawaiModal.querySelector('#modal_edit_status_pegawai').value = statusPegawai;
+        editPegawaiModal.querySelector('#modal_edit_tmt_status').value = tmtStatus; // Mengisi TMT Status
+
+        // Handle photo preview for EDIT MODAL
+        if (fotoProfilPath && fotoProfilPath !== '{{ asset('img/pria.jpg') }}' && fotoProfilPath !== '{{ asset('img/wanita.jpg') }}') {
+            editPreviewImage.src = fotoProfilPath;
+            editPreviewImage.dataset.originalSrc = fotoProfilPath; // Simpan path asli
+        } else {
+            const defaultGenderPhoto = (jenisKelamin === 'Perempuan') ? '{{ asset('img/wanita.jpg') }}' : '{{ asset('img/pria.jpg') }}';
+            editPreviewImage.src = defaultGenderPhoto;
+            editPreviewImage.dataset.originalSrc = defaultGenderPhoto; // Simpan path default
         }
-
-        // Trigger the hidden file input when "Upload New" button is clicked in EDIT modal
-        if (editUploadNewButton) {
-            editUploadNewButton.addEventListener('click', function() {
-                editFotoProfilInput.click();
-            });
-        }
-
-        // Handle "Delete avatar" checkbox change in EDIT modal
-        if (editHapusFotoProfilCheckbox) {
-            editHapusFotoProfilCheckbox.addEventListener('change', function() {
-                if (this.checked) {
-                    editProfilePreviewImage.src = 'https://placehold.co/128x128/e0e0e0/ffffff?text=No+Photo';
-                    editFotoProfilInput.value = ''; // Clear the file input value
-                } else {
-                    editProfilePreviewImage.src = editFotoProfilInput.files.length > 0 ? URL.createObjectURL(editFotoProfilInput.files[0]) : originalEditProfileSrc;
-                }
-            });
-        }
-        
-        // ... (Existing AJAX submission example, if you want to implement AJAX for Add/Edit) ...
-        // For simple submission, just remove e.preventDefault() and let the form submit normally.
-        // If validation fails, Laravel will redirect back with errors.
-        // For modals, it's better to use AJAX to show errors within the modal without a full page reload.
-
-        // Example for showing validation errors via AJAX (for both Add and Edit modals)
-        // You'd need to modify your controller to return JSON errors for AJAX requests.
-        function handleFormSubmission(formId, modalId) {
-            const form = document.getElementById(formId);
-            form.addEventListener('submit', function(e) {
-                // Clear previous errors for this specific form
-                document.querySelectorAll(`#${formId} .text-danger`).forEach(function(el) {
-                    el.textContent = '';
-                });
-                document.querySelectorAll(`#${formId} .form-control.is-invalid, #${formId} .form-select.is-invalid`).forEach(function(el) {
-                    el.classList.remove('is-invalid');
-                });
-
-                e.preventDefault(); // Prevent default form submission for AJAX
-
-                const formData = new FormData(this);
-                fetch(this.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: formData
-                })
-                .then(response => response.json().then(data => ({ status: response.status, body: data })))
-                .then(({ status, body }) => {
-                    if (status === 422) { // Validation errors
-                        const errors = body.errors;
-                        for (const field in errors) {
-                            // Find the correct element by its ID (either add_field or edit_field)
-                            const inputField = document.getElementById(`${formId.startsWith('add') ? 'add_' : 'edit_'}${field}`);
-                            if (inputField) {
-                                inputField.classList.add('is-invalid');
-                                const errorDiv = document.getElementById(`${formId.startsWith('add') ? 'add_' : 'edit_'}${field}-error`);
-                                if (errorDiv) {
-                                    errorDiv.textContent = errors[field][0];
-                                }
-                            }
-                        }
-                    } else if (status >= 200 && status < 300) { // Success
-                        // Handle success, e.g., close modal, show success message, refresh table
-                        var myModal = bootstrap.Modal.getInstance(document.getElementById(modalId));
-                        myModal.hide();
-                        // Consider using SweetAlert2 for success/error notifications
-                        alert(body.message || 'Data berhasil disimpan!');
-                        location.reload(); // Simple reload to see changes
-                    } else { // Other errors
-                        console.error('Error submitting form:', body);
-                        alert(body.message || 'Terjadi kesalahan saat menyimpan data.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Network error or unexpected:', error);
-                    alert('Terjadi kesalahan jaringan atau tak terduga.');
-                });
-            });
-        }
-
-        // Initialize AJAX submission for both forms
-        handleFormSubmission('addPegawaiForm', 'addPegawaiModal');
-        handleFormSubmission('editPegawaiForm', 'editPegawaiModal');
-
-        // This is crucial: if you want AJAX to handle form submissions,
-        // you need to set up your Laravel controllers to return JSON responses
-        // instead of redirecting on success or validation failure.
-        // Example in Controller:
-        // public function store(Request $request) {
-        //     try {
-        //         $validatedData = $request->validate([
-        //             // ... validation rules ...
-        //         ]);
-        //         // ... create pegawai ...
-        //         return response()->json(['message' => 'Pegawai berhasil ditambahkan!'], 201);
-        //     } catch (\Illuminate\Validation\ValidationException $e) {
-        //         return response()->json(['errors' => $e->errors()], 422);
-        //     } catch (\Exception $e) {
-        //         return response()->json(['message' => 'Gagal menambahkan pegawai: ' . $e->getMessage()], 500);
-        //     }
-        // }
-        // Similarly for update method.
-
+        editHapusFotoProfilCheckbox.checked = false; // Pastikan checkbox tidak tercentang saat modal dibuka
+        editFileInput.value = ''; // Kosongkan input file setiap kali modal dibuka
     });
+
+    // Event listener for "Upload New" button in Edit Modal
+    editUploadButton.addEventListener('click', function() {
+        editFileInput.click();
+    });
+
+    // Event listener for file input change in Edit Modal
+    editFileInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                editPreviewImage.src = e.target.result;
+                if (editHapusFotoProfilCheckbox) {
+                    editHapusFotoProfilCheckbox.checked = false; // Uncheck delete if new photo is selected
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Event listener for "Hapus Foto Profil" checkbox in Edit Modal
+    if (editHapusFotoProfilCheckbox) {
+        editHapusFotoProfilCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                editPreviewImage.src = "{{ asset('img/no-photo.jpg') }}"; // Ganti ke placeholder
+                editFileInput.value = ''; // Bersihkan input file
+            } else {
+                // Kembalikan ke foto sebelumnya atau default jika uncheck
+                editPreviewImage.src = editPreviewImage.dataset.originalSrc || "{{ asset('img/no-photo.jpg') }}";
+            }
+        });
+    }
+
+    // Reset the image and checkbox when the modal is hidden
+    editPegawaiModal.addEventListener('hidden.bs.modal', function() {
+        editPreviewImage.src = "{{ asset('img/no-photo.jpg') }}"; // Reset to default placeholder
+        editFileInput.value = ''; // Clear file input
+        if (editHapusFotoProfilCheckbox) {
+            editHapusFotoProfilCheckbox.checked = false; // Uncheck the delete checkbox
+        }
+    });
+
+    // Handle validation errors after submission for editPegawaiModal
+    @if ($errors->any() && session('modal_target') == 'editPegawaiModal')
+        var editModal = new bootstrap.Modal(document.getElementById('editPegawaiModal'));
+        editModal.show();
+    @endif
+}
+});
 </script>
 @endsection

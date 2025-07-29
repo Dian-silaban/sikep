@@ -69,13 +69,17 @@
         @include('settings.sidebar')
     </div>
     <div class="col-md-9">
+        {{-- NEW REPORT HEADER SECTION --}}
+        <div class="report-header-section mb-4">
+            <div class="report-header-content">
+                <h2 class="report-title">Selamat Datang di Pengaturan Sistem</h2>
+            </div>
+        </div>
         {{-- Tambahkan kelas 'content-card-dark' pada div.card --}}
         <div class="card shadow-sm content-card-dark">
-            {{-- Ubah card-header untuk tema primary --}}
-            {{-- Tambahkan 'bg-primary' dan 'text-white' pada card-header untuk memastikan latar belakang dan teks --}}
-            <div class="card-header border-bottom-0 bg-primary text-white">
-                <h5 class="mb-0">Selamat Datang di Pengaturan Sistem</h5> {{-- text-white sudah di card-header --}}
-            </div>
+    
+            
+
             <div class="card-body bg-dark text-white"> {{-- Tambahkan bg-dark dan text-white pada card-body --}}
                 <p>Silakan pilih opsi pengaturan dari menu di samping kiri.</p>
                 <p>Di sini Anda dapat mengelola berbagai aspek sistem, mulai dari menyalin dokumen hingga mengatur data master seperti unit kerja dan jenis dokumen.</p>

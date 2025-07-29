@@ -2,12 +2,14 @@
 * {
     font-family: 'Poppins';
 }
+
 .navbar-brand{
     color: #363d53;
 }
 
 .navbar{
     background-color: #fff;
+    
 }
 
 .btn-back {
@@ -413,12 +415,12 @@ small {
 }
 
 .btn-edit {
-    background-color: #10b981; /* kuning */
+    background-color: #10b981 !important; /* kuning */
     color: white;
 }
 
 .btn-edit:hover {
-    background-color: #0e9266;
+    background-color: #0e9266 !important;
 }
 
 .btn-hapus {
@@ -874,9 +876,69 @@ button[onclick] {
     }
 
 /* edit-dokumen */
-.form-group {
-  margin-bottom: 1.25rem; /* jarak seragam antar elemen */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px; /* Lebar kolom dan tinggi baris (atur sesuai keinginan) */
+    margin-top: 10px;
 }
+
+.form-group {
+    margin-bottom: 5px; /* Atur jarak antar input */
+}
+
+.full-width {
+    grid-column: span 2; /* Biar textarea alamat full dua kolom */
+}
+
+textarea,
+input,
+select {
+    padding: 6px 10px;
+    font-size: 14px;
+    width: 100%;
+}
+
+/* Untuk Modal Tambah/Edit Pegawai - Foto Profil */
+.profile-photo-upload-container {
+    width: 150px; /* Ukuran yang lebih besar untuk area foto */
+    height: 150px;
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Sudut sedikit membulat */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 15px auto; /* Tengahkan dan beri margin bawah */
+    overflow: hidden; /* Pastikan gambar tidak meluap */
+    position: relative; /* Untuk positioning tombol upload */
+    background-color: #f8f9fa; /* Warna latar belakang ringan */
+}
+
+.profile-photo-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Pastikan gambar mengisi area tanpa terdistorsi */
+    border-radius: 8px; /* Sesuai dengan container */
+}
+
+.upload-button {
+    position: absolute; /* Tombol upload di atas gambar */
+    bottom: 10px;
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    background-color: rgba(255, 255, 255, 0.8); /* Agak transparan */
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.upload-button:hover {
+    background-color: rgba(255, 255, 255, 1);
+    color: #0056b3;
+}
+
 
 label {
   display: block;
@@ -1450,3 +1512,6 @@ small.form-hint {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+
+

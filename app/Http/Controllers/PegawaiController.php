@@ -125,7 +125,7 @@ class PegawaiController extends Controller
                 'email' => 'nullable|email|max:255|unique:pegawai,email', // Berdasarkan form Anda, ini mungkin nullable
                 'nomor_telepon' => 'nullable|string|max:20', // Mengurangi kekakuan regex, ganti jika perlu regex spesifik
                 'jabatan' => 'nullable|string|max:255', // Berdasarkan form Anda, ini mungkin nullable
-                'unit_kerja_id' => 'nullable|exists:unit_kerjas,id', // <-- PASTIKAN NAMA TABEL BENAR (unit_kerjas atau unit_kerja)
+                'unit_kerja_id' => 'nullable|exists:unit_kerja,id', // <-- PASTIKAN NAMA TABEL BENAR (unit_kerjas atau unit_kerja)
                 'status_pegawai' => 'nullable|in:Aktif,Non-aktif,Pensiun', // Berdasarkan form Anda, ini mungkin nullable
                 'tmt_status' => 'nullable|date',
                 'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -196,12 +196,12 @@ class PegawaiController extends Controller
 
         // Pastikan Anda memuat semua data yang dibutuhkan view
         $jenis_dokumen = JenisDokumen::all(); // Pastikan model ini ada
-        $unit_kerja = UnitKerja::orderBy('nama_unit')->get();
+        $unitKerjaList = UnitKerja::orderBy('nama_unit')->get();
         $golongans = Golongan::orderBy('urutan')->get();
         $pendidikans = Pendidikan::orderBy('urutan')->get();
         $eselons = Eselon::orderBy('urutan')->get();
 
-        return view('pegawai.show', compact('pegawai', 'all_dokumen', 'jenis_dokumen', 'unit_kerja', 'golongans', 'pendidikans', 'eselons'));
+        return view('pegawai.show', compact('pegawai', 'all_dokumen', 'jenis_dokumen', 'unitKerjaList', 'golongans', 'pendidikans', 'eselons'));
     }
 
     /**
@@ -248,7 +248,7 @@ class PegawaiController extends Controller
                 ],
                 'nomor_telepon' => 'nullable|string|max:20', // Mengurangi kekakuan regex
                 'jabatan' => 'nullable|string|max:255', // Berdasarkan form Anda, ini mungkin nullable
-                'unit_kerja_id' => 'nullable|exists:unit_kerjas,id', // <-- PASTIKAN NAMA TABEL BENAR
+                'unit_kerja_id' => 'nullable|exists:unit_kerja,id', // <-- PASTIKAN NAMA TABEL BENAR
                 'status_pegawai' => 'nullable|in:Aktif,Non-aktif,Pensiun', // Berdasarkan form Anda, ini mungkin nullable
                 'tmt_status' => 'nullable|date',
                 'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

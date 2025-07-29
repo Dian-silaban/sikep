@@ -26,9 +26,9 @@
                 <div class="filter-body">
                     <div class="row g-3">
                         <div class="col-md-4">
-                            <label for="unit_kerja_id" class="form-label">Unit Kerja:</label>
+                            <label for="unit_kerja_id" class="form-label">Bidang:</label>
                             <select class="form-select filter-input" id="unit_kerja_id" name="unit_kerja_id">
-                                <option value="">Semua Unit Kerja</option>
+                                <option value="">Semua Bidang</option>
                                 @foreach($unitKerjaList as $unitKerja)
                                     <option value="{{ $unitKerja->id }}" {{ $selectedUnitKerjaId == $unitKerja->id ? 'selected' : '' }}>
                                         {{ $unitKerja->nama_unit }}
@@ -77,132 +77,227 @@
                 </form>
             </div>
 
-            <div class="table-responsive">
-                <table class="table-unit-kerja bezetting-table">
-                    <thead>
-                        <tr>
-                            <th rowspan="2">GOLONGAN</th>
-                            <th colspan="5">ESELON</th>
-                            <th colspan="8">PENDIDIKAN</th>
-                            <th rowspan="2">JUMLAH</th>
-                        </tr>
-                        <tr>
-                            <th>I</th>
-                            <th>II</th>
-                            <th>III</th>
-                            <th>IV</th>
-                            <th>JFU</th>
-                            <th>SD</th>
-                            <th>SMP</th>
-                            <th>SMA</th>
-                            <th>D-I</th>
-                            <th>D-II</th>
-                            <th>D-III</th>
-                            <th>S-1</th>
-                            <th>S-2</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $golonganOrder = ['IV A', 'IV B', 'IV C', 'IV D', 'III A', 'III B', 'III C', 'III D', 'II A', 'II B', 'II C', 'II D', 'I A', 'I B', 'I C', 'I D'];
-                            $eselonColumns = ['I', 'II', 'III', 'IV', 'JFU'];
-                            $pendidikanColumns = ['SD', 'SMP', 'SMA', 'D-I', 'D-II', 'D-III', 'S-1', 'S-2'];
-                            $grandTotalEselon = array_fill_keys($eselonColumns, 0);
-                            $grandTotalPendidikan = array_fill_keys($pendidikanColumns, 0);
-                            $grandTotalJumlah = 0;
-                        @endphp
+             @php
+                    $eselonColumns = ['I', 'II', 'III', 'IV', 'JFU'];
+                    $pendidikanColumns = ['SD', 'SMP', 'SMA', 'D-I', 'D-II', 'D-III', 'S-1', 'S-2'];
+                    
+                    // Kelompok golongan
+                    $golonganGroups = [
+                        'IV' => ['IV A', 'IV B', 'IV C', 'IV D'],
+                        'III' => ['III A', 'III B', 'III C', 'III D'],
+                        'II' => ['II A', 'II B', 'II C', 'II D'],
+                        'I' => ['I A', 'I B', 'I C', 'I D'],
+                        'KHUSUS' => ['IX', 'V']
+                    ];
+                @endphp
 
-                        @foreach ($golonganOrder as $golongan)
-                            @if (isset($bezettingData[$golongan]))
+                {{-- Loop untuk setiap kelompok golongan --}}
+                @foreach($golonganGroups as $groupName => $golonganList)
+                    <div class="golongan-header">GOLONGAN {{ $groupName }}</div>
+                    <div class="table-responsive table-container">
+                        <table class="table table-bordered table-sm text-center align-middle" style="font-size: 14px;">
+                            <thead>
                                 <tr>
-                                    <td>{{ $bezettingData[$golongan]['golongan'] }}</td>
-                                    @foreach ($eselonColumns as $eselon)
-                                        <td>{{ $bezettingData[$golongan]['eselon'][$eselon] }}</td>
-                                        @php $grandTotalEselon[$eselon] += $bezettingData[$golongan]['eselon'][$eselon]; @endphp
-                                    @endforeach
-                                    @foreach ($pendidikanColumns as $pendidikan)
-                                        <td>{{ $bezettingData[$golongan]['pendidikan'][$pendidikan] }}</td>
-                                        @php $grandTotalPendidikan[$pendidikan] += $bezettingData[$golongan]['pendidikan'][$pendidikan]; @endphp
-                                    @endforeach
-                                    <td>{{ $bezettingData[$golongan]['total_golongan'] }}</td>
-                                    @php $grandTotalJumlah += $bezettingData[$golongan]['total_golongan']; @endphp
+                                    <th rowspan="2">GOLONGAN</th>
+                                    <th colspan="5">ESELON</th>
+                                    <th colspan="8">PENDIDIKAN</th>
+                                    <th rowspan="2">JUMLAH</th>
                                 </tr>
-                            @else
                                 <tr>
-                                    <td>{{ $golongan }}</td>
-                                    @foreach ($eselonColumns as $eselon) <td>0</td> @endforeach
-                                    @foreach ($pendidikanColumns as $pendidikan) <td>0</td> @endforeach
-                                    <td>0</td>
+                                    <th>I</th>
+                                    <th>II</th>
+                                    <th>III</th>
+                                    <th>IV</th>
+                                    <th>JFU</th>
+                                    <th>SD</th>
+                                    <th>SMP</th>
+                                    <th>SMA</th>
+                                    <th>D-I</th>
+                                    <th>D-II</th>
+                                    <th>D-III</th>
+                                    <th>S-1</th>
+                                    <th>S-2</th>
                                 </tr>
-                            @endif
-                        @endforeach
+                            </thead>
+                            <tbody>
+                                @php
+                                    $groupTotalEselon = array_fill_keys($eselonColumns, 0);
+                                    $groupTotalPendidikan = array_fill_keys($pendidikanColumns, 0);
+                                    $groupTotalJumlah = 0;
+                                @endphp
 
-                        {{-- Baris untuk Golongan IX dan V (jika ada di data Anda) --}}
-                        @foreach (['IX', 'V'] as $golonganKhusus)
-                            @if (isset($bezettingData[$golonganKhusus]))
-                                <tr>
-                                    <td>{{ $bezettingData[$golonganKhusus]['golongan'] }}</td>
-                                    @foreach ($eselonColumns as $eselon)
-                                        <td>{{ $bezettingData[$golonganKhusus]['eselon'][$eselon] }}</td>
-                                        @php $grandTotalEselon[$eselon] += $bezettingData[$golonganKhusus]['eselon'][$eselon]; @endphp
-                                    @endforeach
-                                    @foreach ($pendidikanColumns as $pendidikan)
-                                        <td>{{ $bezettingData[$golonganKhusus]['pendidikan'][$pendidikan] }}</td>
-                                        @php $grandTotalPendidikan[$pendidikan] += $bezettingData[$golonganKhusus]['pendidikan'][$pendidikan]; @endphp
-                                    @endforeach
-                                    <td>{{ $bezettingData[$golonganKhusus]['total_golongan'] }}</td>
-                                    @php $grandTotalJumlah += $bezettingData[$golonganKhusus]['total_golongan']; @endphp
-                                </tr>
-                            @else
-                                {{-- Jika tidak ada data, tampilkan baris dengan 0 --}}
-                                <tr>
-                                    <td>{{ $golonganKhusus }}</td>
-                                    @foreach ($eselonColumns as $eselon) <td>0</td> @endforeach
-                                    @foreach ($pendidikanColumns as $pendidikan) <td>0</td> @endforeach
-                                    <td>0</td>
-                                </tr>
-                            @endif
-                        @endforeach
-
-                        {{-- Baris KONTRAK --}}
-                        @if (isset($bezettingData['KONTRAK']))
-                            <tr class="table-secondary fw-bold">
-                                <td>KONTRAK</td>
-                                @foreach ($eselonColumns as $eselon)
-                                    <td>{{ $bezettingData['KONTRAK']['eselon'][$eselon] }}</td>
-                                    @php $grandTotalEselon[$eselon] += $bezettingData['KONTRAK']['eselon'][$eselon]; @endphp
+                                {{-- Baris untuk setiap golongan dalam kelompok --}}
+                                @foreach($golonganList as $golongan)
+                                    <tr>
+                                        <td>{{ $golongan }}</td>
+                                        @foreach($eselonColumns as $eselon)
+                                            <td>{{ $bezettingData[$golongan]['eselon'][$eselon] ?? 0 }}</td>
+                                            @php $groupTotalEselon[$eselon] += $bezettingData[$golongan]['eselon'][$eselon] ?? 0; @endphp
+                                        @endforeach
+                                        @foreach($pendidikanColumns as $pendidikan)
+                                            <td>{{ $bezettingData[$golongan]['pendidikan'][$pendidikan] ?? 0 }}</td>
+                                            @php $groupTotalPendidikan[$pendidikan] += $bezettingData[$golongan]['pendidikan'][$pendidikan] ?? 0; @endphp
+                                        @endforeach
+                                        <td>{{ $bezettingData[$golongan]['total_golongan'] ?? 0 }}</td>
+                                        @php $groupTotalJumlah += $bezettingData[$golongan]['total_golongan'] ?? 0; @endphp
+                                    </tr>
                                 @endforeach
-                                @foreach ($pendidikanColumns as $pendidikan)
-                                    <td>{{ $bezettingData['KONTRAK']['pendidikan'][$pendidikan] }}</td>
-                                    @php $grandTotalPendidikan[$pendidikan] += $bezettingData['KONTRAK']['pendidikan'][$pendidikan]; @endphp
-                                @endforeach
-                                <td>{{ $bezettingData['KONTRAK']['total_golongan'] }}</td>
-                                @php $grandTotalJumlah += $bezettingData['KONTRAK']['total_golongan']; @endphp
-                            </tr>
-                        @else
-                            <tr class="table-secondary fw-bold">
-                                <td>KONTRAK</td>
-                                @foreach ($eselonColumns as $eselon) <td>0</td> @endforeach
-                                @foreach ($pendidikanColumns as $pendidikan) <td>0</td> @endforeach
-                                <td>0</td>
-                            </tr>
-                        @endif
 
-                        {{-- Baris TOTAL --}}
-                        <tr class="table-primary fw-bold">
-                            <td>TOTAL</td>
-                            @foreach ($eselonColumns as $eselon)
-                                <td>{{ $grandTotalEselon[$eselon] }}</td>
-                            @endforeach
-                            @foreach ($pendidikanColumns as $pendidikan)
-                                <td>{{ $grandTotalPendidikan[$pendidikan] }}</td>
-                            @endforeach
-                            <td>{{ $grandTotalJumlah }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                                {{-- Baris subtotal untuk kelompok --}}
+                                <tr class="row-subtotal">
+                                    <td><strong>JUMLAH</strong></td>
+                                    @foreach($eselonColumns as $eselon)
+                                        <td><strong>{{ $groupTotalEselon[$eselon] }}</strong></td>
+                                    @endforeach
+                                    @foreach($pendidikanColumns as $pendidikan)
+                                        <td><strong>{{ $groupTotalPendidikan[$pendidikan] }}</strong></td>
+                                    @endforeach
+                                    <td><strong>{{ $groupTotalJumlah }}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                @endforeach
+
+                {{-- Tabel Kontrak dan Total Keseluruhan --}}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm text-center align-middle" style="font-size: 14px;">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">GOLONGAN</th>
+                                <th colspan="5">ESELON</th>
+                                <th colspan="8">PENDIDIKAN</th>
+                                <th rowspan="2">JUMLAH</th>
+                            </tr>
+                            <tr>
+                                <th>I</th>
+                                <th>II</th>
+                                <th>III</th>
+                                <th>IV</th>
+                                <th>JFU</th>
+                                <th>SD</th>
+                                <th>SMP</th>
+                                <th>SMA</th>
+                                <th>D-I</th>
+                                <th>D-II</th>
+                                <th>D-III</th>
+                                <th>S-1</th>
+                                <th>S-2</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{-- KONTRAK --}}
+                            <tr class="row-kontrak">
+                                <td><strong>KONTRAK</strong></td>
+                                @foreach($eselonColumns as $eselon)
+                                    <td><strong>{{ $bezettingData['KONTRAK']['eselon'][$eselon] ?? 0 }}</strong></td>
+                                @endforeach
+                                @foreach($pendidikanColumns as $pendidikan)
+                                    <td><strong>{{ $bezettingData['KONTRAK']['pendidikan'][$pendidikan] ?? 0 }}</strong></td>
+                                @endforeach
+                                <td><strong>{{ $bezettingData['KONTRAK']['total_golongan'] ?? 0 }}</strong></td>
+                            </tr>
+
+                            {{-- TOTAL KESELURUHAN --}}
+                            <tr class="row-total">
+                                <td><strong>TOTAL</strong></td>
+                                @php
+                                    $grandTotalEselon = array_fill_keys($eselonColumns, 0);
+                                    $grandTotalPendidikan = array_fill_keys($pendidikanColumns, 0);
+                                    $grandTotalJumlah = 0;
+                                    
+                                    // Hitung grand total
+                                    foreach($golonganGroups as $groupName => $golonganList) {
+                                        foreach($golonganList as $golongan) {
+                                            foreach($eselonColumns as $eselon) {
+                                                $grandTotalEselon[$eselon] += $bezettingData[$golongan]['eselon'][$eselon] ?? 0;
+                                            }
+                                            foreach($pendidikanColumns as $pendidikan) {
+                                                $grandTotalPendidikan[$pendidikan] += $bezettingData[$golongan]['pendidikan'][$pendidikan] ?? 0;
+                                            }
+                                            $grandTotalJumlah += $bezettingData[$golongan]['total_golongan'] ?? 0;
+                                        }
+                                    }
+                                    
+                                    // Tambahkan data kontrak
+                                    foreach($eselonColumns as $eselon) {
+                                        $grandTotalEselon[$eselon] += $bezettingData['KONTRAK']['eselon'][$eselon] ?? 0;
+                                    }
+                                    foreach($pendidikanColumns as $pendidikan) {
+                                        $grandTotalPendidikan[$pendidikan] += $bezettingData['KONTRAK']['pendidikan'][$pendidikan] ?? 0;
+                                    }
+                                    $grandTotalJumlah += $bezettingData['KONTRAK']['total_golongan'] ?? 0;
+                                @endphp
+                                
+                                @foreach($eselonColumns as $eselon)
+                                    <td><strong>{{ $grandTotalEselon[$eselon] }}</strong></td>
+                                @endforeach
+                                @foreach($pendidikanColumns as $pendidikan)
+                                    <td><strong>{{ $grandTotalPendidikan[$pendidikan] }}</strong></td>
+                                @endforeach
+                                <td><strong>{{ $grandTotalJumlah }}</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+        </div>
+    </div>
+</div>
+
+{{-- Custom CSS untuk gaya Excel --}}
+<style>
+    .table thead th {
+        background: linear-gradient(to bottom, #363d53, #0d3f8b); /* Hijau Excel */
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        border: 1px solid #000;
+    }
+
+    .table td, .table th {
+        text-align: center;
+        border: 1px solid #555;
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .row-subtotal {
+        background-color: #ffff99; /* Kuning muda untuk subtotal */
+        font-weight: bold;
+    }
+
+    .row-kontrak {
+        background-color: #c7e9b0; /* Hijau muda */
+        font-weight: bold;
+    }
+
+    .row-total {
+        background-color: #ffff00; /* Kuning */
+        font-weight: bold;
+    }
+
+    .table tbody tr:nth-child(odd):not(.row-subtotal):not(.row-kontrak):not(.row-total) {
+        background-color: #f9f9f9;
+    }
+
+    .golongan-header {
+        background: linear-gradient(to right, #4a90e2, #6a5acd); 
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        margin: 20px 0 10px 0;
+        border: 2px solid #c2b9ff;
+        font-size: 16px;
+        color: white;
+    }
+
+    .table-container {
+        margin-bottom: 20px;
+    }
+</style>
 @endsection
