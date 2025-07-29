@@ -987,3 +987,89 @@ small.form-hint {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+body {
+            background-color: #e0e0e0; /* Warna latar belakang abu-abu terang */
+        }
+
+        /* Gaya untuk pembungkus navbar utama */
+        .custom-navbar-wrapper {
+            background-color: #fff; /* Latar belakang putih */
+            border-radius: 50px; /* Sudut sangat melengkung (pill shape) */
+            padding: 10px 20px; /* Padding di dalam wrapper */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sedikit bayangan */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Untuk menempatkan logo di kiri dan nav di kanan */
+            max-width: fit-content; /* Sesuaikan lebar dengan konten */
+            margin: 50px auto; /* Pusatkan navbar */
+        }
+
+        /* Sembunyikan toggler jika tidak diperlukan atau sesuaikan */
+        .custom-navbar-wrapper .navbar-toggler {
+            display: none; /* Sembunyikan toggler untuk desktop view */
+        }
+
+        /* Gaya untuk item navigasi */
+        .custom-nav .nav-item .nav-link {
+            font-weight: 500;
+            color: #333; /* Warna teks default */
+            padding: 8px 20px; /* Padding untuk setiap item */
+            border-radius: 50px; /* Membuat item berbentuk pill */
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none; /* Hapus underline */
+            white-space: nowrap; /* Mencegah teks terpotong */
+        }
+
+        /* Gaya untuk item aktif */
+        .custom-nav .nav-item .nav-link.active {
+            background-color: #363d53; /* Warna hijau terang untuk aktif */
+            color: #ffff; /* Warna teks gelap untuk aktif */
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sedikit bayangan untuk item aktif */
+        }
+
+        /* Gaya untuk hover (untuk item tidak aktif) */
+        .custom-nav .nav-item .nav-link:not(.active):hover {
+            background-color: #f0f0f0; /* Latar belakang abu-abu sangat terang saat hover */
+            color: #000; /* Warna teks lebih gelap saat hover */
+        }
+
+        /* Gaya untuk dropdown Laporan Usulan */
+        .custom-nav .dropdown-menu {
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 10px; /* Sedikit spasi dari tombol */
+        }
+
+        .custom-nav .dropdown-item:hover {
+    background-color: #e0e0e0; /* Latar belakang abu-abu saat hover */
+    color: #000;
+}
+
+        .custom-nav .dropdown-item {
+            font-weight: 400;
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 8px; /* Sudut sedikit melengkung untuk item dropdown */
+        }
+
+        .custom-nav .dropdown-item:hover {
+            background-color: #5c6582; /* Latar belakang abu-abu saat hover */
+            color: #fff;
+        }
+
+        /* Gaya untuk badge (angka) */
+        .custom-badge {
+            display: inline-flex; /* Agar angka dan teks bisa berdampingan */
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(0, 0, 0, 0.2); /* Warna abu-abu transparan untuk badge */
+            color: #fff;
+            border-radius: 50%;
+            font-size: 0.8em;
+            margin-left: 8px; /* Spasi dari teks */
+            vertical-align: middle;
+        }

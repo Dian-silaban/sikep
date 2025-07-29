@@ -20,6 +20,8 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 
 
@@ -34,40 +36,37 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse custom-nav" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        {{-- PERUBAHAN DI SINI: Menggunakan form untuk logout --}}
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                        <a class="nav-link text-danger d-flex align-items-center gap-1" href="#" title="Logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="bi bi-box-arrow-right fs-4"></i><span class="d-none d-lg-inline">Keluar</span>
-                        </a>
-                    </li>
+                
 
-                    <!-- Tombol Baru untuk Buku Jaga -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="reportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Laporan Usulan
+                        <a class="nav-link dropdown-toggle {{ Request::routeIs('reports.*') ? 'active' : '' }}" href="#" id="reportsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Laporan Usulan <span class="custom-badge">4</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="reportsDropdown">
                             <h6 class="dropdown-header">Buku Jaga Pegawai:</h6>
                             <a class="dropdown-item" href="{{ route('reports.usulan-berkala.index') }}">Buku Jaga Usulan KGB</a>
                             <a class="dropdown-item" href="{{ route('reports.usulan-kenaikan-pangkat.index') }}">Daftar Jaga Usulan KP</a>
                             <div class="dropdown-divider"></div>
-                            {{-- Anda bisa menambahkan link laporan lain di sini --}}
                             <a class="dropdown-item" href="#">Laporan Lain (Opsional)</a>
                         </div>
                     </li>
 
                     @auth
                     <li class="nav-item">
-                        <a class="nav-link text-primary" href="{{ route('settings.index') }}" title="Pengaturan">
-                            <i class="bi bi-gear fs-4"></i>
-                        </a>
+                        <a class="nav-link {{ Request::routeIs('settings.index') ? 'active' : '' }}" href="{{ route('settings.index') }}">Pengaturan</a>
                     </li>
                     @endauth
+
+                    <li class="nav-item">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Keluar
+                        </a>
+                    </li>
 
                 </ul>
             </div>
