@@ -71,13 +71,15 @@
     </div>
 
     {{-- Form Pencarian --}}
-    <form class="form-pencarian" method="GET" action="{{ route('pegawai.index') }}" >
-        <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..." value="{{ $searchTerm ?? '' }}" >
-        <button type="submit">Cari</button>
-        @if ($searchTerm ?? '')
-            <a href="{{ route('pegawai.index') }}" class="btn-reset-pencarian">Reset Pencarian</a>
-        @endif
-    </form>
+    <form class="form-pencarian" method="GET" action="{{ route('pegawai.index') }}" id="formCari">
+    <input type="text" name="search" id="searchInput"
+           placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..."
+           value="{{ $searchTerm ?? '' }}">
+    <button type="submit">Cari</button>
+    @if ($searchTerm ?? '')
+        <a href="{{ route('pegawai.index') }}" class="btn-reset-pencarian">Reset Pencarian</a>
+    @endif
+</form>
     <form class="form-pencarian" method="GET" action="{{ route('pegawai.index') }}">
     <!-- <input type="text" name="search" placeholder="Cari NIP, Nama, Jabatan, Unit Kerja..." value="{{ $searchTerm ?? '' }}"> -->
 
@@ -229,8 +231,7 @@
                                     'tanggal_lahir' => 'Tanggal Lahir',
                                     'jenis_kelamin' => 'Jenis Kelamin',
                                     'email' => 'Email',
-                                    'nik' => 'NIK', // Aktifkan jika kolom NIK ada di DB
-                                    'golongan_pangkat' => 'Pangkat', // Aktifkan jika kolom Pangkat ada di DB
+                                    // Aktifkan jika kolom Pangkat ada di DB
                                 ];
                             @endphp
                             @foreach ($exportColumns as $key => $label)
@@ -330,6 +331,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+    const input = document.getElementById('searchInput');
+    const form = document.getElementById('formCari');
+    let timer = null;
+
+    input.addEventListener('input', function() {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            form.submit(); // submit otomatis setelah user berhenti ngetik 500ms
+        }, 500); // 0.5 detik debounce biar gak spam request
+    });
+
 </script>
 @endsection
 

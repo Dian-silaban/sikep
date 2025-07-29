@@ -9,15 +9,22 @@ use App\Models\Golongan;
 use App\Models\Pendidikan;
 use App\Models\Eselon;
 use App\Models\BezettingKontrakData;
+// Import model Riwayat
+use App\Models\RiwayatGolongan;
+use App\Models\RiwayatJabatan;
+use App\Models\RiwayatPendidikan;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Validation\Rule;
 use App\Exports\PegawaiExport;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
 
 class PegawaiController extends Controller
 {
@@ -38,14 +45,14 @@ class PegawaiController extends Controller
         if ($searchTerm) {
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('nama_lengkap', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('nip', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('jabatan', 'like', '%' . $searchTerm . '%')
-                    ->orWhereHas('unit_kerja', function ($q_unit) use ($searchTerm) {
-                        $q_unit->where('nama_unit', 'like', '%' . $searchTerm . '%');
-                    })
-                    ->orWhereHas('eselon', function ($q_eselon) use ($searchTerm) {
-                        $q_eselon->where('nama_eselon', 'like', '%' . $searchTerm . '%');
-                    });
+                  ->orWhere('nip', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('jabatan', 'like', '%' . $searchTerm . '%')
+                  ->orWhereHas('unit_kerja', function ($q_unit) use ($searchTerm) {
+                      $q_unit->where('nama_unit', 'like', '%' . $searchTerm . '%');
+                  })
+                  ->orWhereHas('eselon', function ($q_eselon) use ($searchTerm) { // Cari di nama_eselon
+                      $q_eselon->where('nama_eselon', 'like', '%' . $searchTerm . '%');
+                  });
             });
         }
 
@@ -61,6 +68,7 @@ class PegawaiController extends Controller
 
         $pegawai = $query->paginate(10);
 
+        // Hitung data summary
         $totalPegawai = Pegawai::count();
         $pegawaiAktif = Pegawai::where('status_pegawai', 'Aktif')->count();
         $pegawaiNonAktif = Pegawai::where('status_pegawai', 'Non-aktif')->count();
@@ -84,6 +92,7 @@ class PegawaiController extends Controller
     /**
      * Show the form for creating a new resource.
      * Menampilkan formulir untuk menambah data pegawai baru.
+     * Mengirimkan daftar unit kerja ke view.
      */
     public function create()
     {
@@ -102,18 +111,20 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nip' => 'required|unique:pegawai|string|digits:16', 
+            'nip' => 'required|unique:pegawai|string|digits:16',
             'nama_lengkap' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
             'tmt' => 'nullable|date',
             'jenis_kelamin' => 'required|string|max:50',
             'alamat' => 'required|string',
             'email' => 'required|unique:pegawai|email|max:255',
-            'nomor_telepon' => 'required|regex:/^\d{12}$/',
+            'nomor_telepon' => 'required|regex:/^[0-9]{10,15}$/', // Tepat 12 digit
             'jabatan' => 'required|string|max:255',
             'unit_kerja_id' => 'required|exists:unit_kerja,id',
             'status_pegawai' => 'required|string|max:50',
             'tmt_status' => 'nullable|date',
+            'tgl_usulan_berkala_awal' => 'nullable|date', // BARU: Validasi
+            'tgl_usulan_kp_awal' => 'nullable|date', // BARU: Validasi
             'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nik' => 'nullable|string|size:16|unique:pegawai,nik',
             'golongan_id' => 'nullable|exists:golongans,id',
@@ -124,16 +135,20 @@ class PegawaiController extends Controller
         $data = $request->except('foto_profil');
         $data['nip'] = strtoupper($data['nip']);
 
+        // Simpan foto profil
         if ($request->hasFile('foto_profil')) {
             $file = $request->file('foto_profil');
             $ekstensi = $file->getClientOriginalExtension();
             $namaFileTersimpan = $data['nip'] . '_foto_profil_' . Str::uuid() . '.' . $ekstensi;
+
             $path = $file->storeAs('public/foto_profil', $namaFileTersimpan);
             $data['foto_profil_path'] = Storage::url($path);
         } else {
-            $data['foto_profil_path'] = $request->input('jenis_kelamin') == 'Perempuan'
-                ? asset('img/wanita.jpg')
-                : asset('img/pria.jpg');
+            if ($request->input('jenis_kelamin') == 'Perempuan') {
+                $data['foto_profil_path'] = asset('img/wanita.jpg');
+            } else {
+                $data['foto_profil_path'] = asset('img/pria.jpg');
+            }
         }
 
         Pegawai::create($data);
@@ -144,16 +159,20 @@ class PegawaiController extends Controller
     /**
      * Display the specified resource.
      * Menampilkan detail data pegawai beserta daftar dokumen aktifnya.
+     * Mengirimkan daftar unit kerja ke view untuk form upload dokumen.
      */
     public function show(Pegawai $pegawai)
     {
+        // Eager load relasi yang diperlukan untuk tampilan detail
         $pegawai->load(['unit_kerja', 'golongan', 'pendidikan', 'eselon']);
+        // Eager load relasi riwayat
+        $pegawai->load(['riwayatGolongan', 'riwayatJabatan', 'riwayatPendidikan']);
 
         $all_dokumen = $pegawai->dokumen()
-            ->whereNotIn('status_dokumen', ['Dihapus'])
-            ->orderBy('jenis_dokumen_id')
-            ->orderBy('versi_dokumen', 'desc')
-            ->get();
+                               ->whereNotIn('status_dokumen', ['Dihapus'])
+                               ->orderBy('jenis_dokumen_id')
+                               ->orderBy('versi_dokumen', 'desc')
+                               ->get();
 
         $jenis_dokumen = JenisDokumen::all();
         $unit_kerja = UnitKerja::orderBy('nama_unit')->get();
@@ -161,12 +180,40 @@ class PegawaiController extends Controller
         $pendidikans = Pendidikan::orderBy('urutan')->get();
         $eselons = Eselon::orderBy('urutan')->get();
 
-        return view('pegawai.show', compact('pegawai', 'all_dokumen', 'jenis_dokumen', 'unit_kerja', 'golongans', 'pendidikans', 'eselons'));
+        $nextUsulanBerkala = null;
+        if ($pegawai->tgl_usulan_berkala_awal) {
+            $tglAwal = Carbon::parse($pegawai->tgl_usulan_berkala_awal);
+            $currentDate = Carbon::now();
+            $interval = 2; // Tahun
+
+            $nextDate = $tglAwal->copy();
+            while ($nextDate->lessThanOrEqualTo($currentDate)) {
+                $nextDate->addYears($interval);
+            }
+            $nextUsulanBerkala = $nextDate;
+        }
+
+        // Hitung usulan kenaikan pangkat berikutnya
+        $nextUsulanKenaikanPangkat = null;
+        if ($pegawai->tgl_usulan_kp_awal) {
+            $tglAwal = Carbon::parse($pegawai->tgl_usulan_kp_awal);
+            $currentDate = Carbon::now();
+            $interval = 4; // Tahun
+
+            $nextDate = $tglAwal->copy();
+            while ($nextDate->lessThanOrEqualTo($currentDate)) {
+                $nextDate->addYears($interval);
+            }
+            $nextUsulanKenaikanPangkat = $nextDate;
+        }
+
+        return view('pegawai.show', compact('pegawai', 'all_dokumen', 'jenis_dokumen', 'unit_kerja', 'golongans', 'pendidikans', 'eselons', 'nextUsulanBerkala', 'nextUsulanKenaikanPangkat'));
     }
 
     /**
      * Show the form for editing the specified resource.
      * Menampilkan formulir untuk mengedit data pegawai.
+     * Mengirimkan daftar unit kerja ke view.
      */
     public function edit(Pegawai $pegawai)
     {
@@ -174,13 +221,13 @@ class PegawaiController extends Controller
         $golongans = Golongan::orderBy('urutan')->get();
         $pendidikans = Pendidikan::orderBy('urutan')->get();
         $eselons = Eselon::orderBy('urutan')->get();
-
         return view('pegawai.edit', compact('pegawai', 'unit_kerja', 'golongans', 'pendidikans', 'eselons'));
     }
 
     /**
      * Update the specified resource in storage.
      * Memperbarui data pegawai di database.
+     * Validasi disesuaikan untuk unit_kerja_id.
      */
     public function update(Request $request, Pegawai $pegawai)
     {
@@ -202,7 +249,7 @@ class PegawaiController extends Controller
                 'max:255',
                 Rule::unique('pegawai')->ignore($pegawai->id),
             ],
-            'nomor_telepon' => 'required|regex:/^\d{12}$/',
+            'nomor_telepon' => 'required|regex:/^[0-9]{10,15}$/',
             'jabatan' => 'required|string|max:255',
             'unit_kerja_id' => 'required|exists:unit_kerja,id',
             'status_pegawai' => 'required|string|max:50',
@@ -223,7 +270,7 @@ class PegawaiController extends Controller
         $data['nip'] = strtoupper($data['nip']);
 
         if ($request->hasFile('foto_profil')) {
-            if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, ['pria.jpg', 'wanita.jpg'])) {
+            if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'pria.jpg') && !Str::contains($pegawai->foto_profil_path, 'wanita.jpg')) {
                 $oldPath = str_replace('/storage/', 'public/', $pegawai->foto_profil_path);
                 if (Storage::exists($oldPath)) {
                     Storage::delete($oldPath);
@@ -236,16 +283,18 @@ class PegawaiController extends Controller
             $data['foto_profil_path'] = Storage::url($path);
         } else {
             if ($request->input('hapus_foto_profil') == '1') {
-                if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, ['pria.jpg', 'wanita.jpg'])) {
+                if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'pria.jpg') && !Str::contains($pegawai->foto_profil_path, 'wanita.jpg')) {
                     $oldPath = str_replace('/storage/', 'public/', $pegawai->foto_profil_path);
                     if (Storage::exists($oldPath)) {
                         Storage::delete($oldPath);
                     }
                 }
-                $data['foto_profil_path'] = $pegawai->jenis_kelamin == 'Perempuan'
-                    ? asset('img/wanita.jpg')
-                    : asset('img/pria.jpg');
-            } elseif (!isset($data['foto_profil_path'])) {
+                if ($pegawai->jenis_kelamin == 'Perempuan') {
+                    $data['foto_profil_path'] = asset('img/wanita.jpg');
+                } else {
+                    $data['foto_profil_path'] = asset('img/pria.jpg');
+                }
+            } else if (!$request->hasFile('foto_profil') && !isset($data['foto_profil_path'])) {
                 $data['foto_profil_path'] = $pegawai->foto_profil_path;
             }
         }
@@ -265,13 +314,15 @@ class PegawaiController extends Controller
      */
     public function destroy(Pegawai $pegawai)
     {
-        if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, ['pria.jpg', 'wanita.jpg'])) {
+        // 1. Hapus foto profil pegawai jika ada dan BUKAN foto default
+        if ($pegawai->foto_profil_path && !Str::contains($pegawai->foto_profil_path, 'pria.jpg') && !Str::contains($pegawai->foto_profil_path, 'wanita.jpg')) {
             $filePathFoto = str_replace('/storage/', 'public/', $pegawai->foto_profil_path);
             if (Storage::exists($filePathFoto)) {
                 Storage::delete($filePathFoto);
             }
         }
 
+        // 2. Hapus semua file dokumen terkait pegawai
         foreach ($pegawai->dokumen as $dokumen) {
             $filePathDokumen = str_replace('/storage/', 'public/', $dokumen->path_file);
             if (Storage::exists($filePathDokumen)) {
@@ -279,18 +330,25 @@ class PegawaiController extends Controller
             }
         }
 
+        // 3. Hapus folder dokumen pegawai jika ada
         $folderPath = 'public/dokumen_pegawai/' . $pegawai->nip;
         if (Storage::exists($folderPath)) {
             Storage::deleteDirectory($folderPath);
         }
 
+        // 4. Hapus data pegawai dari database
         $pegawai->delete();
 
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
     }
 
+    /**
+     * Export data pegawai ke Excel.
+     */
     public function exportExcel(Request $request)
     {
+        // Mendefinisikan semua kolom yang mungkin bisa diekspor beserta nama tampilannya.
+        // Kunci adalah nama kolom database/relasi, nilai adalah nama tampilan di Excel.
         $allExportColumns = [
             'id' => 'ID Pegawai',
             'nip' => 'NIP',
@@ -299,6 +357,8 @@ class PegawaiController extends Controller
             'nik' => 'NIK',
             'tmt' => 'TMT',
             'tmt_status' => 'TMT Status',
+            'tgl_usulan_berkala_awal' => 'Tgl Usulan Berkala Awal', // BARU: Tambahkan ke ekspor
+            'tgl_usulan_kp_awal' => 'Tgl Usulan KP Awal', // BARU: Tambahkan ke ekspor
             'golongan.nama_golongan' => 'Pangkat',
             'unit_kerja.nama_unit' => 'Unit Kerja',
             'jabatan' => 'Jabatan',
@@ -313,16 +373,21 @@ class PegawaiController extends Controller
             'pendidikan.nama_pendidikan' => 'Pendidikan',
         ];
 
+        // Dapatkan kolom yang dipilih dari request. Jika tidak ada, ekspor semua.
         $selectedColumnsRaw = $request->input('columns', array_keys($allExportColumns));
-        $selectedColumns = array_filter($selectedColumnsRaw, function ($col) use ($allExportColumns) {
+
+        // Filter kolom yang dipilih untuk memastikan hanya kolom yang valid yang masuk
+        $selectedColumns = array_filter($selectedColumnsRaw, function($col) use ($allExportColumns) {
             return array_key_exists($col, $allExportColumns);
         });
 
+        // Dapatkan filter dari request (dari modal)
         $filters = [
             'status' => $request->input('status_filter'),
             'unit_kerja_id' => $request->input('unit_kerja_filter'),
         ];
 
-        return Excel::download(new PegawaiExport($selectedColumns, $filters, $allExportColumns), 'pegawai_data_' . date('Ymd_His') . '.xlsx');
+        // Buat instance PegawaiExport dengan kolom dan filter yang dipilih
+        return Excel::download(new PegawaiExport($selectedColumns, $filters, $allExportColumns), 'pegawai_data_'.date('Ymd_His').'.xlsx');
     }
 }

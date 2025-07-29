@@ -213,6 +213,21 @@
                 </div>
             </div>
 
+            <!-- Tanggal Usulan Berkala Awal (KGB) - KOLOM BARU -->
+                <div>
+                    <label for="tgl_usulan_berkala_awal" class="block text-sm font-medium text-gray-700 mb-1">Tgl. Usulan Berkala Awal</label>
+                    <input type="date" name="tgl_usulan_berkala_awal" id="tgl_usulan_berkala_awal" value="{{ old('tgl_usulan_berkala_awal', $pegawai->tgl_usulan_berkala_awal ? $pegawai->tgl_usulan_berkala_awal->format('Y-m-d') : '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <p class="mt-1 text-xs text-gray-500">Tanggal acuan awal untuk perhitungan kenaikan gaji berkala (KGB).</p>
+                </div>
+
+                <!-- Tanggal Usulan Kenaikan Pangkat Awal (KP) - KOLOM BARU -->
+                <div>
+                    <label for="tgl_usulan_kp_awal" class="block text-sm font-medium text-gray-700 mb-1">Tgl. Usulan Kenaikan Pangkat Awal</label>
+                    <input type="date" name="tgl_usulan_kp_awal" id="tgl_usulan_kp_awal" value="{{ old('tgl_usulan_kp_awal', $pegawai->tgl_usulan_kp_awal ? $pegawai->tgl_usulan_kp_awal->format('Y-m-d') : '') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <p class="mt-1 text-xs text-gray-500">Tanggal acuan awal untuk perhitungan kenaikan pangkat (KP).</p>
+                </div>
+
+
             
 
             {{-- Alamat (Full Width) --}}

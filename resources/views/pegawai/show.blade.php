@@ -489,10 +489,22 @@
                         <strong>TMT Status</strong>
                         {{ $pegawai->tmt_status ? \Carbon\Carbon::parse($pegawai->tmt_status)->format('d-m-Y') : '-' }}
                     </div>
+                    {{-- BARU: Tgl Usulan Berkala Awal --}}
+                    <div class="item-kotak">
+                        <strong>Tgl Usulan Berkala Awal</strong>
+                        {{ $pegawai->tgl_usulan_berkala_awal ? \Carbon\Carbon::parse($pegawai->tgl_usulan_berkala_awal)->format('d-m-Y') : '-' }}
+                    </div>
+                    {{-- BARU: Tgl Usulan KP Awal --}}
+                    <div class="item-kotak">
+                        <strong>Tgl Usulan KP Awal</strong>
+                        {{ $pegawai->tgl_usulan_kp_awal ? \Carbon\Carbon::parse($pegawai->tgl_usulan_kp_awal)->format('d-m-Y') : '-' }}
+                    </div>
                 </div>
 
                 <div class="mt-8 flex justify-center">
                     <a href="{{ route('pegawai.edit', ['pegawai' => $pegawai->id, '_redirect_to' => request()->fullUrl()]) }}" class="btn-custom-edit">Edit Data Pegawai</a>
+                    {{-- BARU: Tombol untuk Manajemen Riwayat --}}
+                    <a href="{{ route('pegawai.riwayat.index', $pegawai->id) }}" class="btn-custom-edit bg-green-600 hover:bg-green-700">Manajemen Riwayat</a>
                     <a href="{{ route('pegawai.index') }}" class="btn-custom-edit">Kembali ke Daftar Pegawai</a>
                 </div>
             </div>
@@ -597,7 +609,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8">Tidak ada dokumen aktif atau revisi untuk pegawai ini.</td> {{-- Perbarui colspan --}}
+                                <td colspan="8">Tidak ada dokumen aktif atau revisi untuk pegawai ini.</td>
                             </tr>
                         @endforelse
                     </tbody>
