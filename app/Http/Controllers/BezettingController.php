@@ -40,8 +40,8 @@ class BezettingController extends Controller
 
         // --- Ambil data Bezetting Kontrak Agregat ---
         $queryKontrak = BezettingKontrakData::with(['unitKerja', 'pendidikan'])
-                                            ->where('bulan', $selectedMonth)
-                                            ->where('tahun', $selectedYear);
+            ->where('bulan', $selectedMonth)
+            ->where('tahun', $selectedYear);
         if ($selectedUnitKerjaId) {
             $queryKontrak->where('unit_kerja_id', $selectedUnitKerjaId);
         }
@@ -72,8 +72,26 @@ class BezettingController extends Controller
     private function calculateBezetting($pegawaiPNSData, $bezettingKontrakAgregat)
     {
         // Definisi struktur golongan sesuai dengan kebutuhan sub-tabel
-        $allGolongan = ['IV A', 'IV B', 'IV C', 'IV D', 'III A', 'III B', 'III C', 'III D', 
-                       'II A', 'II B', 'II C', 'II D', 'I A', 'I B', 'I C', 'I D', 'IX', 'V'];
+        $allGolongan = [
+            'IV A',
+            'IV B',
+            'IV C',
+            'IV D',
+            'III A',
+            'III B',
+            'III C',
+            'III D',
+            'II A',
+            'II B',
+            'II C',
+            'II D',
+            'I A',
+            'I B',
+            'I C',
+            'I D',
+            'IX',
+            'V'
+        ];
         $eselonColumns = ['I', 'II', 'III', 'IV', 'JFU'];
         $pendidikanColumns = ['SD', 'SMP', 'SMA', 'D-I', 'D-II', 'D-III', 'S-1', 'S-2'];
 
@@ -158,7 +176,7 @@ class BezettingController extends Controller
 
         $eselonColumns = ['I', 'II', 'III', 'IV', 'JFU'];
         $pendidikanColumns = ['SD', 'SMP', 'SMA', 'D-I', 'D-II', 'D-III', 'S-1', 'S-2'];
-        
+
         $subTables = [];
 
         foreach ($golonganGroups as $groupName => $golonganList) {
@@ -196,7 +214,7 @@ class BezettingController extends Controller
     private function mapPendidikanToColumn($pendidikan)
     {
         if (!$pendidikan) return null;
-        
+
         $pendidikan = strtoupper($pendidikan);
         if (str_contains($pendidikan, 'SD')) return 'SD';
         if (str_contains($pendidikan, 'SMP')) return 'SMP';
@@ -213,12 +231,12 @@ class BezettingController extends Controller
      * Mengekspor data bezetting ke Excel dengan format sub-tabel.
      */
     /**
- * Mengekspor data bezetting ke Excel dengan format yang sama persis seperti di web.
- */
-/**
- * Mengekspor data bezetting ke Excel dengan format yang sama persis seperti di web.
- */
-public function exportExcel(Request $request)
+     * Mengekspor data bezetting ke Excel dengan format yang sama persis seperti di web.
+     */
+    /**
+     * Mengekspor data bezetting ke Excel dengan format yang sama persis seperti di web.
+     */
+    public function exportExcel(Request $request)
 {
     $selectedUnitKerjaId = $request->input('unit_kerja_id_export');
     $selectedMonth = $request->input('month_export', date('m'));
@@ -248,11 +266,11 @@ public function exportExcel(Request $request)
     $eselonColumns = ['I', 'II', 'III', 'IV', 'JFU'];
     $pendidikanColumns = ['SD', 'SMP', 'SMA', 'D-I', 'D-II', 'D-III', 'S-1', 'S-2'];
     $golonganOrder = ['IV A','IV B','IV C','IV D','III A','III B','III C','III D','II A','II B','II C','II D','I A','I B','I C','I D'];
-    
+
     $grandTotalEselon = array_fill_keys($eselonColumns, 0);
     $grandTotalPendidikan = array_fill_keys($pendidikanColumns, 0);
     $grandTotalJumlah = 0;
-    
+
     // Hitung grand total dari semua golongan PNS
     foreach($golonganOrder as $golongan) {
         foreach($eselonColumns as $eselon) {
@@ -263,7 +281,7 @@ public function exportExcel(Request $request)
         }
         $grandTotalJumlah += $bezettingData[$golongan]['total_golongan'] ?? 0;
     }
-    
+
     // Tambahkan data kontrak ke grand total
     foreach($eselonColumns as $eselon) {
         $grandTotalEselon[$eselon] += $bezettingData['KONTRAK']['eselon'][$eselon] ?? 0;
@@ -275,12 +293,13 @@ public function exportExcel(Request $request)
 
     $fileName = 'bezetting_pegawai_' . date('Ymd_His') . '.xlsx';
     return Excel::download(new BezettingExport(
-        $bezettingData, 
-        $selectedMonth, 
-        $selectedYear, 
-        $grandTotalEselon, 
-        $grandTotalPendidikan, 
+        $bezettingData,
+        $selectedMonth,
+        $selectedYear,
+        $grandTotalEselon,
+        $grandTotalPendidikan,
         $grandTotalJumlah
     ), $fileName);
 }
+
 }
