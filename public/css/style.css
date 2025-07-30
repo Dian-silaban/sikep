@@ -406,7 +406,7 @@ small {
 }
 
 .btn-lihat {
-    background-color: #3b82f6; /* biru */
+    background-color: #0d6efd;; /* biru */
     color: white;
 }
 
@@ -415,12 +415,12 @@ small {
 }
 
 .btn-edit {
-    background-color: #10b981 !important; /* kuning */
+    background-color: #28a745 !important; /* kuning */
     color: white;
 }
 
 .btn-edit:hover {
-    background-color: #0e9266 !important;
+    background-color: #218838 !important;
 }
 
 .btn-hapus {
@@ -1097,6 +1097,7 @@ small.form-hint {
     transition: background-color 0.2s ease-in-out;
 }
 
+
 .table-container .btn-add-unit:hover {
     background-color: #0a58ca; /* Warna primary sedikit lebih gelap saat hover */
 }
@@ -1515,3 +1516,231 @@ small.form-hint {
 
 
 
+
+body {
+            background-color: #e0e0e0; /* Warna latar belakang abu-abu terang */
+        }
+
+        /* Gaya untuk pembungkus navbar utama */
+        .custom-navbar-wrapper {
+            background-color: #fff; /* Latar belakang putih */
+            border-radius: 50px; /* Sudut sangat melengkung (pill shape) */
+            padding: 10px 20px; /* Padding di dalam wrapper */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sedikit bayangan */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Untuk menempatkan logo di kiri dan nav di kanan */
+            max-width: fit-content; /* Sesuaikan lebar dengan konten */
+            margin: 50px auto; /* Pusatkan navbar */
+        }
+
+        /* Sembunyikan toggler jika tidak diperlukan atau sesuaikan */
+        .custom-navbar-wrapper .navbar-toggler {
+            display: none; /* Sembunyikan toggler untuk desktop view */
+        }
+
+        /* Gaya untuk item navigasi */
+        .custom-nav .nav-item .nav-link {
+            font-weight: 500;
+            color: #333; /* Warna teks default */
+            padding: 8px 20px; /* Padding untuk setiap item */
+            border-radius: 50px; /* Membuat item berbentuk pill */
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none; /* Hapus underline */
+            white-space: nowrap; /* Mencegah teks terpotong */
+        }
+
+        /* Gaya untuk item aktif */
+        .custom-nav .nav-item .nav-link.active {
+            background-color: #363d53; /* Warna hijau terang untuk aktif */
+            color: #ffff; /* Warna teks gelap untuk aktif */
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sedikit bayangan untuk item aktif */
+        }
+
+        /* Gaya untuk hover (untuk item tidak aktif) */
+        .custom-nav .nav-item .nav-link:not(.active):hover {
+            background-color: #f0f0f0; /* Latar belakang abu-abu sangat terang saat hover */
+            color: #000; /* Warna teks lebih gelap saat hover */
+        }
+
+        /* Gaya untuk dropdown Laporan Usulan */
+        .custom-nav .dropdown-menu {
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 10px; /* Sedikit spasi dari tombol */
+        }
+
+        .custom-nav .dropdown-item:hover {
+    background-color: #e0e0e0; /* Latar belakang abu-abu saat hover */
+    color: #000;
+}
+
+        .custom-nav .dropdown-item {
+            font-weight: 400;
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 8px; /* Sudut sedikit melengkung untuk item dropdown */
+        }
+
+        .custom-nav .dropdown-item:hover {
+            background-color: #5c6582; /* Latar belakang abu-abu saat hover */
+            color: #fff;
+        }
+
+        /* Gaya untuk badge (angka) */
+        .custom-badge {
+            display: inline-flex; /* Agar angka dan teks bisa berdampingan */
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(0, 0, 0, 0.2); /* Warna abu-abu transparan untuk badge */
+            color: #fff;
+            border-radius: 50%;
+            font-size: 0.8em;
+            margin-left: 8px; /* Spasi dari teks */
+            vertical-align: middle;
+        }
+
+
+
+        .table thead th {
+        background: linear-gradient(to bottom, #363d53, #0d3f8b); /* Hijau Excel */
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        border: 1px solid #000;
+    }
+
+    .table td, .table th {
+        text-align: center;
+        border: 1px solid #555;
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .row-subtotal {
+        background-color: #ffff99; /* Kuning muda untuk subtotal */
+        font-weight: bold;
+    }
+
+    .row-kontrak {
+        background-color: #c7e9b0; /* Hijau muda */
+        font-weight: bold;
+    }
+
+    .row-total {
+        background-color: #ffff00; /* Kuning */
+        font-weight: bold;
+    }
+
+    .table tbody tr:nth-child(odd):not(.row-subtotal):not(.row-kontrak):not(.row-total) {
+        background-color: #f9f9f9;
+    }
+
+    .golongan-header {
+        background: linear-gradient(to right, #4a90e2, #6a5acd); 
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        margin: 20px 0 10px 0;
+        border: 2px solid #c2b9ff;
+        font-size: 16px;
+        color: white;
+    }
+
+    .table-container {
+        margin-bottom: 20px;
+    }   
+
+
+    /* --- Styling untuk Konten Utama (Selamat Datang Card) --- */
+.content-card-dark {
+    background: linear-gradient(135deg, #4a90e2 0%, #2e6bb8 100%); /* Latar belakang hitam, sesuai sidebar */
+    color: #f8f9fa; /* Warna teks default putih/abu terang untuk konten ini */
+    border: none; /* Hilangkan border */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; /* Bayangan serupa dengan sidebar */
+    border-radius: 8px; /* Sudut melengkung, sesuaikan dengan sidebar jika berbeda */
+    overflow: hidden; /* Penting untuk memastikan border-radius terlihat sempurna */
+}
+
+.content-card-dark .card-header {
+    background: linear-gradient(135deg, #4a90e2 0%, #2e6bb8 100%); /* Latar belakang header juga hitam */
+    border-bottom: none; /* Pastikan tidak ada border di bawah header */
+    color: #f8f9fa; /* Warna teks header */
+    padding-bottom: 0.5rem; /* Sesuaikan padding jika perlu */
+    /* Untuk memastikan sudut atas header juga melengkung */
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+
+.content-card-dark .card-body {
+    /* Menambahkan ini untuk memastikan border-radius juga diterapkan pada card-body */
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    /* Pastikan background-color di sini sesuai dengan yang diinginkan (bg-dark dari Blade) */
+    /* Jika Anda ingin background-color diatur di CSS, Anda bisa tambahkan:
+       background-color: #212529;
+    */
+    background-color: #f8f9fa !important; /* Pastikan warna background body sesuai */
+    color: #343a40 !important;
+}
+
+
+.content-card-dark .card-title {
+    color: #f8f9fa; /* Pastikan judul juga putih */
+}
+
+/* Styling untuk bagian Informasi (alert) di tema gelap */
+.dark-alert-info {
+    /* Warna latar belakang yang lebih gelap dari default alert-info */
+    color: #7b8796; /* Warna teks yang lebih terang agar terbaca di latar gelap */
+    border-color: #4a5568; /* Warna border yang lebih gelap */
+    
+}
+
+.dark-alert-info strong {
+    color: #000; /* Pastikan teks "Informasi:" tetap putih */
+}
+
+/* --- Override default Bootstrap card styles if necessary for consistency --- */
+/* Ini adalah aturan umum untuk semua .card dan .card-header.
+   Pastikan ini tidak bertentangan dengan desain lain di aplikasi Anda. */
+.card {
+    border-radius: 8px; /* Memastikan semua kartu memiliki sudut melengkung */
+    border: none; /* Menghilangkan border default kartu */
+}
+
+.card-header {
+    background-color: transparent; /* Default ke transparan kecuali ditentukan lain */
+    border-bottom: 1px solid rgba(0,0,0,.125); /* Border default Bootstrap */
+}
+
+.table .btn-action {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: white; /* Warna teks tombol aksi */
+}
+
+.table .btn-edit {
+    background-color: #ffc107 !important; /* Warna kuning untuk edit */
+}
+
+.table .btn-edit:hover {
+    background-color: #e0a800 !important;
+}
+
+.table .btn-delete {
+    background-color: #dc3545 !important; /* Warna merah untuk hapus */
+}
+
+.table .btn-delete:hover {
+    background-color: #c82333 !important;
+}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,21 +11,28 @@
         /* Global CSS for Body */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5; /* Warna latar belakang terang */
+            background-color: #f0f2f5;
+            /* Warna latar belakang terang */
             margin: 0;
             padding: 0;
-            display: flex; /* Menggunakan flexbox untuk memusatkan konten */
+            display: flex;
+            /* Menggunakan flexbox untuk memusatkan konten */
             justify-content: center;
-            align-items: flex-start; /* Konten dimulai dari atas */
-            min-height: 100vh; /* Memastikan body mengisi seluruh tinggi viewport */
+            align-items: flex-start;
+            /* Konten dimulai dari atas */
+            min-height: 100vh;
+            /* Memastikan body mengisi seluruh tinggi viewport */
         }
 
         /* Styling for the main page container */
         .main-container {
-            background-color: #e0e7ff; /* Warna biru muda untuk latar belakang utama */
+            background-color: #e0e7ff;
+            /* Warna biru muda untuk latar belakang utama */
             width: 100%;
-            min-height: 100vh; /* Memastikan container mengisi seluruh tinggi viewport */
-            padding: 40px 20px; /* Padding keseluruhan */
+            min-height: 100vh;
+            /* Memastikan container mengisi seluruh tinggi viewport */
+            padding: 40px 20px;
+            /* Padding keseluruhan */
             box-sizing: border-box;
             position: relative;
             overflow: hidden;
@@ -36,40 +44,53 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 200px; /* Height of the background pattern */
-            background: linear-gradient(135deg, #4a90e2 0%, #2e6bb8 100%); /* Blue gradient */
+            height: 200px;
+            /* Height of the background pattern */
+            background: linear-gradient(135deg, #4a90e2 0%, #2e6bb8 100%);
+            /* Blue gradient */
             z-index: 0;
         }
 
         /* Container for the "Tambah Pegawai Baru" title in the top center */
         .page-title-container {
-            position: relative; /* For z-index to work */
-            z-index: 2; /* Ensure it's above the background-pattern */
+            position: relative;
+            /* For z-index to work */
+            z-index: 2;
+            /* Ensure it's above the background-pattern */
             width: 100%;
             display: flex;
-            justify-content: center; /* Center the title */
-            padding: 20px; /* Padding from container edges */
+            justify-content: center;
+            /* Center the title */
+            padding: 20px;
+            /* Padding from container edges */
             box-sizing: border-box;
-            margin-bottom: 20px; /* Space between title and main content */
+            margin-bottom: 20px;
+            /* Space between title and main content */
         }
 
         .page-title-container h2 {
             font-size: 28px;
             font-weight: 700;
-            color: white; /* Change text color to white */
-            margin: 0; /* Remove default h2 margin */
-            padding-bottom: 0; /* Remove padding-bottom if border-bottom is removed */
-            text-align: center; /* Ensure text is centered */
+            color: white;
+            /* Change text color to white */
+            margin: 0;
+            /* Remove default h2 margin */
+            padding-bottom: 0;
+            /* Remove padding-bottom if border-bottom is removed */
+            text-align: center;
+            /* Ensure text is centered */
         }
 
         /* Wrapper for content to be above the background pattern */
         .content-wrapper {
             position: relative;
             z-index: 1;
-            max-width: 800px; /* Max width for the form container */
+            max-width: 800px;
+            /* Max width for the form container */
             margin: 0 auto;
             padding: 20px;
-            margin-top: 0; /* Adjust if page-title-container already provides spacing */
+            margin-top: 0;
+            /* Adjust if page-title-container already provides spacing */
         }
 
         /* Styling for the form card */
@@ -110,14 +131,17 @@
         form input[type="file"] {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid #d1d5db; /* Lighter border */
+            border: 1px solid #d1d5db;
+            /* Lighter border */
             border-radius: 8px;
             font-size: 16px;
             color: #374151;
-            background-color: #f9fafb; /* Lighter input background */
+            background-color: #f9fafb;
+            /* Lighter input background */
             box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            box-sizing: border-box; /* Ensure padding doesn't add to width */
+            box-sizing: border-box;
+            /* Ensure padding doesn't add to width */
         }
 
         form input[type="text"]:focus,
@@ -140,7 +164,8 @@
         /* Styling for form submit button */
         form button[type="submit"] {
             padding: 12px 25px;
-            background-color: #28a745; /* Green color for submit */
+            background-color: #28a745;
+            /* Green color for submit */
             color: white;
             border: none;
             border-radius: 8px;
@@ -160,13 +185,15 @@
         .btn-custom {
             display: inline-block;
             padding: 12px 25px;
-            background-color: #6b7280; /* Gray color for cancel */
+            background-color: #6b7280;
+            /* Gray color for cancel */
             color: white;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-left: 10px; /* Space from submit button */
+            margin-left: 10px;
+            /* Space from submit button */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -177,17 +204,22 @@
 
         /* Styling for back button in top left */
         .back-button-container {
-            position: absolute; /* Absolute positioning to place in corner */
-            top: 20px; /* Distance from top */
-            left: 20px; /* Distance from left */
-            z-index: 3; /* Ensure it's above other elements */
+            position: absolute;
+            /* Absolute positioning to place in corner */
+            top: 20px;
+            /* Distance from top */
+            left: 20px;
+            /* Distance from left */
+            z-index: 3;
+            /* Ensure it's above other elements */
         }
 
         .btn-back {
             display: inline-flex;
             align-items: center;
             padding: 10px 15px;
-            background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Semi-transparent background */
             color: white;
             border-radius: 8px;
             text-decoration: none;
@@ -202,48 +234,65 @@
         }
 
         .btn-back svg {
-            margin-right: 8px; /* Space between icon and text */
+            margin-right: 8px;
+            /* Space between icon and text */
         }
 
         /* New CSS for two-column form layout */
         .form-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Two equal columns */
-            gap: 20px; /* Gap between columns and rows */
+            grid-template-columns: 1fr 1fr;
+            /* Two equal columns */
+            gap: 20px;
+            /* Gap between columns and rows */
         }
 
         .form-grid .form-group {
-            margin-bottom: 0; /* Remove default paragraph margin if using form-group */
+            margin-bottom: 0;
+            /* Remove default paragraph margin if using form-group */
         }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .back-button-container {
-                top: 10px; /* Slightly smaller on mobile */
+                top: 10px;
+                /* Slightly smaller on mobile */
                 left: 10px;
             }
+
             .page-title-container {
                 padding: 10px;
             }
+
             .page-title-container h2 {
                 font-size: 24px;
             }
+
             .content-wrapper {
                 padding: 10px;
             }
+
             .card {
                 padding: 20px;
             }
-            form input, form select, form textarea, form button, .btn-custom {
+
+            form input,
+            form select,
+            form textarea,
+            form button,
+            .btn-custom {
                 font-size: 14px;
                 padding: 10px 12px;
             }
+
             .form-grid {
-                grid-template-columns: 1fr; /* Single column on small screens */
+                grid-template-columns: 1fr;
+                /* Single column on small screens */
             }
         }
     </style>
 </head>
+
 <body>
     <div class="main-container">
         <div class="background-pattern"></div>
@@ -252,7 +301,7 @@
         <div class="back-button-container">
             <a href="{{ route('pegawai.index') }}" class="btn-back">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
                 </svg>
                 Kembali
             </a>
@@ -271,25 +320,29 @@
                         <p class="form-group">
                             <label for="nip">NIP:</label>
                             <input type="text" name="nip" id="nip" value="{{ old('nip') }}" required>
-                            @error('nip') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('nip')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
                             <label for="nik">NIK:</label>
                             <input type="text" name="nik" id="nik" value="{{ old('nik') }}">
-                            @error('nik') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('nik')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
                             <label for="nama_lengkap">Nama Lengkap:</label>
                             <input type="text" name="nama_lengkap" id="nama_lengkap" value="{{ old('nama_lengkap') }}" required>
-                            @error('nama_lengkap') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('nama_lengkap')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
                             <label for="tanggal_lahir">Tanggal Lahir:</label>
                             <input type="date" name="tanggal_lahir" id="tanggal_lahir" value="{{ old('tanggal_lahir') }}">
-                            @error('tanggal_lahir') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('tanggal_lahir')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
@@ -299,26 +352,30 @@
                                 <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                                 <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                             </select>
-                            @error('jenis_kelamin') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('jenis_kelamin')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
                             <label for="email">Email:</label>
                             <input type="email" name="email" id="email" value="{{ old('email') }}">
-                            @error('email') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('email')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
                             <label for="nomor_telepon">Nomor Telepon:</label>
                             <input type="text" name="nomor_telepon" id="nomor_telepon" value="{{ old('nomor_telepon') }}">
-                            @error('nomor_telepon') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('nomor_telepon')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         {{-- Input teks untuk nama jabatan --}}
                         <p class="form-group">
                             <label for="jabatan">Nama Jabatan:</label>
                             <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan') }}" required>
-                            @error('jabatan') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('jabatan')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         {{-- Dropdown untuk Eselon --}}
@@ -327,12 +384,13 @@
                             <select name="eselon_id" id="eselon_id" required>
                                 <option value="">Pilih Eselon</option>
                                 @foreach ($eselons as $eselon)
-                                    <option value="{{ $eselon->id }}" {{ old('eselon_id') == $eselon->id ? 'selected' : '' }}>
-                                        {{ $eselon->nama_eselon }}
-                                    </option>
+                                <option value="{{ $eselon->id }}" {{ old('eselon_id') == $eselon->id ? 'selected' : '' }}>
+                                    {{ $eselon->nama_eselon }}
+                                </option>
                                 @endforeach
                             </select>
-                            @error('eselon_id') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('eselon_id')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         {{-- Dropdown untuk Pangkat dan Golongan --}}
@@ -341,12 +399,13 @@
                             <select name="golongan_id" id="golongan_id">
                                 <option value="">Pilih Golongan</option>
                                 @foreach ($golongans as $golongan)
-                                    <option value="{{ $golongan->id }}" {{ old('golongan_id') == $golongan->id ? 'selected' : '' }}>
-                                        {{ $golongan->nama_golongan }}
-                                    </option>
+                                <option value="{{ $golongan->id }}" {{ old('golongan_id') == $golongan->id ? 'selected' : '' }}>
+                                    {{ $golongan->nama_golongan }}
+                                </option>
                                 @endforeach
                             </select>
-                            @error('golongan_id') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('golongan_id')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         {{-- Dropdown untuk Pendidikan --}}
@@ -355,12 +414,13 @@
                             <select name="pendidikan_id" id="pendidikan_id">
                                 <option value="">Pilih Pendidikan</option>
                                 @foreach ($pendidikans as $pendidikan)
-                                    <option value="{{ $pendidikan->id }}" {{ old('pendidikan_id') == $pendidikan->id ? 'selected' : '' }}>
-                                        {{ $pendidikan->nama_pendidikan }}
-                                    </option>
+                                <option value="{{ $pendidikan->id }}" {{ old('pendidikan_id') == $pendidikan->id ? 'selected' : '' }}>
+                                    {{ $pendidikan->nama_pendidikan }}
+                                </option>
                                 @endforeach
                             </select>
-                            @error('pendidikan_id') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('pendidikan_id')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
@@ -368,12 +428,13 @@
                             <select name="unit_kerja_id" id="unit_kerja_id">
                                 <option value="">Pilih Unit Kerja</option>
                                 @foreach ($unit_kerja as $unit)
-                                    <option value="{{ $unit->id }}" {{ old('unit_kerja_id') == $unit->id ? 'selected' : '' }}>
-                                        {{ $unit->nama_unit }}
-                                    </option>
+                                <option value="{{ $unit->id }}" {{ old('unit_kerja_id') == $unit->id ? 'selected' : '' }}>
+                                    {{ $unit->nama_unit }}
+                                </option>
                                 @endforeach
                             </select>
-                            @error('unit_kerja_id') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('unit_kerja_id')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
@@ -384,21 +445,36 @@
                                 <option value="Non-aktif" {{ old('status_pegawai') == 'Non-aktif' ? 'selected' : '' }}>Non-aktif</option>
                                 <option value="Pensiun" {{ old('status_pegawai') == 'Pensiun' ? 'selected' : '' }}>Pensiun</option>
                             </select>
-                            @error('status_pegawai') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('status_pegawai')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
+                        <!-- Tanggal Usulan Berkala Awal (KGB) - KOLOM BARU -->
+                        <div>
+                            <label for="tgl_usulan_berkala" class="block text-sm font-medium text-gray-700 mb-1">Tgl. Usulan Berkala</label>
+                            <input type="date" name="tgl_usulan_berkala" id="tgl_usulan_berkala" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <p class="mt-1 text-xs text-gray-500">Tanggal acuan untuk perhitungan kenaikan gaji berkala (KGB).</p>
+                        </div>                   
+                        <!-- Tanggal Usulan Kenaikan Pangkat Awal (KP) - KOLOM BARU -->
+                        <div>
+                            <label for="tgl_usulan_kp_awal" class="block text-sm font-medium text-gray-700 mb-1">Tgl. Usulan Kenaikan Pangkat Awal</label>
+                            <input type="date" name="tgl_usulan_kp_awal" id="tgl_usulan_kp_awal" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <p class="mt-1 text-xs text-gray-500">Tanggal acuan awal untuk perhitungan kenaikan pangkat (KP).</p>
+                        </div>
 
                         {{-- BARU: Input untuk TMT Status --}}
                         <p class="form-group">
                             <label for="tmt_status">TMT Status:</label>
                             <input type="date" name="tmt_status" id="tmt_status" value="{{ old('tmt_status') }}">
-                            @error('tmt_status') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('tmt_status')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
 
                         <p class="form-group">
                             <label for="foto_profil">Foto Profil:</label>
                             <input type="file" name="foto_profil" id="foto_profil">
                             <img id="photo_preview" src="#" alt="Preview Foto Profil" class="hidden mt-2" style="max-width: 150px; max-height: 150px; border-radius: 8px;">
-                            @error('foto_profil') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                            @error('foto_profil')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </p>
                     </div>
 
@@ -406,46 +482,48 @@
                     <p>
                         <label for="alamat">Alamat:</label>
                         <textarea name="alamat" id="alamat">{{ old('alamat') }}</textarea>
-                        @error('alamat') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
+                        @error('alamat')
+                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                     </p>
 
                     <p>
                         <button type="submit">Simpan Pegawai</button>
                         <a href="{{ route('pegawai.index') }}" class="btn-custom">Batal</a>
                     </p>
-                    
+
 
                 </form>
-                
+
             </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const fotoProfilInput = document.getElementById('foto_profil');
-        const photoPreview = document.getElementById('photo_preview');
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const fotoProfilInput = document.getElementById('foto_profil');
+                    const photoPreview = document.getElementById('photo_preview');
 
-        fotoProfilInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    photoPreview.src = e.target.result;
-                    photoPreview.classList.remove('hidden'); // Tampilkan gambar
-                };
-                reader.readAsDataURL(file);
-            } else {
-                photoPreview.src = '#';
-                photoPreview.classList.add('hidden'); // Sembunyikan jika tidak ada file
-            }
-        });
-    });
-</script>
+                    fotoProfilInput.addEventListener('change', function(event) {
+                        const file = event.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                photoPreview.src = e.target.result;
+                                photoPreview.classList.remove('hidden'); // Tampilkan gambar
+                            };
+                            reader.readAsDataURL(file);
+                        } else {
+                            photoPreview.src = '#';
+                            photoPreview.classList.add('hidden'); // Sembunyikan jika tidak ada file
+                        }
+                    });
+                });
+            </script>
 
         </div>
         <footer class="text-center mt-5 mb-3 text-muted" style="font-size: 14px;">
-    © 2025 Sistem Informasi Kepegawaian - Dikelola oleh Bagian Kepegawaian
-</footer>
+            © 2025 Sistem Informasi Kepegawaian - Dikelola oleh Bagian Kepegawaian
+        </footer>
     </div>
 </body>
+
 </html>
 </form>

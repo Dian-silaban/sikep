@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-3">
-        @include('settings.sidebar') {{-- Atau sidebar khusus laporan jika ada --}}
+        @include('settings.sidebar')
     </div>
     <div class="col-md-9">
         {{-- NEW REPORT HEADER SECTION --}}
@@ -30,9 +30,9 @@
                             <select class="form-select filter-input" id="unit_kerja_id" name="unit_kerja_id">
                                 <option value="">Semua Bidang</option>
                                 @foreach($unitKerjaList as $unitKerja)
-                                    <option value="{{ $unitKerja->id }}" {{ $selectedUnitKerjaId == $unitKerja->id ? 'selected' : '' }}>
-                                        {{ $unitKerja->nama_unit }}
-                                    </option>
+                                        <option value="{{ $unitKerja->id }}" {{ $selectedUnitKerjaId == $unitKerja->id ? 'selected' : '' }}>
+                                            {{ $unitKerja->nama_unit }}
+                                        </option>
                                 @endforeach
                             </select>
                         </div>
@@ -40,9 +40,9 @@
                             <label for="month" class="form-label">Bulan:</label>
                             <select class="form-select filter-input" id="month" name="month">
                                 @for ($m = 1; $m <= 12; $m++)
-                                    <option value="{{ sprintf('%02d', $m) }}" {{ $selectedMonth == sprintf('%02d', $m) ? 'selected' : '' }}>
-                                        {{ \Carbon\Carbon::createFromDate(null, $m, 1)->translatedFormat('F') }}
-                                    </option>
+                                        <option value="{{ sprintf('%02d', $m) }}" {{ $selectedMonth == sprintf('%02d', $m) ? 'selected' : '' }}>
+                                            {{ \Carbon\Carbon::createFromDate(null, $m, 1)->translatedFormat('F') }}
+                                        </option>
                                 @endfor
                             </select>
                         </div>
@@ -50,9 +50,9 @@
                             <label for="year" class="form-label">Tahun:</label>
                             <select class="form-select filter-input" id="year" name="year">
                                 @for ($y = date('Y') - 5; $y <= date('Y') + 1; $y++)
-                                    <option value="{{ $y }}" {{ $selectedYear == $y ? 'selected' : '' }}>
-                                        {{ $y }}
-                                    </option>
+                                        <option value="{{ $y }}" {{ $selectedYear == $y ? 'selected' : '' }}>
+                                            {{ $y }}
+                                        </option>
                                 @endfor
                             </select>
                         </div>
@@ -77,7 +77,7 @@
                 </form>
             </div>
 
-             @php
+            @php
                     $eselonColumns = ['I', 'II', 'III', 'IV', 'JFU'];
                     $pendidikanColumns = ['SD', 'SMP', 'SMA', 'D-I', 'D-II', 'D-III', 'S-1', 'S-2'];
                     
@@ -121,26 +121,26 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $groupTotalEselon = array_fill_keys($eselonColumns, 0);
-                                    $groupTotalPendidikan = array_fill_keys($pendidikanColumns, 0);
-                                    $groupTotalJumlah = 0;
+                                        $groupTotalEselon = array_fill_keys($eselonColumns, 0);
+                                        $groupTotalPendidikan = array_fill_keys($pendidikanColumns, 0);
+                                        $groupTotalJumlah = 0;
                                 @endphp
 
                                 {{-- Baris untuk setiap golongan dalam kelompok --}}
                                 @foreach($golonganList as $golongan)
-                                    <tr>
-                                        <td>{{ $golongan }}</td>
-                                        @foreach($eselonColumns as $eselon)
-                                            <td>{{ $bezettingData[$golongan]['eselon'][$eselon] ?? 0 }}</td>
-                                            @php $groupTotalEselon[$eselon] += $bezettingData[$golongan]['eselon'][$eselon] ?? 0; @endphp
-                                        @endforeach
-                                        @foreach($pendidikanColumns as $pendidikan)
-                                            <td>{{ $bezettingData[$golongan]['pendidikan'][$pendidikan] ?? 0 }}</td>
-                                            @php $groupTotalPendidikan[$pendidikan] += $bezettingData[$golongan]['pendidikan'][$pendidikan] ?? 0; @endphp
-                                        @endforeach
-                                        <td>{{ $bezettingData[$golongan]['total_golongan'] ?? 0 }}</td>
-                                        @php $groupTotalJumlah += $bezettingData[$golongan]['total_golongan'] ?? 0; @endphp
-                                    </tr>
+                                        <tr>
+                                            <td>{{ $golongan }}</td>
+                                            @foreach($eselonColumns as $eselon)
+                                                <td>{{ $bezettingData[$golongan]['eselon'][$eselon] ?? 0 }}</td>
+                                                @php $groupTotalEselon[$eselon] += $bezettingData[$golongan]['eselon'][$eselon] ?? 0; @endphp
+                                            @endforeach
+                                            @foreach($pendidikanColumns as $pendidikan)
+                                                <td>{{ $bezettingData[$golongan]['pendidikan'][$pendidikan] ?? 0 }}</td>
+                                                @php $groupTotalPendidikan[$pendidikan] += $bezettingData[$golongan]['pendidikan'][$pendidikan] ?? 0; @endphp
+                                            @endforeach
+                                            <td>{{ $bezettingData[$golongan]['total_golongan'] ?? 0 }}</td>
+                                            @php $groupTotalJumlah += $bezettingData[$golongan]['total_golongan'] ?? 0; @endphp
+                                        </tr>
                                 @endforeach
 
                                 {{-- Baris subtotal untuk kelompok --}}
@@ -202,31 +202,31 @@
                             <tr class="row-total">
                                 <td><strong>TOTAL</strong></td>
                                 @php
-                                    $grandTotalEselon = array_fill_keys($eselonColumns, 0);
-                                    $grandTotalPendidikan = array_fill_keys($pendidikanColumns, 0);
-                                    $grandTotalJumlah = 0;
-                                    
-                                    // Hitung grand total
-                                    foreach($golonganGroups as $groupName => $golonganList) {
-                                        foreach($golonganList as $golongan) {
-                                            foreach($eselonColumns as $eselon) {
-                                                $grandTotalEselon[$eselon] += $bezettingData[$golongan]['eselon'][$eselon] ?? 0;
+                                        $grandTotalEselon = array_fill_keys($eselonColumns, 0);
+                                        $grandTotalPendidikan = array_fill_keys($pendidikanColumns, 0);
+                                        $grandTotalJumlah = 0;
+                                        
+                                        // Hitung grand total
+                                        foreach($golonganGroups as $groupName => $golonganList) {
+                                            foreach($golonganList as $golongan) {
+                                                foreach($eselonColumns as $eselon) {
+                                                    $grandTotalEselon[$eselon] += $bezettingData[$golongan]['eselon'][$eselon] ?? 0;
+                                                }
+                                                foreach($pendidikanColumns as $pendidikan) {
+                                                    $grandTotalPendidikan[$pendidikan] += $bezettingData[$golongan]['pendidikan'][$pendidikan] ?? 0;
+                                                }
+                                                $grandTotalJumlah += $bezettingData[$golongan]['total_golongan'] ?? 0;
                                             }
-                                            foreach($pendidikanColumns as $pendidikan) {
-                                                $grandTotalPendidikan[$pendidikan] += $bezettingData[$golongan]['pendidikan'][$pendidikan] ?? 0;
-                                            }
-                                            $grandTotalJumlah += $bezettingData[$golongan]['total_golongan'] ?? 0;
                                         }
-                                    }
-                                    
-                                    // Tambahkan data kontrak
-                                    foreach($eselonColumns as $eselon) {
-                                        $grandTotalEselon[$eselon] += $bezettingData['KONTRAK']['eselon'][$eselon] ?? 0;
-                                    }
-                                    foreach($pendidikanColumns as $pendidikan) {
-                                        $grandTotalPendidikan[$pendidikan] += $bezettingData['KONTRAK']['pendidikan'][$pendidikan] ?? 0;
-                                    }
-                                    $grandTotalJumlah += $bezettingData['KONTRAK']['total_golongan'] ?? 0;
+                                        
+                                        // Tambahkan data kontrak
+                                        foreach($eselonColumns as $eselon) {
+                                            $grandTotalEselon[$eselon] += $bezettingData['KONTRAK']['eselon'][$eselon] ?? 0;
+                                        }
+                                        foreach($pendidikanColumns as $pendidikan) {
+                                            $grandTotalPendidikan[$pendidikan] += $bezettingData['KONTRAK']['pendidikan'][$pendidikan] ?? 0;
+                                        }
+                                        $grandTotalJumlah += $bezettingData['KONTRAK']['total_golongan'] ?? 0;
                                 @endphp
                                 
                                 @foreach($eselonColumns as $eselon)
@@ -240,64 +240,8 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
         </div>
     </div>
 </div>
 
-        </div>
-    </div>
-</div>
-
-{{-- Custom CSS untuk gaya Excel --}}
-<style>
-    .table thead th {
-        background: linear-gradient(to bottom, #363d53, #0d3f8b); /* Hijau Excel */
-        color: white;
-        font-weight: bold;
-        text-align: center;
-        border: 1px solid #000;
-    }
-
-    .table td, .table th {
-        text-align: center;
-        border: 1px solid #555;
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    .row-subtotal {
-        background-color: #ffff99; /* Kuning muda untuk subtotal */
-        font-weight: bold;
-    }
-
-    .row-kontrak {
-        background-color: #c7e9b0; /* Hijau muda */
-        font-weight: bold;
-    }
-
-    .row-total {
-        background-color: #ffff00; /* Kuning */
-        font-weight: bold;
-    }
-
-    .table tbody tr:nth-child(odd):not(.row-subtotal):not(.row-kontrak):not(.row-total) {
-        background-color: #f9f9f9;
-    }
-
-    .golongan-header {
-        background: linear-gradient(to right, #4a90e2, #6a5acd); 
-        font-weight: bold;
-        text-align: center;
-        padding: 10px;
-        margin: 20px 0 10px 0;
-        border: 2px solid #c2b9ff;
-        font-size: 16px;
-        color: white;
-    }
-
-    .table-container {
-        margin-bottom: 20px;
-    }
-</style>
 @endsection

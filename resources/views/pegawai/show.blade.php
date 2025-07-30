@@ -581,6 +581,16 @@
                         <strong>TMT Status</strong>
                         {{ $pegawai->tmt_status ? \Carbon\Carbon::parse($pegawai->tmt_status)->format('d-m-Y') : '-' }}
                     </div>
+                    {{-- BARU: Tgl Usulan Berkala Awal --}}
+                    <div class="item-kotak">
+                        <strong>Tgl Usulan Berkala Awal</strong>
+                        {{ $pegawai->tgl_usulan_berkala_awal ? \Carbon\Carbon::parse($pegawai->tgl_usulan_berkala_awal)->format('d-m-Y') : '-' }}
+                    </div>
+                    {{-- BARU: Tgl Usulan KP Awal --}}
+                    <div class="item-kotak">
+                        <strong>Tgl Usulan KP Awal</strong>
+                        {{ $pegawai->tgl_usulan_kp_awal ? \Carbon\Carbon::parse($pegawai->tgl_usulan_kp_awal)->format('d-m-Y') : '-' }}
+                    </div>
 
                     <div class="item-kotak full-width">
                         <strong>Alamat</strong>
@@ -590,7 +600,7 @@
 
                 <div class="mt-8 flex justify-center">
                     {{-- Ubah ini untuk memicu modal --}}
-                    <button type="button" class="btn-custom-edit"
+                    <button type="button" class="btn-custom-edit  bg-green-600 hover:bg-green-700"
                         data-bs-toggle="modal" data-bs-target="#editPegawaiModal"
                         data-id="{{ $pegawai->id }}"
                         data-nip="{{ $pegawai->nip }}"
@@ -612,7 +622,9 @@
                         data-foto-profil-path="{{ $pegawai->foto_profil_path ? asset($pegawai->foto_profil_path) : '' }}">
                         Edit Data Pegawai
                     </button>
-                    <a href="{{ route('pegawai.index') }}" class="btn-custom-edit">Kembali ke Daftar Pegawai</a>
+                    {{-- BARU: Tombol untuk Manajemen Riwayat --}}
+                    <a href="{{ route('pegawai.riwayat.index', $pegawai->id) }}" class="btn-custom-edit bg-green-600 hover:bg-green-700">Manajemen Riwayat</a>
+                    
                 </div>
             </div>
 

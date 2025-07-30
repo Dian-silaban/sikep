@@ -14,14 +14,16 @@ class Pegawai extends Model
         'nip',
         'nama_lengkap',
         'tanggal_lahir',
-        'tmt', // Ini adalah TMT umum/awal pegawai
+        'tmt',
         'jenis_kelamin',
         'alamat',
         'email',
         'nomor_telepon',
         'unit_kerja_id',
         'status_pegawai',
-        'tmt_status', // BARU: Tambahkan kolom TMT Status
+        'tmt_status',
+        'tgl_usulan_berkala_awal', // BARU
+        'tgl_usulan_kp_awal',      // BARU
         'foto_profil_path',
         'nik',
         'golongan_id',
@@ -33,7 +35,9 @@ class Pegawai extends Model
     protected $casts = [
         'tanggal_lahir' => 'date',
         'tmt' => 'date',
-        'tmt_status' => 'date', // BARU: Cast TMT Status sebagai tanggal
+        'tmt_status' => 'date',
+        'tgl_usulan_berkala_awal' => 'date', // BARU
+        'tgl_usulan_kp_awal' => 'date',      // BARU
     ];
 
     /**
@@ -74,5 +78,21 @@ class Pegawai extends Model
     public function pendidikan()
     {
         return $this->belongsTo(Pendidikan::class);
+    }
+
+    // Relasi one-to-many untuk Riwayat
+    public function riwayatGolongan()
+    {
+        return $this->hasMany(RiwayatGolongan::class);
+    }
+
+    public function riwayatJabatan()
+    {
+        return $this->hasMany(RiwayatJabatan::class);
+    }
+
+    public function riwayatPendidikan()
+    {
+        return $this->hasMany(RiwayatPendidikan::class);
     }
 }
