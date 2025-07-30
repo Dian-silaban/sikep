@@ -41,15 +41,22 @@ class BezettingExport implements FromArray, ShouldAutoSize, WithTitle, WithEvent
         $data = [];
 
         $monthNames = [
-            '01' => 'JANUARI', '02' => 'FEBRUARI', '03' => 'MARET',
-            '04' => 'APRIL', '05' => 'MEI', '06' => 'JUNI',
-            '07' => 'JULI', '08' => 'AGUSTUS', '09' => 'SEPTEMBER',
-            '10' => 'OKTOBER', '11' => 'NOVEMBER', '12' => 'DESEMBER'
+            '01' => 'JANUARI',
+            '02' => 'FEBRUARI',
+            '03' => 'MARET',
+            '04' => 'APRIL',
+            '05' => 'MEI',
+            '06' => 'JUNI',
+            '07' => 'JULI',
+            '08' => 'AGUSTUS',
+            '09' => 'SEPTEMBER',
+            '10' => 'OKTOBER',
+            '11' => 'NOVEMBER',
+            '12' => 'DESEMBER'
         ];
 
-        $monthName = isset($monthNames[$this->month]) ? $monthNames[$this->month] :
-            (isset($monthNames[str_pad($this->month, 2, '0', STR_PAD_LEFT)]) ?
-                $monthNames[str_pad($this->month, 2, '0', STR_PAD_LEFT)] : strtoupper($this->month));
+        $monthName = isset($monthNames[$this->month]) ? $monthNames[$this->month] : (isset($monthNames[str_pad($this->month, 2, '0', STR_PAD_LEFT)]) ?
+            $monthNames[str_pad($this->month, 2, '0', STR_PAD_LEFT)] : strtoupper($this->month));
 
         $data[] = ['BEZETTING PEGAWAI BPKAD'];
         $data[] = ['BULAN ' . $monthName . ' ' . $this->year];
@@ -105,26 +112,25 @@ class BezettingExport implements FromArray, ShouldAutoSize, WithTitle, WithEvent
 
                 $data[] = $rowData;
 
-if (in_array($golongan, ['IV D', 'III D', 'II D', 'I D'])) {
-    $jumlahRow = ['Jumlah'];
-    foreach ($eselonColumns as $eselon) {
-        $jumlahRow[] = $currentGroupTotalEselon[$eselon];
-    }
-    foreach ($pendidikanColumns as $pendidikan) {
-        $jumlahRow[] = $currentGroupTotalPendidikan[$pendidikan];
-    }
-    $jumlahRow[] = $currentGroupTotalJumlah;
-    $data[] = $jumlahRow;
+                if (in_array($golongan, ['IV D', 'III D', 'II D', 'I D'])) {
+                    $jumlahRow = ['Jumlah'];
+                    foreach ($eselonColumns as $eselon) {
+                        $jumlahRow[] = $currentGroupTotalEselon[$eselon];
+                    }
+                    foreach ($pendidikanColumns as $pendidikan) {
+                        $jumlahRow[] = $currentGroupTotalPendidikan[$pendidikan];
+                    }
+                    $jumlahRow[] = $currentGroupTotalJumlah;
+                    $data[] = $jumlahRow;
 
-    // Setelah JUMLAH, kasih 2 baris kosong baru lanjut header
-    $data[] = [];
-    $data[] = [];
+                    // Setelah JUMLAH, kasih 2 baris kosong baru lanjut header
+                    $data[] = [];
+                    $data[] = [];
 
-    $currentGroupTotalEselon = array_fill_keys($eselonColumns, 0);
-    $currentGroupTotalPendidikan = array_fill_keys($pendidikanColumns, 0);
-    $currentGroupTotalJumlah = 0;
-}
-
+                    $currentGroupTotalEselon = array_fill_keys($eselonColumns, 0);
+                    $currentGroupTotalPendidikan = array_fill_keys($pendidikanColumns, 0);
+                    $currentGroupTotalJumlah = 0;
+                }
             }
         }
 
@@ -183,17 +189,19 @@ if (in_array($golongan, ['IV D', 'III D', 'II D', 'I D'])) {
                 for ($row = 1; $row <= $lastRow; $row++) {
                     $cellAValue = $sheet->getCell('A' . $row)->getValue();
                     $isSeparatorRow = (
-    empty($cellAValue) &&
-    (
-        strtoupper($sheet->getCell('A' . ($row - 1))->getValue()) === 'JUMLAH' ||
-        strtoupper($sheet->getCell('A' . ($row + 1))->getValue()) === 'GOLONGAN'
-    )
-);
+                        empty($cellAValue) &&
+                        (
+                            strtoupper($sheet->getCell('A' . ($row - 1))->getValue()) === 'JUMLAH' ||
+                            strtoupper($sheet->getCell('A' . ($row + 1))->getValue()) === 'GOLONGAN'
+                        )
+                    );
 
 
-                    if ($cellAValue === $headerRowContentIdentifierA &&
+                    if (
+                        $cellAValue === $headerRowContentIdentifierA &&
                         $sheet->getCell('B' . $row)->getValue() === $headerRowContentIdentifierB &&
-                        $sheet->getCell('F' . $row)->getValue() === $headerRowContentIdentifierF) {
+                        $sheet->getCell('F' . $row)->getValue() === $headerRowContentIdentifierF
+                    ) {
 
                         $headerStartRow = $row;
                         $headerEndRow = $row + 1;
@@ -205,39 +213,35 @@ if (in_array($golongan, ['IV D', 'III D', 'II D', 'I D'])) {
                         $sheet->mergeCells("O{$headerStartRow}:O{$headerEndRow}");
 
                         $sheet->getStyle("A{$headerStartRow}:O{$headerEndRow}")->applyFromArray([
-                            'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF']],
-                            'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '22C55E']],
+                            'font' => ['bold' => false, 'color' => ['rgb' => '000000']],
+                            'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '00B050']],
                             'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER, 'vertical' => Alignment::VERTICAL_CENTER],
                             'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_THIN, 'color' => ['rgb' => '000000']]]
                         ]);
                         $dataRowCounter = 0;
                         $row += 1;
-                    }
-                    elseif (strtoupper($cellAValue) === 'JUMLAH') {
+                    } elseif (strtoupper($cellAValue) === 'JUMLAH') {
                         $sheet->getStyle("A{$row}:O{$row}")->applyFromArray([
                             'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FFFF00']],
                             'font' => ['bold' => true],
                             'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_THIN, 'color' => ['rgb' => '000000']]]
                         ]);
                         $dataRowCounter = 0;
-                    }
-                    elseif (strtoupper($cellAValue) === 'KONTRAK') {
+                    } elseif (strtoupper($cellAValue) === 'KONTRAK') {
                         $sheet->getStyle("A{$row}:O{$row}")->applyFromArray([
                             'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => 'C7E9B0']],
                             'font' => ['bold' => true],
                             'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_THIN, 'color' => ['rgb' => '000000']]]
                         ]);
                         $dataRowCounter = 0;
-                    }
-                    elseif (strtoupper($cellAValue) === 'TOTAL') {
+                    } elseif (strtoupper($cellAValue) === 'TOTAL') {
                         $sheet->getStyle("A{$row}:O{$row}")->applyFromArray([
                             'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FFFF00']],
                             'font' => ['bold' => true],
                             'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_THIN, 'color' => ['rgb' => '000000']]]
                         ]);
                         $dataRowCounter = 0;
-                    }
-                    else {
+                    } else {
                         $is_initial_fixed_row = ($row >= 1 && $row <= 3);
 
                         $is_blank_row_after_repeating_header = (
@@ -277,6 +281,10 @@ if (in_array($golongan, ['IV D', 'III D', 'II D', 'I D'])) {
 
                 $sheet->getRowDimension(1)->setRowHeight(25);
                 $sheet->getRowDimension(2)->setRowHeight(20);
+
+                for ($row = 3; $row <= $lastRow; $row++) {
+                    $sheet->getRowDimension($row)->setRowHeight(30);
+                }
             }
         ];
     }

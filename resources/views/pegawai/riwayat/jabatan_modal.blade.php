@@ -28,7 +28,7 @@
                         <select class="form-select" id="unit_kerja_id" name="unit_kerja_id">
                             <option value="">Pilih Unit Kerja</option>
                             @foreach ($unitKerjaList as $unit)
-                                <option value="{{ $unit->id }}" {{ old('unit_kerja_id') == $unit->id ? 'selected' : '' }}>{{ $unit->nama_unit }}</option>
+                            <option value="{{ $unit->id }}" {{ old('unit_kerja_id') == $unit->id ? 'selected' : '' }}>{{ $unit->nama_unit }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -80,7 +80,7 @@
                         <select class="form-select" id="edit_eselon_id" name="eselon_id" required>
                             <option value="">Pilih Eselon</option>
                             @foreach ($eselons as $eselon)
-                                <option value="{{ $eselon->id }}">{{ $eselon->nama_eselon }}</option>
+                            <option value="{{ $eselon->id }}">{{ $eselon->nama_eselon }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -89,7 +89,7 @@
                         <select class="form-select" id="edit_unit_kerja_id" name="unit_kerja_id">
                             <option value="">Pilih Unit Kerja</option>
                             @foreach ($unitKerjaList as $unit)
-                                <option value="{{ $unit->id }}">{{ $unit->nama_unit }}</option>
+                            <option value="{{ $unit->id }}">{{ $unit->nama_unit }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -121,34 +121,34 @@
 
 {{-- JavaScript untuk handle edit modal jabatan --}}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Handle edit modal jabatan
-    const editJabatanButtons = document.querySelectorAll('button[data-bs-target="#editJabatanModal"]');
-    
-    editJabatanButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const id = this.getAttribute('data-id');
-            const namaJabatan = this.getAttribute('data-nama_jabatan');
-            const eselonId = this.getAttribute('data-eselon_id');
-            const unitKerjaId = this.getAttribute('data-unit_kerja_id');
-            const tmtJabatan = this.getAttribute('data-tmt_jabatan');
-            const nomorSk = this.getAttribute('data-nomor_sk');
-            const tanggalSk = this.getAttribute('data-tanggal_sk');
-            const keterangan = this.getAttribute('data-keterangan');
-            
-            // Set form action
-            const form = document.getElementById('editJabatanForm');
-            form.action = `{{ route('pegawai.riwayat.jabatan.update', [$pegawai->id, '__ID__']) }}`.replace('__ID__', id);
-            
-            // Fill form fields
-            document.getElementById('edit_nama_jabatan').value = namaJabatan || '';
-            document.getElementById('edit_eselon_id').value = eselonId || '';
-            document.getElementById('edit_unit_kerja_id').value = unitKerjaId || '';
-            document.getElementById('edit_tmt_jabatan').value = tmtJabatan || '';
-            document.getElementById('edit_nomor_sk_jabatan').value = nomorSk || '';
-            document.getElementById('edit_tanggal_sk_jabatan').value = tanggalSk || '';
-            document.getElementById('edit_keterangan_jabatan').value = keterangan || '';
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle edit modal jabatan
+        const editJabatanButtons = document.querySelectorAll('button[data-bs-target="#editJabatanModal"]');
+
+        editJabatanButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const namaJabatan = this.getAttribute('data-nama_jabatan');
+                const eselonId = this.getAttribute('data-eselon_id');
+                const unitKerjaId = this.getAttribute('data-unit_kerja_id');
+                const tmtJabatan = this.getAttribute('data-tmt_jabatan');
+                const nomorSk = this.getAttribute('data-nomor_sk');
+                const tanggalSk = this.getAttribute('data-tanggal_sk');
+                const keterangan = this.getAttribute('data-keterangan');
+
+                // Set form action
+                const form = document.getElementById('editJabatanForm');
+                form.action = `{{ route('pegawai.riwayat.jabatan.update', [$pegawai->id, '__ID__']) }}`.replace('__ID__', id);
+
+                // Fill form fields
+                document.getElementById('edit_nama_jabatan').value = namaJabatan || '';
+                document.getElementById('edit_eselon_id').value = eselonId || '';
+                document.getElementById('edit_unit_kerja_id').value = unitKerjaId || '';
+                document.getElementById('edit_tmt_jabatan').value = tmtJabatan || '';
+                document.getElementById('edit_nomor_sk_jabatan').value = nomorSk || '';
+                document.getElementById('edit_tanggal_sk_jabatan').value = tanggalSk || '';
+                document.getElementById('edit_keterangan_jabatan').value = keterangan || '';
+            });
         });
     });
-});
 </script>
