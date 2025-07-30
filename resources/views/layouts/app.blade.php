@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,12 +11,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <!-- Custom CSS -->
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
@@ -24,6 +31,7 @@
 
 
 </head>
+
 
 
 <body class="bg-light">
@@ -74,6 +82,7 @@
         </div>
     </nav>
 
+
     <!-- Main Content -->
     <main class="container mb-5">
         {{-- Alert success --}}
@@ -81,10 +90,16 @@
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
         @endif
 
         {{-- Alert error --}}
         @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
         <div class="alert alert-danger">
             {{ session('error') }}
         </div>
@@ -100,6 +115,14 @@
                 @endforeach
             </ul>
         </div>
+        <div class="alert alert-warning">
+            <strong>Terjadi kesalahan:</strong>
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
         {{ $slot ?? '' }}
@@ -107,8 +130,32 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
         crossorigin="anonymous">
+    </script>
+
+    <script>
+        // Debug Bootstrap Modal
+        document.addEventListener('DOMContentLoaded', function() {
+            // Test jika Bootstrap tersedia
+            if (typeof bootstrap === 'undefined') {
+                console.error('Bootstrap JavaScript tidak ter-load!');
+                alert('Bootstrap JavaScript tidak ter-load! Modal tidak akan berfungsi.');
+                return;
+            }
+
+            // Test modal functionality
+            console.log('Bootstrap loaded successfully');
+
+            // Manual trigger untuk debugging
+            window.debugModal = function(modalId) {
+                const modal = new bootstrap.Modal(document.getElementById(modalId));
+                modal.show();
+            };
+        });
+    </script>
+
     </script>
 
     <script>
@@ -136,9 +183,14 @@
     <footer class="text-center mt-5 mb-3 text-muted" style="font-size: 14px;">
         © 2025 Sistem Informasi Kepegawaian - Dikelola oleh Bagian Kepegawaian
     </footer>
+    <footer class="text-center mt-5 mb-3 text-muted" style="font-size: 14px;">
+        © 2025 Sistem Informasi Kepegawaian - Dikelola oleh Bagian Kepegawaian
+    </footer>
 
+    @yield('scripts')
     @yield('scripts')
 
 </body>
+
 
 </html>

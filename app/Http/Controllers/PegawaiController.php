@@ -40,14 +40,14 @@ class PegawaiController extends Controller
         if ($searchTerm) {
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('nama_lengkap', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('nip', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('jabatan', 'like', '%' . $searchTerm . '%')
-                    ->orWhereHas('unit_kerja', function ($q_unit) use ($searchTerm) {
-                        $q_unit->where('nama_unit', 'like', '%' . $searchTerm . '%');
-                    })
-                    ->orWhereHas('eselon', function ($q_eselon) use ($searchTerm) {
-                        $q_eselon->where('nama_eselon', 'like', '%' . $searchTerm . '%');
-                    });
+                  ->orWhere('nip', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('jabatan', 'like', '%' . $searchTerm . '%')
+                  ->orWhereHas('unit_kerja', function ($q_unit) use ($searchTerm) {
+                      $q_unit->where('nama_unit', 'like', '%' . $searchTerm . '%');
+                  })
+                  ->orWhereHas('eselon', function ($q_eselon) use ($searchTerm) { // Cari di nama_eselon
+                      $q_eselon->where('nama_eselon', 'like', '%' . $searchTerm . '%');
+                  });
             });
         }
 
@@ -63,6 +63,7 @@ class PegawaiController extends Controller
 
         $pegawai = $query->paginate(10);
 
+        // Hitung data summary
         $totalPegawai = Pegawai::count();
         $pegawaiAktif = Pegawai::where('status_pegawai', 'Aktif')->count();
         $pegawaiNonAktif = Pegawai::where('status_pegawai', 'Non-aktif')->count();
@@ -184,16 +185,20 @@ class PegawaiController extends Controller
     /**
      * Display the specified resource.
      * Menampilkan detail data pegawai beserta daftar dokumen aktifnya.
+     * Mengirimkan daftar unit kerja ke view untuk form upload dokumen.
      */
     public function show(Pegawai $pegawai)
     {
+        // Eager load relasi yang diperlukan untuk tampilan detail
         $pegawai->load(['unit_kerja', 'golongan', 'pendidikan', 'eselon']);
+        // Eager load relasi riwayat
+        $pegawai->load(['riwayatGolongan', 'riwayatJabatan', 'riwayatPendidikan']);
 
         $all_dokumen = $pegawai->dokumen()
-            ->whereNotIn('status_dokumen', ['Dihapus'])
-            ->orderBy('jenis_dokumen_id')
-            ->orderBy('versi_dokumen', 'desc')
-            ->get();
+                               ->whereNotIn('status_dokumen', ['Dihapus'])
+                               ->orderBy('jenis_dokumen_id')
+                               ->orderBy('versi_dokumen', 'desc')
+                               ->get();
 
         // Pastikan Anda memuat semua data yang dibutuhkan view
         $jenis_dokumen = JenisDokumen::all(); // Pastikan model ini ada
@@ -218,13 +223,13 @@ class PegawaiController extends Controller
         $golongans = Golongan::orderBy('urutan')->get();
         $pendidikans = Pendidikan::orderBy('urutan')->get();
         $eselons = Eselon::orderBy('urutan')->get();
-
         return view('pegawai.edit', compact('pegawai', 'unit_kerja', 'golongans', 'pendidikans', 'eselons'));
     }
 
     /**
      * Update the specified resource in storage.
      * Memperbarui data pegawai di database.
+     * Validasi disesuaikan untuk unit_kerja_id.
      */
     public function update(Request $request, Pegawai $pegawai)
     {
@@ -356,13 +361,19 @@ class PegawaiController extends Controller
             Storage::deleteDirectory($folderPath);
         }
 
+        // 4. Hapus data pegawai dari database
         $pegawai->delete();
 
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
     }
 
+    /**
+     * Export data pegawai ke Excel.
+     */
     public function exportExcel(Request $request)
     {
+        // Mendefinisikan semua kolom yang mungkin bisa diekspor beserta nama tampilannya.
+        // Kunci adalah nama kolom database/relasi, nilai adalah nama tampilan di Excel.
         $allExportColumns = [
             'id' => 'ID Pegawai',
             'nip' => 'NIP',
@@ -371,6 +382,8 @@ class PegawaiController extends Controller
             'nik' => 'NIK',
             'tmt' => 'TMT',
             'tmt_status' => 'TMT Status',
+            'tgl_usulan_berkala_awal' => 'Tgl Usulan Berkala Awal', // BARU: Tambahkan ke ekspor
+            'tgl_usulan_kp_awal' => 'Tgl Usulan KP Awal', // BARU: Tambahkan ke ekspor
             'golongan.nama_golongan' => 'Pangkat',
             'unit_kerja.nama_unit' => 'Unit Kerja',
             'jabatan' => 'Jabatan',
@@ -385,16 +398,21 @@ class PegawaiController extends Controller
             'pendidikan.nama_pendidikan' => 'Pendidikan',
         ];
 
+        // Dapatkan kolom yang dipilih dari request. Jika tidak ada, ekspor semua.
         $selectedColumnsRaw = $request->input('columns', array_keys($allExportColumns));
-        $selectedColumns = array_filter($selectedColumnsRaw, function ($col) use ($allExportColumns) {
+
+        // Filter kolom yang dipilih untuk memastikan hanya kolom yang valid yang masuk
+        $selectedColumns = array_filter($selectedColumnsRaw, function($col) use ($allExportColumns) {
             return array_key_exists($col, $allExportColumns);
         });
 
+        // Dapatkan filter dari request (dari modal)
         $filters = [
             'status' => $request->input('status_filter'),
             'unit_kerja_id' => $request->input('unit_kerja_filter'),
         ];
 
-        return Excel::download(new PegawaiExport($selectedColumns, $filters, $allExportColumns), 'pegawai_data_' . date('Ymd_His') . '.xlsx');
+        // Buat instance PegawaiExport dengan kolom dan filter yang dipilih
+        return Excel::download(new PegawaiExport($selectedColumns, $filters, $allExportColumns), 'pegawai_data_'.date('Ymd_His').'.xlsx');
     }
 }

@@ -4,6 +4,7 @@
 <div class="row">
     <div class="col-md-3">
         @include('settings.sidebar')
+        @include('settings.sidebar')
     </div>
     <div class="col-md-9">
         {{-- NEW REPORT HEADER SECTION --}}
@@ -163,6 +164,8 @@
                 <div class="table-responsive">
                     <table class="table table-bordered table-sm text-center align-middle" style="font-size: 14px;">
                         <thead>
+                    <table class="table table-bordered table-sm text-center align-middle" style="font-size: 14px;">
+                        <thead>
                             <tr>
                                 <th rowspan="2">GOLONGAN</th>
                                 <th colspan="5">ESELON</th>
@@ -234,7 +237,10 @@
                                 @endforeach
                                 @foreach($pendidikanColumns as $pendidikan)
                                     <td><strong>{{ $grandTotalPendidikan[$pendidikan] }}</strong></td>
+                                @foreach($pendidikanColumns as $pendidikan)
+                                    <td><strong>{{ $grandTotalPendidikan[$pendidikan] }}</strong></td>
                                 @endforeach
+                                <td><strong>{{ $grandTotalJumlah }}</strong></td>
                                 <td><strong>{{ $grandTotalJumlah }}</strong></td>
                             </tr>
                         </tbody>
