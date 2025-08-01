@@ -90,7 +90,7 @@
                     'III' => ['III A', 'III B', 'III C', 'III D'],
                     'II' => ['II A', 'II B', 'II C', 'II D'],
                     'I' => ['I A', 'I B', 'I C', 'I D'],
-                    'KHUSUS' => ['IX', 'V']
+                    'PPPK' => ['IX', 'V']
                 ];
             @endphp
 

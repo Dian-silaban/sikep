@@ -117,13 +117,13 @@ class PegawaiController extends Controller
     {
         try {
             $rules = [
-                'nip' => 'required|string|digits:16|unique:pegawai,nip',
+                'nip' => 'required|string|digits:18|unique:pegawai,nip',
                 'nik' => 'nullable|string|size:16|unique:pegawai,nik',
                 'nama_lengkap' => 'required|string|max:255',
                 'tanggal_lahir' => 'nullable|date', // Berdasarkan form Anda, ini mungkin nullable
                 'tmt' => 'nullable|date',
                 'jenis_kelamin' => 'required|in:Laki-laki,Perempuan', // Menggunakan 'in' lebih tepat daripada string|max:50
-                'alamat' => 'required|string',
+                'alamat' => 'nullable|string|max:255',
                 'email' => 'nullable|email|max:255|unique:pegawai,email', // Berdasarkan form Anda, ini mungkin nullable
                 'nomor_telepon' => 'nullable|string|max:20', // Mengurangi kekakuan regex, ganti jika perlu regex spesifik
                 'jabatan' => 'nullable|string|max:255', // Berdasarkan form Anda, ini mungkin nullable
@@ -231,31 +231,31 @@ class PegawaiController extends Controller
      * Memperbarui data pegawai di database.
      * Validasi disesuaikan untuk unit_kerja_id.
      */
-    public function update(Request $request, Pegawai $pegawai)
+public function update(Request $request, Pegawai $pegawai)
     {
         try {
             $rules = [
                 'nip' => [
                     'required',
                     'string',
-                    'digits:16',
+                    'digits:18',
                     Rule::unique('pegawai')->ignore($pegawai->id),
                 ],
                 'nama_lengkap' => 'required|string|max:255',
                 'tanggal_lahir' => 'nullable|date',
                 'tmt' => 'nullable|date',
                 'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-                'alamat' => 'required|string',
+                'alamat' => 'nullable|string',
                 'email' => [
-                    'nullable', // Berdasarkan form Anda, ini mungkin nullable
+                    'nullable',
                     'email',
                     'max:255',
                     Rule::unique('pegawai')->ignore($pegawai->id),
                 ],
-                'nomor_telepon' => 'nullable|string|max:20', // Mengurangi kekakuan regex
-                'jabatan' => 'nullable|string|max:255', // Berdasarkan form Anda, ini mungkin nullable
-                'unit_kerja_id' => 'nullable|exists:unit_kerja,id', // <-- PASTIKAN NAMA TABEL BENAR
-                'status_pegawai' => 'nullable|in:Aktif,Non-aktif,Pensiun', // Berdasarkan form Anda, ini mungkin nullable
+                'nomor_telepon' => 'nullable|string|max:20',
+                'jabatan' => 'nullable|string|max:255',
+                'unit_kerja_id' => 'nullable|exists:unit_kerja,id',
+                'status_pegawai' => 'nullable|in:Aktif,Non-aktif,Pensiun',
                 'tmt_status' => 'nullable|date',
                 'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'nik' => [
@@ -267,10 +267,18 @@ class PegawaiController extends Controller
                 'golongan_id' => 'nullable|exists:golongans,id',
                 'eselon_id' => 'nullable|exists:eselons,id',
                 'pendidikan_id' => 'nullable|exists:pendidikans,id',
-                'hapus_foto_profil' => 'sometimes|boolean', // Menangkap checkbox "Delete Avatar"
+                'hapus_foto_profil' => 'sometimes|boolean',
+                // PERBAIKAN: Menambahkan aturan validasi untuk field tanggal baru
+                'tgl_usulan_berkala_awal' => 'nullable|date',
+                'tgl_usulan_kp_awal' => 'nullable|date',
             ];
 
             $validatedData = $request->validate($rules);
+
+            // Perlu diperhatikan:
+            // Pastikan Anda juga sudah menambahkan 'tgl_usulan_berkala_awal' dan
+            // 'tgl_usulan_kp_awal' ke properti `$fillable` di model Pegawai.php.
+            // Tanpa ini, data tidak akan tersimpan meskipun sudah divalidasi di sini.
 
             $dataToUpdate = $validatedData;
 
@@ -302,13 +310,15 @@ class PegawaiController extends Controller
                 $dataToUpdate['foto_profil_path'] = Storage::url($path);
             } else {
                 // Jika tidak ada foto baru dan tidak ada permintaan hapus, pertahankan path yang sudah ada
-                // Pastikan foto_profil_path tidak di unset jika tidak ada perubahan
                 $dataToUpdate['foto_profil_path'] = $pegawai->foto_profil_path;
             }
             
             // Hapus 'foto_profil' dari dataToUpdate karena sudah ditangani secara terpisah
             unset($dataToUpdate['foto_profil']);
 
+            // PERBAIKAN: Menambahkan field tanggal berkala dan KP ke dalam array data yang akan diupdate
+            $dataToUpdate['tgl_usulan_berkala_awal'] = $validatedData['tgl_usulan_berkala_awal'] ?? null;
+            $dataToUpdate['tgl_usulan_kp_awal'] = $validatedData['tgl_usulan_kp_awal'] ?? null;
 
             $pegawai->update($dataToUpdate);
 
@@ -324,12 +334,12 @@ class PegawaiController extends Controller
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json(['errors' => $e->errors()], 422);
             }
-            return redirect()->back()->withErrors($e->errors())->withInput();
+            return redirect()->back()->withErrors($e->errors())->withInput()->with('modal_target', 'editPegawaiModal');
         } catch (\Exception $e) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json(['message' => 'Gagal memperbarui data pegawai: ' . $e->getMessage()], 500);
             }
-            return redirect()->back()->with('error', 'Gagal memperbarui data pegawai: ' . $e->getMessage())->withInput();
+            return redirect()->back()->with('error', 'Gagal memperbarui data pegawai: ' . $e->getMessage())->withInput()->with('modal_target', 'editPegawaiModal');
         }
     }
 

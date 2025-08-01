@@ -18,7 +18,7 @@
             <div class="card-body">
                  {{-- Form Filter --}}
             {{-- PERUBAHAN UTAMA DI SINI: Tambahkan kelas dan struktur baru --}}
-            <form action="{{ route('settings.bezetting.index') }}" method="GET" class="filter-form mb-4">
+            <form action="{{ route('settings.bezetting_kontrak.index') }}" method="GET" class="filter-form mb-4">
                 <div class="filter-header">
                     <i class="fas fa-filter me-2"></i> Filter
                 </div>

@@ -169,8 +169,7 @@
             transform: translateY(-2px);
         }
 
-        /* Styling untuk Form Input (used by modal forms) */
-        /* These styles should be moved to a shared CSS file if you use layouts.app */
+        /* Styling untuk Form Input */
         form p {
             margin-bottom: 15px;
         }
@@ -334,9 +333,29 @@
         }
 
         /* Penyesuaian Responsif */
-        @media (max-width: 768px) {
+        @media (min-width: 992px) { /* Untuk layar yang lebih besar (desktop) */
             .grid-kotak {
-                grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+            .item-kotak.full-width {
+                grid-column: 1 / -1; /* Membentang penuh di 3 kolom */
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 991px) { /* Untuk tablet */
+            .grid-kotak {
+                grid-template-columns: repeat(2, 1fr); /* 2 kolom untuk tablet */
+            }
+            .item-kotak.full-width {
+                grid-column: 1 / -1; /* Membentang penuh di 2 kolom */
+            }
+        }
+
+        @media (max-width: 768px) { /* Untuk mobile */
+            .grid-kotak {
+                grid-template-columns: 1fr; /* 1 kolom untuk mobile */
             }
             .table-dokumen, .table-dokumen thead, .table-dokumen tbody, .table-dokumen th, .table-dokumen td, .table-dokumen tr {
                 display: block;
@@ -375,7 +394,8 @@
             .table-dokumen td:nth-of-type(3):before { content: "Versi"; }
             .table-dokumen td:nth-of-type(4):before { content: "Keterangan"; }
             .table-dokumen td:nth-of-type(5):before { content: "Status"; }
-            .table-dokumen td:nth-of-type(6):before { content: "Tgl. Unggah"; }
+            /* Adjusted index after removing Tgl. Unggah */
+            .table-dokumen td:nth-of-type(6):before { content: "TMT Dokumen"; }
             .table-dokumen td:nth-of-type(7):before { content: "Aksi"; }
 
             .table-dokumen .action-buttons {
@@ -472,6 +492,38 @@
         .form-check-label {
             margin-bottom: 0;
         }
+        /* Additional modal styles for file rename form */
+        .form-input-text, .form-select, .form-textarea, .form-input-file {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .form-input-text:focus, .form-select:focus, .form-textarea:focus, .form-input-file:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .form-hint {
+            font-size: 0.875em;
+            color: #6c757d;
+            margin-top: 0.25rem;
+            display: block;
+        }
+
+        .form-actions {
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        /* Ensure .btn-close-white works for Bootstrap modals if custom styling overrides it */
+        .modal-header .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%); /* Makes it white */
+        }
     </style>
 </head>
 <body>
@@ -536,14 +588,16 @@
                         <strong>Nomor Telepon</strong>
                         {{ $pegawai->nomor_telepon ?? '-' }}
                     </div>
+
                     <div class="item-kotak">
-                        <strong>Jabatan</strong>
-                        {{ $pegawai->jabatan ?? '-' }}
+                        <strong>Golongan</strong>
+                        {{ $pegawai->golongan->nama_golongan ?? '-' }} {{-- Asumsi ada relasi ke model Golongan --}}
                     </div>
+                    
 
                     {{-- BARU: TMT (Tanggal Mulai Terhitung) --}}
                     <div class="item-kotak">
-                        <strong>TMT (Tanggal Mulai Terhitung)</strong>
+                        <strong>TMT Golongan</strong>
                         {{ $pegawai->tmt ? \Carbon\Carbon::parse($pegawai->tmt)->format('d-m-Y') : '-' }}
                     </div>
 
@@ -552,13 +606,13 @@
                         <strong>Eselon</strong>
                         {{ $pegawai->eselon->nama_eselon ?? '-' }}
                     </div>
-
+                    <div class="item-kotak">
+                        <strong>Jabatan</strong>
+                        {{ $pegawai->jabatan ?? '-' }}
+                    </div>
                     {{-- PERHATIAN: Pilih salah satu untuk Pangkat dan Golongan --}}
                     {{-- Opsi 1: Jika sudah dropdown (menggunakan relasi Golongan) --}}
-                    <div class="item-kotak">
-                        <strong>Pangkat dan Golongan</strong>
-                        {{ $pegawai->golongan->nama_golongan ?? '-' }} {{-- Asumsi ada relasi ke model Golongan --}}
-                    </div>
+                    
 
                     {{-- BARU: Pendidikan --}}
                     <div class="item-kotak">
@@ -600,7 +654,7 @@
 
                 <div class="mt-8 flex justify-center">
                     {{-- Ubah ini untuk memicu modal --}}
-                    <button type="button" class="btn-custom-edit  bg-green-600 hover:bg-green-700"
+                    <button type="button" class="btn-custom-edit bg-green-600 hover:bg-green-700"
                         data-bs-toggle="modal" data-bs-target="#editPegawaiModal"
                         data-id="{{ $pegawai->id }}"
                         data-nip="{{ $pegawai->nip }}"
@@ -612,7 +666,7 @@
                         data-email="{{ $pegawai->email ?? '' }}"
                         data-nomor-telepon="{{ $pegawai->nomor_telepon ?? '' }}"
                         data-jabatan="{{ $pegawai->jabatan ?? '' }}"
-                        data-tmt="{{ $pegawai->tmt ? \Carbon\Carbon::parse($pegawai->tmt)->format('Y-m-d') : '' }}"
+                        data-tmt="{{ \Carbon\Carbon::parse($pegawai->tmt)->format('Y-m-d') }}"
                         data-eselon-id="{{ $pegawai->eselon_id ?? '' }}"
                         data-golongan-id="{{ $pegawai->golongan_id ?? '' }}"
                         data-pendidikan-id="{{ $pegawai->pendidikan_id ?? '' }}"
@@ -624,7 +678,7 @@
                     </button>
                     {{-- BARU: Tombol untuk Manajemen Riwayat --}}
                     <a href="{{ route('pegawai.riwayat.index', $pegawai->id) }}" class="btn-custom-edit bg-green-600 hover:bg-green-700">Manajemen Riwayat</a>
-                    
+
                 </div>
             </div>
 
@@ -644,6 +698,10 @@
                     <p>
                         <label for="file_dokumen">File Dokumen:</label><br>
                         <input type="file" name="file_dokumen" id="file_dokumen" required>
+                    </p>
+                    <p>
+                        <label for="tmt_dokumen">TMT Dokumen:</label><br>
+                        <input type="date" name="tmt_dokumen" id="tmt_dokumen" value="{{ old('tmt_dokumen') }}">
                     </p>
                     <p>
                         <label for="keterangan">Keterangan (Asli/FotoCopy):</label><br>
@@ -666,7 +724,8 @@
                             <th>Versi</th>
                             <th>Keterangan</th>
                             <th>Status</th>
-                            <th>Tgl. Unggah</th>
+                            {{-- <th>Tgl. Unggah</th> Removed this column --}}
+                            <th>TMT Dokumen</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -680,15 +739,41 @@
                                 <td>
                                     <strong>{{ $doc->status_dokumen }}</strong>
                                 </td>
-                                <td>{{ $doc->tanggal_upload->format('d-m-Y H:i') }}</td>
+                                {{-- <td>{{ $doc->tanggal_upload->format('d-m-Y H:i') }}</td> Removed this data cell --}}
+                                <td>{{ $doc->tmt_dokumen ? \Carbon\Carbon::parse($doc->tmt_dokumen)->format('d-m-Y') : '-' }}</td>
                                 <td class="action-buttons">
                                     {{-- Tombol Lihat --}}
-                                    <a href="{{ asset($doc->path_file) }}" target="_blank" class="btn-aksi btn-lihat" title="Lihat Dokumen">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                                        </svg>
-                                    </a>
+                                    @php
+    $fileUrl = Storage::url($doc->path_file);
+    $extension = strtolower(pathinfo($fileUrl, PATHINFO_EXTENSION));
+@endphp
+
+@if(in_array($extension, ['pdf', 'jpg', 'jpeg', 'png', 'gif']))
+    {{-- Jika PDF atau gambar, buka langsung --}}
+    <a href="{{ $fileUrl }}" target="_blank" rel="noopener noreferrer" class="btn-aksi btn-lihat" title="Lihat Dokumen">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+        </svg>
+    </a>
+@elseif(in_array($extension, ['doc', 'docx', 'xls', 'xlsx']))
+    {{-- Jika Word/Excel, buka pakai Google Docs Viewer --}}
+    <a href="https://docs.google.com/gview?url={{ urlencode($fileUrl) }}&embedded=true" target="_blank" rel="noopener noreferrer" class="btn-aksi btn-lihat" title="Lihat Dokumen">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+        </svg>
+    </a>
+@else
+    {{-- Jika format lain, default: download --}}
+    <a href="{{ $fileUrl }}" download class="btn-aksi btn-lihat" title="Download Dokumen">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+            <path d="M.5 9.9V12a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V9.9a.5.5 0 0 0-1 0V12H1v-2.1a.5.5 0 0 0-1 0z"/>
+            <path d="M7.646 10.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 9.293V1.5a.5.5 0 0 0-1 0v7.793L5.354 7.146a.5.5 0 1 0-.708.708l3 3z"/>
+        </svg>
+    </a>
+@endif
+
 
                                     {{-- Tombol Unduh --}}
                                     <a href="{{ route('dokumen.download', $doc->id) }}" target="_blank" class="btn-aksi btn-unduh" title="Unduh Dokumen">
@@ -737,8 +822,8 @@
 
         </div>
         <footer class="text-center mt-5 mb-3 text-muted" style="font-size: 14px;">
-            © 2025 Sistem Informasi Kepegawaian - Dikelola oleh Bagian Kepegawaian
-        </footer>
+    © 2025 Sistem Informasi Kepegawaian - Dikelola oleh Bagian Kepegawaian
+</footer>
 
     </div>
 
@@ -831,12 +916,19 @@
                             </p>
 
                             <p class="form-group">
-                                <label for="modal_edit_nomor_telepon">Nomor Telepon:</label>
-                                <input type="text" name="nomor_telepon" id="modal_edit_nomor_telepon">
-                                @error('nomor_telepon')
+                                <label for="modal_edit_unit_kerja_id">Bidang:</label>
+                                <select name="unit_kerja_id" id="modal_edit_unit_kerja_id">
+                                    <option value="">Pilih Bidang</option>
+                                    {{-- Pastikan $unitKerjaList tersedia di show() method controller --}}
+                                    @foreach ($unitKerjaList as $unit)
+                                        <option value="{{ $unit->id }}">{{ $unit->nama_unit }}</option>
+                                    @endforeach
+                                </select>
+                                @error('unit_kerja_id')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </p>
+                        
 
                             <p class="form-group">
                                 <label for="modal_edit_jabatan">Jabatan:</label>
@@ -859,19 +951,6 @@
                                 @error('eselon_id') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </p>
 
-                            {{-- Dropdown untuk Pangkat dan Golongan --}}
-                            <p class="form-group">
-                                <label for="modal_edit_golongan_id">Pangkat dan Golongan:</label>
-                                <select name="golongan_id" id="modal_edit_golongan_id">
-                                    <option value="">Pilih Golongan</option>
-                                    {{-- Pastikan $golongans tersedia di show() method controller --}}
-                                    @foreach ($golongans as $golongan)
-                                        <option value="{{ $golongan->id }}">{{ $golongan->nama_golongan }}</option>
-                                    @endforeach
-                                </select>
-                                @error('golongan_id') <div class="alert alert-danger">{{ $message }}</div> @enderror
-                            </p>
-
                             {{-- Dropdown untuk Pendidikan --}}
                             <p class="form-group">
                                 <label for="modal_edit_pendidikan_id">Pendidikan:</label>
@@ -885,18 +964,24 @@
                                 @error('pendidikan_id') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </p>
 
+                            {{-- Dropdown untuk Pangkat dan Golongan --}}
                             <p class="form-group">
-                                <label for="modal_edit_unit_kerja_id">Bidang:</label>
-                                <select name="unit_kerja_id" id="modal_edit_unit_kerja_id">
-                                    <option value="">Pilih Bidang</option>
-                                    {{-- Pastikan $unitKerjaList tersedia di show() method controller --}}
-                                    @foreach ($unitKerjaList as $unit)
-                                        <option value="{{ $unit->id }}">{{ $unit->nama_unit }}</option>
+                                <label for="modal_edit_golongan_id">Golongan:</label>
+                                <select name="golongan_id" id="modal_edit_golongan_id">
+                                    <option value="">Pilih Golongan</option>
+                                    {{-- Pastikan $golongans tersedia di show() method controller --}}
+                                    @foreach ($golongans as $golongan)
+                                        <option value="{{ $golongan->id }}">{{ $golongan->nama_golongan }}</option>
                                     @endforeach
                                 </select>
-                                @error('unit_kerja_id')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+                                @error('golongan_id') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                            </p>
+
+                            {{-- Input untuk TMT (Tanggal Mulai Terhitung) --}}
+                            <p class="form-group">
+                                <label for="modal_edit_tmt">TMT Golongan:</label>
+                                <input type="date" name="tmt" id="modal_edit_tmt">
+                                @error('tmt') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </p>
 
                             <p class="form-group">
@@ -918,12 +1003,15 @@
                                 <input type="date" name="tmt_status" id="modal_edit_tmt_status">
                                 @error('tmt_status') <div class="alert alert-danger">{{ $message }}</div> @enderror
                             </p>
-                            {{-- Input untuk TMT (Tanggal Mulai Terhitung) --}}
+
                             <p class="form-group">
-                                <label for="modal_edit_tmt">TMT (Tanggal Mulai Terhitung):</label>
-                                <input type="date" name="tmt" id="modal_edit_tmt">
-                                @error('tmt') <div class="alert alert-danger">{{ $message }}</div> @enderror
+                                <label for="modal_edit_nomor_telepon">Nomor Telepon:</label>
+                                <input type="text" name="nomor_telepon" id="modal_edit_nomor_telepon">
+                                @error('nomor_telepon')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </p>
+                            
                         </div>
 
                         <p>
@@ -1015,6 +1103,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Define JavaScript variables for asset paths
+            const defaultPriaPhoto = "{{ asset('img/pria.jpg') }}";
+            const defaultWanitaPhoto = "{{ asset('img/wanita.jpg') }}";
+            const noPhoto = "{{ asset('img/no-photo.jpg') }}";
+
             // Script for Rename File Modal (already existing)
             const renameFileModal = document.getElementById('renameFileModal');
             renameFileModal.addEventListener('show.bs.modal', function (event) {
@@ -1120,11 +1213,11 @@
                     editPegawaiModal.querySelector('#modal_edit_tmt_status').value = tmtStatus;
 
                     // Handle photo preview for EDIT MODAL
-                    if (fotoProfilPath && fotoProfilPath !== '{{ asset('img/pria.jpg') }}' && fotoProfilPath !== '{{ asset('img/wanita.jpg') }}') {
+                    if (fotoProfilPath && fotoProfilPath !== defaultPriaPhoto && fotoProfilPath !== defaultWanitaPhoto) {
                         editPreviewImage.src = fotoProfilPath;
                         editPreviewImage.dataset.originalSrc = fotoProfilPath;
                     } else {
-                        const defaultGenderPhoto = (jenisKelamin === 'Perempuan') ? '{{ asset('img/wanita.jpg') }}' : '{{ asset('img/pria.jpg') }}';
+                        const defaultGenderPhoto = (jenisKelamin === 'Perempuan') ? defaultWanitaPhoto : defaultPriaPhoto;
                         editPreviewImage.src = defaultGenderPhoto;
                         editPreviewImage.dataset.originalSrc = defaultGenderPhoto;
                     }
@@ -1156,23 +1249,23 @@
                 if (editHapusFotoProfilCheckbox) {
                     editHapusFotoProfilCheckbox.addEventListener('change', function() {
                         if (this.checked) {
-                            editPreviewImage.src = "{{ asset('img/no-photo.jpg') }}";
+                            editPreviewImage.src = noPhoto;
                             editFileInput.value = '';
                         } else {
-                            editPreviewImage.src = editPreviewImage.dataset.originalSrc || "{{ asset('img/no-photo.jpg') }}";
+                            editPreviewImage.src = editPreviewImage.dataset.originalSrc || noPhoto;
                         }
                     });
                 }
 
                 // Reset the image and checkbox when the modal is hidden
                 editPegawaiModal.addEventListener('hidden.bs.modal', function() {
-                    editPreviewImage.src = "{{ asset('img/no-photo.jpg') }}";
+                    editPreviewImage.src = noPhoto;
                     editFileInput.value = '';
                     if (editHapusFotoProfilCheckbox) {
                         editHapusFotoProfilCheckbox.checked = false;
                     }
                 });
-                
+
             }
 
             @if ($errors->any() && session('modal_target') == 'editPegawaiModal')

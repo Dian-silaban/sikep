@@ -160,7 +160,7 @@ tbody{
                     <div class="table-header"> {{-- Header kustom untuk judul dan tombol tambah, seperti pada "Tambah Jenis Dokumen" --}}
                         <h2>Daftar Riwayat Jabatan</h2> {{-- Mengubah h4 menjadi h2 --}}
                         {{-- Tombol "Tambah Riwayat Golongan" yang memicu modal, dengan gaya btn-add-unit --}}
-                        <a href="#" class="btn-add-unit" data-bs-toggle="modal" data-bs-target="#addGolonganModal">
+                        <a href="#" class="btn-add-unit" data-bs-toggle="modal" data-bs-target="#addJabatanModal">
                             <i class="fas fa-plus me-2"></i>Tambah Riwayat Jabatan
                         </a>
                     </div>
@@ -225,7 +225,7 @@ tbody{
                     <div class="table-header"> {{-- Header kustom untuk judul dan tombol tambah, seperti pada "Tambah Jenis Dokumen" --}}
                         <h2>Daftar Riwayat Pendidikan</h2> {{-- Mengubah h4 menjadi h2 --}}
                         {{-- Tombol "Tambah Riwayat Golongan" yang memicu modal, dengan gaya btn-add-unit --}}
-                        <a href="#" class="btn-add-unit" data-bs-toggle="modal" data-bs-target="#addGolonganModal">
+                        <a href="#" class="btn-add-unit" data-bs-toggle="modal" data-bs-target="#addPendidikanModal">
                             <i class="fas fa-plus me-2"></i>Tambah Riwayat Pendidikan
                         </a>
                     </div>
