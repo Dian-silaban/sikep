@@ -98,7 +98,7 @@
             <select class="filter" name="status_pegawai">
                 <option value="">Status</option>
                 <option value="Aktif">Aktif</option>
-                <option value="Non-aktif">Non-aktif</option>
+                <option value="Non-aktif">Pindah</option>
                 <option value="Pensiun">Pensiun</option>
             </select>
         </div>
@@ -261,9 +261,9 @@
                     <div class="mb-3">
                         <label for="status_filter" class="form-label">Status Pegawai:</label>
                         <select class="form-select" id="status_filter" name="status_filter">
-                            <option value="all">Semua Status</option>
+                            <option value="all">Status</option>
                             <option value="Aktif">Aktif</option>
-                            <option value="Non-aktif">Non-aktif</option>
+                            <option value="Non-aktif">Pindah</option>
                             <option value="Pensiun">Pensiun</option>
                         </select>
                     </div>
@@ -356,7 +356,7 @@
                             </select>
                         </p>
                         <p class="form-group">
-                            <label for="tmt">TMT Status:</label>
+                            <label for="tmt">TMT Golongan:</label>
                             <input type="date" name="tmt" id="tmt" value="{{ old('tmt') }}">
                         </p>
                         <p class="form-group">
@@ -442,22 +442,27 @@
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="_redirect_to" value="{{ request()->fullUrl() }}">
-                    <div class="text-center mb-4">
-                        <label for="modal_edit_foto_profil" class="d-block mb-2">Foto Profil:</label>
-                        <div class="profile-photo-upload-container mb-2">
-                            <img id="modal-edit-profile-preview-image" src="{{ asset('img/no-photo.jpg') }}" alt="No Photo" class="profile-photo-preview mb-2">
-                            <br>
-                            <button type="button" id="modal-edit-upload-new-button" class="btn btn-sm btn-outline-primary">Unggah Baru</button>
-                            <input type="file" name="foto_profil" id="modal_edit_foto_profil" class="d-none">
+
+                    
+
+                        <div class="form-group text-center mb-4">
+                            <label for="modal_edit_foto_profil" class="d-block mb-2">Foto Profil:</label>
+                            <div class="profile-photo-upload-container">
+                                <img id="modal-edit-profile-preview-image" src="{{ asset('img/no-photo.jpg') }}" alt="No Photo" class="profile-photo-preview">
+                                <button type="button" id="modal-edit-upload-new-button" class="btn btn-sm btn-outline-primary upload-button">Upload New</button>
+                                <input type="file" name="foto_profil" id="modal_edit_foto_profil" class="d-none">
+                            </div>
+                            <div class="form-check d-flex justify-content-center align-items-center mt-2">
+                                <input class="form-check-input me-1" type="checkbox" name="hapus_foto_profil" value="1" id="modal_edit_hapus_foto_profil">
+                                <label class="form-check-label" for="modal_edit_hapus_foto_profil">
+                                    Hapus Foto Profil Saat Ini
+                                </label>
+                            </div>
+                            @error('foto_profil')
+                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
-                        <div class="form-check d-flex justify-content-center">
-                            <input class="form-check-input me-2" type="checkbox" name="hapus_foto_profil" value="1" id="modal_edit_hapus_foto_profil">
-                            <label class="form-check-label" for="modal_edit_hapus_foto_profil">Hapus Foto Profil Saat Ini</label>
-                        </div>
-                        @error('foto_profil')
-                        <div class="text-danger text-sm mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
+
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label for="modal_edit_nip" class="form-label">NIP:</label>

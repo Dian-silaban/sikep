@@ -9,11 +9,12 @@ use App\Models\Golongan; // Import model Golongan
 class GolonganSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Jalankan seeder database.
      */
     public function run(): void
     {
         $golongans = [
+            // Golongan untuk PNS
             ['nama_golongan' => 'I A', 'urutan' => 1],
             ['nama_golongan' => 'I B', 'urutan' => 2],
             ['nama_golongan' => 'I C', 'urutan' => 3],
@@ -30,6 +31,17 @@ class GolonganSeeder extends Seeder
             ['nama_golongan' => 'IV B', 'urutan' => 14],
             ['nama_golongan' => 'IV C', 'urutan' => 15],
             ['nama_golongan' => 'IV D', 'urutan' => 16],
+            
+            // Golongan untuk P3K (ditambahkan)
+            ['nama_golongan' => 'IX', 'urutan' => 17],
+            ['nama_golongan' => 'VIII', 'urutan' => 18],
+            ['nama_golongan' => 'VII', 'urutan' => 19],
+            ['nama_golongan' => 'VI', 'urutan' => 20],
+            ['nama_golongan' => 'V', 'urutan' => 21],
+            ['nama_golongan' => 'IV', 'urutan' => 22],
+            ['nama_golongan' => 'III', 'urutan' => 23],
+            ['nama_golongan' => 'II', 'urutan' => 24],
+            ['nama_golongan' => 'I', 'urutan' => 25],
         ];
 
         foreach ($golongans as $golongan) {

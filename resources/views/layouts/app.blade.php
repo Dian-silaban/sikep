@@ -18,6 +18,16 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- jQuery (wajib untuk Select2) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 </head>
 
 <body class="bg-light">
@@ -47,9 +57,9 @@
                     </li>
 
                     @auth
-                        <li class="nav-item">
-                            <a class="nav-link {{ Request::routeIs('settings.index') ? 'active' : '' }}" href="{{ route('settings.index') }}">Pengaturan</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::routeIs('settings.index') ? 'active' : '' }}" href="{{ route('settings.index') }}">Pengaturan</a>
+                    </li>
                     @endauth
 
                     <li class="nav-item">
@@ -69,24 +79,24 @@
     <main class="container mb-5">
         {{-- Alert success --}}
         @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
         {{-- Alert error --}}
         @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
+        <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
         {{-- Validation errors --}}
         @if ($errors->any())
-            <div class="alert alert-warning">
-                <strong>Terjadi kesalahan:</strong>
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="alert alert-warning">
+            <strong>Terjadi kesalahan:</strong>
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
         {{ $slot ?? '' }}
@@ -103,7 +113,7 @@
 
     <!-- Debug Modal Check -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             if (typeof bootstrap === 'undefined') {
                 console.error('Bootstrap JavaScript tidak ter-load!');
                 alert('Bootstrap JavaScript tidak ter-load! Modal tidak akan berfungsi.');
@@ -120,4 +130,5 @@
     @yield('scripts')
 
 </body>
+
 </html>

@@ -49,16 +49,10 @@
                         </div>
 
                         {{-- Filter Tahun --}}
-                        <div class="col-md-3">
-                            <label for="year" class="form-label">Tahun:</label>
-                            <select class="form-select filter-input" id="year" name="year">
-                                @for ($y = date('Y') - 5; $y <= date('Y') + 1; $y++)
-                                    <option value="{{ $y }}" {{ $selectedYear == $y ? 'selected' : '' }}>
-                                        {{ $y }}
-                                    </option>
-                                @endfor
-                            </select>
-                        </div>
+                        <div class="col-md-2">
+                                <label for="year" class="form-label">Tahun Acuan:</label>
+                                <input type="text" id="year" name="year" class="form-control yearpicker" value="{{ $selectedYear }}">
+                            </div>
 
                         <div class="col-md-2 d-flex align-items-center">
                             <button type="submit" class="btn btn-primary w-100 filter-button">Filter</button>
@@ -240,4 +234,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('.yearpicker').datepicker({
+        format: "yyyy",
+        viewMode: "years",
+        minViewMode: "years",
+        autoclose: true
+    });
+</script>
+
 @endsection

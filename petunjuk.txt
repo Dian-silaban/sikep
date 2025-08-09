@@ -1,0 +1,10 @@
+email : admin@BPKAD.com
+password : password123
+
+
+terminal 
+
+php artisan storage:link
+
+
+php artisan queue:work

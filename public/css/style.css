@@ -360,10 +360,7 @@ small {
     align-items: center;
 }
 
-.action-buttons form {
-    display: inline-block;
-    margin: 0;
-}
+
 
 /* Styling untuk badge status (misal: Aktif, Non-aktif) */
 .status-badge {
@@ -1744,3 +1741,4 @@ body {
 .table .btn-delete:hover {
     background-color: #c82333 !important;
 }
+

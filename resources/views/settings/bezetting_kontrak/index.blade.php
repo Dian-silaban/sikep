@@ -45,16 +45,10 @@
                                 @endfor
                             </select>
                         </div>
-                        <div class="col-md-3">
-                            <label for="year" class="form-label">Tahun:</label>
-                            <select class="form-select filter-input" id="year" name="year">
-                                @for ($y = date('Y') - 5; $y <= date('Y') + 1; $y++)
-                                    <option value="{{ $y }}" {{ $selectedYear == $y ? 'selected' : '' }}>
-                                        {{ $y }}
-                                    </option>
-                                @endfor
-                            </select>
-                        </div>
+                        <div class="col-md-2">
+                                <label for="year" class="form-label">Tahun Acuan:</label>
+                                <input type="text" id="year" name="year" class="form-control yearpicker" value="{{ $selectedYear }}">
+                            </div>
                         <div class="col-md-2 d-flex align-items-center"> {{-- Ubah align-items-end menjadi align-items-center --}}
                             <button type="submit" class="btn btn-primary w-100 filter-button">Filter</button>
                         </div>
@@ -174,13 +168,10 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="add_tahun" class="form-label">Tahun <span class="text-danger">*</span></label>
-                        <select class="form-select" id="add_tahun" name="tahun" required>
-                            @for ($y = date('Y') - 5; $y <= date('Y') + 1; $y++)
-                                <option value="{{ $y }}">{{ $y }}</option>
-                            @endfor
-                        </select>
-                    </div>
+    <label for="edit_tahun" class="form-label">Tahun <span class="text-danger">*</span></label>
+    <input type="text" class="form-control yearpicker" id="edit_tahun" name="tahun" required>
+</div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -247,13 +238,10 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="edit_tahun" class="form-label">Tahun <span class="text-danger">*</span></label>
-                        <select class="form-select" id="edit_tahun" name="tahun" required>
-                            @for ($y = date('Y') - 5; $y <= date('Y') + 1; $y++)
-                                <option value="{{ $y }}">{{ $y }}</option>
-                            @endfor
-                        </select>
-                    </div>
+    <label for="edit_tahun" class="form-label">Tahun <span class="text-danger">*</span></label>
+    <input type="text" class="form-control yearpicker" id="edit_tahun" name="tahun" required>
+</div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -301,5 +289,13 @@
             inputTahun.value = tahun;
         });
     });
+
+    $('.yearpicker').datepicker({
+        format: "yyyy",
+        viewMode: "years",
+        minViewMode: "years",
+        autoclose: true
+    });
+
 </script>
 @endsection
